@@ -1,0 +1,23 @@
+{
+  "name": "@pe/api",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.1",
+    "hono": "^4.7.7"
+  },
+  "devDependencies": {
+    "@pe/eslint": "workspace:*",
+    "@pe/typescript": "workspace:*",
+    "@types/node": "^20.11.17",
+    "eslint": "catalog:",
+    "tsx": "^4.7.1",
+    "typescript": "catalog:"
+  }
+}

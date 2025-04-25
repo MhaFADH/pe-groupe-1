@@ -1,0 +1,4 @@
+{
+  "tailwindCSS.classAttributes": ["style"],
+  "tailwindCSS.classFunctions": ["tw", "tw.color", "tw.style"]
+}

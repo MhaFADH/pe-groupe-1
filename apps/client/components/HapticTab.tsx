@@ -12,6 +12,7 @@ export function HapticTab(props: BottomTabBarButtonProps) {
           void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         props.onPressIn?.(ev)
       }}
     />

@@ -1,4 +1,13 @@
 {
   "tailwindCSS.classAttributes": ["style"],
-  "tailwindCSS.classFunctions": ["tw", "tw.color", "tw.style"]
+  "tailwindCSS.classFunctions": [
+    "tw",
+    "tw.color",
+    "tw.style"
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#1C3037",
+    "titleBar.activeBackground": "#27444D",
+    "titleBar.activeForeground": "#FAFCFD"
+  }
 }

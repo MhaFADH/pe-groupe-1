@@ -4,7 +4,7 @@
     "apps/client": {
       "entry": ["app/**/*.{ts,tsx}", "**/*.@(ios|android|web).@(ts|tsx)"],
       "ignore": ["babel.config.js"],
-      "ignoreDependencies": ["@babel/runtime", "react-dom", "expo-updates"]
+      "ignoreDependencies": ["@babel/runtime", "expo-updates"]
     }
   },
   "rules": {

@@ -100,3 +100,7 @@ dist/
 data/
 
 .turbo
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

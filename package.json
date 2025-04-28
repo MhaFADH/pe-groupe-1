@@ -13,7 +13,8 @@
     "run:web": "pnpm --F \"@pe/client\" web",
     "run:ios": "pnpm --F \"@pe/client\" ios",
     "run:android": "pnpm --F \"@pe/client\" android",
-    "run:api": "pnpm --F \"@pe/api\" dev"
+    "run:api": "pnpm --F \"@pe/api\" dev",
+    "clean:project": "find . -type d \\( -name \"node_modules\" -o -name \".turbo\" -o -name \".expo\" \\) -prune -exec rm -rf '{}' +"
   },
   "keywords": [],
   "author": "",

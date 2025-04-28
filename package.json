@@ -10,6 +10,7 @@
     "lint": "turbo lint",
     "format": "prettier -c .",
     "format:fix": "prettier -w .",
+    "run:clients": "pnpm --F \"@pe/client\" start",
     "run:web": "pnpm --F \"@pe/client\" web",
     "run:ios": "pnpm --F \"@pe/client\" ios",
     "run:android": "pnpm --F \"@pe/client\" android",

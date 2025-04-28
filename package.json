@@ -14,13 +14,15 @@
     "run:ios": "pnpm --F \"@pe/client\" ios",
     "run:android": "pnpm --F \"@pe/client\" android",
     "run:api": "pnpm --F \"@pe/api\" dev",
-    "clean:project": "find . -type d \\( -name \"node_modules\" -o -name \".turbo\" -o -name \".expo\" \\) -prune -exec rm -rf '{}' +"
+    "clean:project": "find . -type d \\( -name \"node_modules\" -o -name \".turbo\" -o -name \".expo\" \\) -prune -exec rm -rf '{}' +",
+    "knip": "knip"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "knip": "^5.50.5",
     "prettier": "^3.5.3",
     "turbo": "^2.5.1",
     "typescript": "catalog:"

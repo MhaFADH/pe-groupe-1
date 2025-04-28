@@ -1,9 +1,10 @@
 /* eslint-disable no-undefined */
 import { StyleSheet, Text, type TextProps } from "react-native"
 
+import { useTheme } from "@/components/contexts/theme-context"
 import { useThemeColor } from "@/hooks/useThemeColor"
 
-export type ThemedTextProps = TextProps & {
+type ThemedTextProps = TextProps & {
   lightColor?: string
   darkColor?: string
   type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link"
@@ -17,6 +18,7 @@ export function ThemedText({
   ...rest
 }: ThemedTextProps) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, "text")
+  const { tw } = useTheme()
 
   return (
     <Text
@@ -28,6 +30,7 @@ export function ThemedText({
         type === "subtitle" ? styles.subtitle : undefined,
         type === "link" ? styles.link : undefined,
         style,
+        tw.style("text-red-500"),
       ]}
       {...rest}
     />

@@ -46,6 +46,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         domain: process.env.EXPO_PUBLIC_AUTH0_DOMAIN,
       },
     ],
+    "expo-system-ui",
+    "expo-updates",
   ],
   experiments: {
     typedRoutes: true,

@@ -4,3 +4,7 @@
 
 expo-env.d.ts
 # @end expo-cli
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

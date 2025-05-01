@@ -5,6 +5,8 @@ import * as SplashScreen from "expo-splash-screen"
 import { useCallback, useEffect, useState } from "react"
 import "react-native-reanimated"
 
+import Auth0ProviderWrapper from "@/components/allPlatformsWrappers/auth"
+import { AuthManagerProvider } from "@/components/contexts/authManager"
 import type { Theme } from "@/components/contexts/theme-context"
 import Providers from "@/components/providers"
 import config from "@/utils/config"
@@ -48,8 +50,12 @@ export default function RootLayout() {
   }
 
   return (
-    <Providers theme={theme}>
-      <Slot />
-    </Providers>
+    <Auth0ProviderWrapper>
+      <AuthManagerProvider>
+        <Providers theme={theme}>
+          <Slot />
+        </Providers>
+      </AuthManagerProvider>
+    </Auth0ProviderWrapper>
   )
 }

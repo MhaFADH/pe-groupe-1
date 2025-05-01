@@ -1,27 +1,20 @@
 import type { KnipConfig } from "knip"
 
 const config: KnipConfig = {
-  // Use workspaces as an object, not array
   workspaces: {
     "apps/api": {
       entry: ["src/index.ts", "eslint.config.js"],
       project: ["src/**/*.ts"],
     },
     "apps/client": {
-      entry: [
-        "app/index.tsx",
-        "app/(mobile)/**/*.tsx",
-        "app/(web)/**/*.tsx",
-        "eslint.config.mjs",
-        "app.config.ts",
-        "tailwind.config.ts",
-      ],
+      entry: ["**/*.{ts,tsx}", "eslint.config.mjs"],
       project: [
         "app/**/*.{ts,tsx}",
         "components/**/*.{ts,tsx}",
         "constants/**/*.ts",
         "hooks/**/*.ts",
         "utils/**/*.ts",
+        "services/**/*.ts",
       ],
       expo: {
         config: ["app.json", "app.config.{ts,js}"],
@@ -38,8 +31,6 @@ const config: KnipConfig = {
     },
   },
 
-  // File extensions to consider
-  // Directories and files to ignore
   ignore: [
     "**/node_modules",
     "**/dist",
@@ -55,11 +46,9 @@ const config: KnipConfig = {
     "apps/client/tsconfig.tsbuildinfo",
   ],
 
-  // Dependencies that are used by the tooling but not imported directly
-
   ignoreBinaries: ["jest", "web", "ios", "android", "dev"],
 
-  ignoreDependencies: ["@babel/runtime"],
+  ignoreDependencies: ["@babel/runtime", "@testing-library/*"],
 
   prettier: {
     config: [

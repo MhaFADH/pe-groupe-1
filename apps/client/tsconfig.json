@@ -2,6 +2,7 @@
   "extends": "@pe/typescript/base",
   "compilerOptions": {
     "strict": true,
+    "lib": ["DOM"],
     "jsx": "react-jsx",
     "paths": {
       "@/*": ["./*"]

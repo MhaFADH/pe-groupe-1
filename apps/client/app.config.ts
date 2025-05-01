@@ -48,6 +48,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     "expo-system-ui",
     "expo-updates",
+    "expo-secure-store",
   ],
   experiments: {
     typedRoutes: true,

@@ -1,25 +1,24 @@
-import { useAuth0 } from "@auth0/auth0-react"
 import tailwind from "twrnc"
 
+import { useAuthManager } from "@/components/contexts/authManager"
+
 const WebRoot = () => {
-  const { logout, loginWithRedirect, user, error } = useAuth0()
+  const { signIn, signOut, user, error } = useAuthManager()
 
   return (
     <div
-      style={tailwind.style(
-        "flex flex-col items-center justify-center h-full bg-red-500",
-      )}
+      style={tailwind.style("flex flex-col items-center justify-center h-full")}
     >
       {user && (
         <>
           <span>Logged in as {user.name}</span>
-          <button onClick={() => logout()}>Log out</button>
+          <button onClick={() => signOut()}>Log out</button>
         </>
       )}
       {!user && (
         <>
           <span>Not logged in</span>
-          <button onClick={() => loginWithRedirect()}>Log In</button>
+          <button onClick={() => signIn()}>Log In</button>
         </>
       )}
       {error && <span>{error.message}</span>}

@@ -1,40 +1,22 @@
-/* eslint-disable no-console */
 import { Button, Text, View } from "react-native"
-import { useAuth0 } from "react-native-auth0"
 import tailwind from "twrnc"
 
+import { useAuthManager } from "@/components/contexts/authManager"
+
 const MobileRoot = () => {
-  const { user, error } = useAuth0()
-
-  const { clearSession, authorize } = useAuth0()
-
-  const signOut = async () => {
-    try {
-      await clearSession()
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  const signIn = async () => {
-    try {
-      await authorize()
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  const { signIn, signOut, user, error, isAuthenticated } = useAuthManager()
 
   return (
     <View style={tailwind.style("flex-1 items-center justify-center")}>
-      {!user && (
+      {!isAuthenticated && (
         <>
           <Text>Not logged in</Text>
           <Button onPress={signIn} title="Sign in" />
         </>
       )}
-      {user && (
+      {isAuthenticated && (
         <>
-          <Text>Logged in as {user.name}</Text>
+          <Text>Logged in as {user?.name}</Text>
           <Button onPress={signOut} title="Sign out" />
         </>
       )}

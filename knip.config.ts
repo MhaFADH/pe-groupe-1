@@ -46,7 +46,7 @@ const config: KnipConfig = {
     "apps/client/tsconfig.tsbuildinfo",
   ],
 
-  ignoreBinaries: ["jest", "web", "ios", "android", "dev"],
+  ignoreBinaries: ["web", "ios", "android", "dev", "build:web"],
 
   ignoreDependencies: ["@babel/runtime", "@testing-library/*"],
 

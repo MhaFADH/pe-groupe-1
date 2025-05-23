@@ -4,21 +4,21 @@ import type { Config } from "tailwindcss"
 import baseConfig from "../tailwind.config"
 
 export const DarkTheme: Theme["colors"] = {
-  primary: "#ff6347",
+  primary: "#E94E4E",
   background: "#000000",
   card: "#3f3f46",
   text: "#FFF",
-  border: "#ff6347",
-  notification: "#ff6347",
+  border: "#E94E4E",
+  notification: "#E94E4E",
 }
 
 export const LightTheme: Theme["colors"] = {
-  primary: "#ff6347",
+  primary: "#E94E4E",
   background: "#FFFFFF",
   card: "#3F3F46",
   text: "#000000",
-  border: "#ff6347",
-  notification: "#ff6347",
+  border: "#E94E4E",
+  notification: "#E94E4E",
 }
 
 export const darkConfig = {

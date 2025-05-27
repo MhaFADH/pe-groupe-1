@@ -27,12 +27,10 @@ import {
 import config from "@/utils/config"
 
 export type Theme = "dark" | "light" | "system"
-// eslint-disable-next-line no-undef
 type ResolvedTheme = Exclude<Theme, "system">
 
 type Context = {
   themeColors: RNTheme["colors"]
-  // eslint-disable-next-line no-undef
   tw: ReturnType<typeof create>
   theme: Theme
   setTheme: Dispatch<SetStateAction<Theme>>

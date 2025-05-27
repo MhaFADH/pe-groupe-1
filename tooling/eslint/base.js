@@ -167,7 +167,7 @@ export default tseslint.config(
       indent: "off",
       "linebreak-style": ["error", "unix"],
       "newline-before-return": "error",
-      "no-undef": "error",
+      "no-undef": "off",
       "padded-blocks": ["error", "never"],
       "padding-line-between-statements": [
         "error",

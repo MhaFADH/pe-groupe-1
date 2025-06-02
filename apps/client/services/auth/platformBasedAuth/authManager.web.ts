@@ -64,6 +64,12 @@ const useAuthManagerWeb = () => {
   } as IAuthManager
 }
 
+type Tokens = {
+  accessToken: string
+  idToken: string | undefined
+  refreshToken: string | undefined
+}
+
 export type IAuthManager = {
   signIn: () => Promise<void>
   signOut: () => Promise<void>
@@ -72,12 +78,6 @@ export type IAuthManager = {
   isAuthenticated: boolean
   error: Error | null
   user: User | null
-}
-
-export type Tokens = {
-  accessToken: string
-  idToken: string | undefined
-  refreshToken: string | undefined
 }
 
 export class AuthManagerError extends Error {

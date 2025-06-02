@@ -7,7 +7,7 @@ import useAuthManagerWeb, {
   type IAuthManager,
 } from "@/services/auth/platformBasedAuth/authManager.web"
 
-export const AuthManagerContext = createContext<IAuthManager | null>(null)
+const AuthManagerContext = createContext<IAuthManager | null>(null)
 
 export const AuthManagerProvider = ({
   children,

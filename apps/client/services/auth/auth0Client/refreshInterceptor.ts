@@ -6,7 +6,7 @@ import Auth0 from "react-native-auth0"
 import { signOut } from "@/services/auth/authBridge"
 import getEnv from "@/utils/env"
 
-export class RefreshInterceptorError extends Error {
+class RefreshInterceptorError extends Error {
   constructor(message: string) {
     super(message)
     this.name = "RefreshInterceptorError"

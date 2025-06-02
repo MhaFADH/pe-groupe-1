@@ -4,7 +4,7 @@ import * as SecureStore from "expo-secure-store"
 import refreshInterceptor from "@/services/auth/auth0Client/refreshInterceptor"
 import getEnv from "@/utils/env"
 
-export class Auth0ClientError extends Error {
+class Auth0ClientError extends Error {
   constructor(message: string) {
     super(message)
     this.name = "Auth0ClientError"
@@ -13,7 +13,7 @@ export class Auth0ClientError extends Error {
 
 const env = getEnv()
 
-export type Auth0ClientMethods = "get" | "post" | "put" | "delete" | "patch"
+type Auth0ClientMethods = "get" | "post" | "put" | "delete" | "patch"
 
 const createAuth0Client =
   (method: Auth0ClientMethods) =>

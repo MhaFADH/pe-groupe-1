@@ -4,4 +4,4 @@ apps/client/ios/
 apps/client/android/
 apps/client/.expo/
 .turbo/
-.vscode/
+packages/db/src/drizzle

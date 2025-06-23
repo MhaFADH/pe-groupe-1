@@ -41,9 +41,15 @@ importers:
       '@hono/node-server':
         specifier: ^1.14.1
         version: 1.14.4(hono@4.8.3)
+      '@hono/zod-validator':
+        specifier: ^0.7.0
+        version: 0.7.0(hono@4.8.3)(zod@3.25.67)
       '@pe/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@pe/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
       '@types/jsonwebtoken':
         specifier: ^9.0.9
         version: 9.0.10
@@ -1540,6 +1546,12 @@ packages:
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
+
+  '@hono/zod-validator@0.7.0':
+    resolution: {integrity: sha512-qe2ZE6sHFE98dcUrbYMtS3bAV8hqcCOflykvZga2S7XhmNSZzT+dIz4OuMILsjLHkJw9JMn912/dB7dQOmuPvg==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.25.0
 
   '@hookform/resolvers@5.1.1':
     resolution: {integrity: sha512-J/NVING3LMAEvexJkyTLjruSm7aOFx7QX21pzkiJfMoNG0wl5aFEjLTl7ay7IQb9EWY6AkrBy7tHL2Alijpdcg==}
@@ -7854,6 +7866,11 @@ snapshots:
   '@hono/node-server@1.14.4(hono@4.8.3)':
     dependencies:
       hono: 4.8.3
+
+  '@hono/zod-validator@0.7.0(hono@4.8.3)(zod@3.25.67)':
+    dependencies:
+      hono: 4.8.3
+      zod: 3.25.67
 
   '@hookform/resolvers@5.1.1(react-hook-form@7.59.0(react@18.3.1))':
     dependencies:

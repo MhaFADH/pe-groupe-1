@@ -3,45 +3,48 @@ import { logger } from "hono/logger"
 
 import { eq, users } from "@pe/db"
 
-import auth, { type AuthVariables } from "../../middleware/auth.js"
+import auth from "../../middleware/auth.js"
 import auth0ManagementClient from "../../services/userManagementClient.js"
 import { type Auth0User } from "./../../types/auth0"
 
-const userRoute = new Hono<{ Variables: AuthVariables }>()
+const userRoute = new Hono()
 
 userRoute.basePath("/user")
 
-userRoute.get("/sync", auth(false), logger(), async (c) => {
-  const authUserId = c.get("authUserId")
-  const db = c.get("db")
-  const dbUser = await db.query.users.findFirst({
-    columns: { id: true },
-    where: eq(users.auth0Id, authUserId),
-  })
-
-  if (dbUser) {
-    return c.json({ message: "User already synced" }, 200)
-  }
-
-  try {
-    const authUser = await auth0ManagementClient
-      .get(`users/${authUserId}`)
-      .then((response) => response.data as Auth0User)
-
-    await db.insert(users).values({
-      auth0Id: authUserId,
-      email: authUser.email,
-      name: authUser.name,
-      nickname: authUser.nickname,
+userRoute.get(
+  "/sync",
+  auth(false),
+  logger(),
+  async ({ var: { fail, send, db, authUserId } }) => {
+    const dbUser = await db.query.users.findFirst({
+      columns: { id: true },
+      where: eq(users.auth0Id, authUserId),
     })
 
-    return c.json({ message: "User synced successfully" }, 200)
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error("Failed to sync user:", err)
+    if (dbUser) {
+      return send({ message: "User already synced" })
+    }
 
-    return c.json({ error: "Failed to sync user" }, 500)
-  }
-})
+    try {
+      const authUser = await auth0ManagementClient
+        .get(`users/${authUserId}`)
+        .then((response) => response.data as Auth0User)
+
+      await db.insert(users).values({
+        auth0Id: authUserId,
+        email: authUser.email,
+        name: authUser.name,
+        nickname: authUser.nickname,
+      })
+
+      return send({ message: "User synced successfully" })
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("Failed to sync user:", err)
+
+      return fail("failedToSync")
+    }
+  },
+)
 
 export default userRoute

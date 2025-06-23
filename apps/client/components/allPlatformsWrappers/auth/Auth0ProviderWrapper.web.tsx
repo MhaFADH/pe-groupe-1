@@ -14,6 +14,8 @@ export default function Auth0ProviderWrapper({ children }: Props) {
       domain={env.auth0.domain}
       clientId={env.auth0.clientId}
       authorizationParams={{
+        audience: env.auth0.audience,
+        scope: "openid profile email offline_access",
         // eslint-disable-next-line camelcase
         redirect_uri: env.auth0.redirectUri.web,
       }}

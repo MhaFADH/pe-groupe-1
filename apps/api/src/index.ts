@@ -4,14 +4,26 @@ import { cors } from "hono/cors"
 
 import { Config } from "../utils/config.js"
 import auth, { type AuthVariables } from "./middleware/auth.js"
+import treasureHuntsRoutes from "./routes/treasure-hunts-routes"
+import { contextVariables, fail, send } from "./utils/context"
 
-const app = new Hono<{ Variables: AuthVariables }>()
+const app = new Hono<{ Variables: AuthVariables }>().basePath("/api")
 
-app.use(cors())
+app.use(cors(), (ctx, next) => {
+  Object.entries(contextVariables).forEach(([name, value]) => {
+    ctx.set(name as never, value as never)
+  })
+  ctx.set("send", send(ctx))
+  ctx.set("fail", fail(ctx))
 
-const api = app.basePath("/api")
+  return next()
+})
 
-api.get("/", (c) =>
+app.get("/", (c) => c.text("Hello Hono!"))
+
+app.route("/treasure-hunts", treasureHuntsRoutes)
+
+app.get("/", (c) =>
   c.json({
     message: "PE Groupe 1 API",
     status: "healthy",
@@ -19,7 +31,7 @@ api.get("/", (c) =>
   }),
 )
 
-api.get("/test-auth", auth, (c) => {
+app.get("/test-auth", auth, (c) => {
   const user = c.get("user")
   const authHeader = c.req.header("Authorization")
 

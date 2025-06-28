@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.14.1",
+    "@pe/db": "workspace:*",
     "@types/jsonwebtoken": "^9.0.9",
+    "axios": "^1.9.0",
     "dotenv": "^16.5.0",
     "hono": "^4.7.7",
     "jsonwebtoken": "^9.0.2",

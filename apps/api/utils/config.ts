@@ -5,7 +5,7 @@ config({ path: "../../.env" })
 
 const envSchema = z.object({
   databaseUrl: z.string().min(1, "DATABASE_URL is required"),
-  apiPort: z.number().min(4, "API_PORT is required").optional(),
+  apiPort: z.coerce.number().min(4, "API_PORT is required").default(5001),
   auth0: z.object({
     domain: z.string().min(1, "AUTH0_DOMAIN is required"),
     audience: z.string().min(1, "AUTH0_AUDIENCE is required"),
@@ -27,7 +27,7 @@ const envSchema = z.object({
 
 export const Config = envSchema.parse({
   databaseUrl: process.env.DATABASE_URL,
-  apiPort: process.env.EXPO_PUBLIC_API_PORT ?? "5001",
+  apiPort: process.env.EXPO_PUBLIC_API_PORT,
   auth0: {
     domain: process.env.EXPO_PUBLIC_AUTH0_DOMAIN,
     audience: process.env.EXPO_PUBLIC_AUTH0_AUDIENCE,

@@ -3,7 +3,7 @@ import * as SecureStore from "expo-secure-store"
 import { jwtDecode } from "jwt-decode"
 import Auth0 from "react-native-auth0"
 
-import { signOut } from "@/services/auth/authBridge"
+import { getAuthManager } from "@/services/auth/authBridge"
 import getEnv from "@/utils/env"
 
 class RefreshInterceptorError extends Error {
@@ -51,7 +51,7 @@ export default async (config: InternalAxiosRequestConfig) => {
         scope: "openid profile email offline_access",
       })
       .catch(async (error) => {
-        await signOut()
+        await getAuthManager().signOut()
         throw new RefreshInterceptorError(`Error refreshing token: ${error}`)
       })
 

@@ -6,8 +6,8 @@ const config: KnipConfig = {
       entry: ["app/**/*.tsx", "components/ui/**/index.tsx"],
     },
   },
-  ignoreBinaries: ["web", "ios", "android", "dev"],
-  ignoreDependencies: ["@babel/runtime", "@testing-library/*"],
+  ignore: ["packages/db/src/drizzle/**"],
+  ignoreDependencies: ["@babel/runtime", "@testing-library/*", "expo-asset"],
 }
 
 export default config

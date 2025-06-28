@@ -6,7 +6,9 @@ import reactConfig from "@pe/eslint/react"
 /** @type {import('@pe/eslint').Config} */
 export default [
   {
-    ignores: [".expo", "node_modules", "dist"],
+    ignores: [".expo"],
+  },
+  {
     files: ["**/*.spec.ts", "**/*.test.ts"],
     plugins: { jest: pluginJest },
     languageOptions: {

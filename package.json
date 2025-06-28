@@ -14,7 +14,7 @@
     "run:ios": "pnpm --F \"@pe/client\" ios",
     "run:android": "pnpm --F \"@pe/client\" android",
     "run:api": "pnpm --F \"@pe/api\" dev",
-    "clean:project": "find . -type d \\( -name \"node_modules\" -o -name \".turbo\" -o -name \".expo\" \\) -prune -exec rm -rf '{}' +",
+    "clean": "find . -type d \\( -name \"node_modules\" -o -name \".turbo\" -o -name \".expo\" \\) -prune -exec rm -rf '{}' +",
     "knip": "knip --config knip.config.ts"
   },
   "keywords": [],

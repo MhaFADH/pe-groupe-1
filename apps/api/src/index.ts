@@ -2,7 +2,8 @@ import { serve } from "@hono/node-server"
 import { Hono } from "hono"
 import { cors } from "hono/cors"
 
-import auth, { type AuthVariables } from "./middleware/auth.js"
+import auth, { type AuthVariables } from "./middleware/auth"
+import userRoute from "./routes/user/userRoute"
 
 const app = new Hono<{ Variables: AuthVariables }>()
 
@@ -18,7 +19,7 @@ api.get("/", (c) =>
   }),
 )
 
-api.get("/test-auth", auth, (c) => {
+api.get("/test-auth", auth(), (c) => {
   const user = c.get("user")
   const authHeader = c.req.header("Authorization")
 
@@ -31,6 +32,7 @@ api.get("/test-auth", auth, (c) => {
       : null,
   })
 })
+api.route("/user", userRoute)
 
 serve(
   {

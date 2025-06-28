@@ -31,7 +31,6 @@ export const users = pgTable("users", {
   role: roleEnum().notNull().default("player"),
   email: text().unique().notNull(),
   name: text().notNull(),
-  picture: text(),
   nickname: text(),
   firstName: text(),
   lastName: text(),

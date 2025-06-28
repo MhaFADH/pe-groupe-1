@@ -7,6 +7,8 @@ import reactConfig from "@pe/eslint/react"
 export default [
   {
     ignores: [".expo"],
+  },
+  {
     files: ["**/*.spec.ts", "**/*.test.ts"],
     plugins: { jest: pluginJest },
     languageOptions: {

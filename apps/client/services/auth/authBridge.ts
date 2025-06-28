@@ -1,13 +1,15 @@
-let signOutHolder: (() => Promise<void>) | null = null
+import { type IAuthManager } from "@/services/auth/platformBasedAuth/authManager.web"
 
-export const registerSignOut = (fn: () => Promise<void>) => {
-  signOutHolder = fn
+let authManagerHolder: IAuthManager | null = null
+
+export const registerAuthManager = (authManager: IAuthManager) => {
+  authManagerHolder = authManager
 }
 
-export const signOut = () => {
-  if (!signOutHolder) {
-    throw new Error("signOut not registered")
+export const getAuthManager = () => {
+  if (!authManagerHolder) {
+    throw new Error("AuthManager not registered")
   }
 
-  return signOutHolder()
+  return authManagerHolder
 }

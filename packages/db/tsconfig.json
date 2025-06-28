@@ -1,5 +1,5 @@
 {
   "extends": "@pe/typescript/internal-package",
   "include": ["."],
-  "exclude": ["node_modules", "eslint.config.js"]
+  "exclude": ["node_modules", "eslint.config.mjs"]
 }

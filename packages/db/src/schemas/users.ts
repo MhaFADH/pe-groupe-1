@@ -10,7 +10,6 @@ import {
   uuid,
 } from "drizzle-orm/pg-core"
 
-import { timestamps } from "../helpers"
 import { images } from "./images"
 import { mfaTokens } from "./mfa-tokens"
 import { treasureHuntLandmarks } from "./treasure-hunt-landmarks"
@@ -31,14 +30,12 @@ export const users = pgTable("users", {
   role: roleEnum().notNull().default("player"),
   email: text().unique().notNull(),
   name: text().notNull(),
-  picture: text(),
   nickname: text(),
   firstName: text(),
   lastName: text(),
   age: date(),
   coins: integer().default(0).notNull(),
   isMfaEnabled: boolean().default(false).notNull(),
-  ...timestamps,
   deletedAt: timestamp(),
   imageId: integer().references(() => images.id),
 })

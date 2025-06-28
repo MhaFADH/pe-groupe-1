@@ -2,8 +2,9 @@ import { serve } from "@hono/node-server"
 import { Hono } from "hono"
 import { cors } from "hono/cors"
 
-import { Config } from "../utils/config.js"
-import auth, { type AuthVariables } from "./middleware/auth.js"
+import { Config } from "../utils/config"
+import auth, { type AuthVariables } from "./middleware/auth"
+import userRoute from "./routes/user/userRoute"
 
 const app = new Hono<{ Variables: AuthVariables }>()
 
@@ -19,24 +20,22 @@ api.get("/", (c) =>
   }),
 )
 
-api.get("/test-auth", auth, (c) => {
-  const user = c.get("user")
+api.get("/test-auth", auth(), (c) => {
   const authHeader = c.req.header("Authorization")
 
   return c.json({
-    message: "Auth test endpoint",
-    authenticated: Boolean(user),
-    userInfo: user,
+    message: "Auth test endpoint successful",
     token: authHeader
       ? `${authHeader.replace("Bearer ", "").substring(0, 20)}...`
       : null,
   })
 })
+api.route("/user", userRoute)
 
 serve(
   {
     fetch: app.fetch,
-    port: Config.apiPort,
+    port: Config.apiPort ? Number(Config.apiPort) : 5001,
   },
   (info) => {
     // eslint-disable-next-line no-console

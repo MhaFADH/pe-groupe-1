@@ -5,7 +5,7 @@ config({ path: "../../.env" })
 
 const envSchema = z.object({
   databaseUrl: z.string().min(1, "DATABASE_URL is required"),
-  apiPort: z.number().min(4, "API_PORT is required").optional(),
+  apiPort: z.string().min(4, "API_PORT is required").optional(),
   auth0: z.object({
     domain: z.string().min(1, "AUTH0_DOMAIN is required"),
     audience: z.string().min(1, "AUTH0_AUDIENCE is required"),

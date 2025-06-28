@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect } from "react"
 import { Platform } from "react-native"
 
-import { registerSignOut } from "@/services/auth/authBridge"
+import apiClient from "@/services/api/apiClient"
+import { registerAuthManager } from "@/services/auth/authBridge"
 import useAuthManagerMobile from "@/services/auth/platformBasedAuth/authManager.native"
 import useAuthManagerWeb, {
   type IAuthManager,
@@ -19,8 +20,26 @@ export const AuthManagerProvider = ({
     // eslint-disable-next-line react-hooks/rules-of-hooks
     Platform.OS === "web" ? useAuthManagerWeb() : useAuthManagerMobile()
 
+  const { isAuthenticated, signOut } = authManager
+
   useEffect(() => {
-    registerSignOut(authManager.signOut)
+    if (isAuthenticated) {
+      apiClient
+        .get("/user/sync")
+        .then(async ({ status }) => {
+          if (status !== 200) {
+            await signOut()
+          }
+        })
+        .catch(async () => {
+          await signOut()
+          throw new Error("Error syncing user data")
+        })
+    }
+  }, [isAuthenticated, signOut])
+
+  useEffect(() => {
+    registerAuthManager(authManager)
   }, [authManager])
 
   return (

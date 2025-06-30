@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import { Ionicons } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
 import { useEffect } from "react"

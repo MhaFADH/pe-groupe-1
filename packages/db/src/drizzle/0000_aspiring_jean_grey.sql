@@ -94,18 +94,19 @@ CREATE TABLE "user_winnings" (
 --> statement-breakpoint
 CREATE TABLE "users" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"role" "role" NOT NULL,
-	"nickname" text NOT NULL,
+	"auth0_id" text NOT NULL,
+	"role" "role" DEFAULT 'player' NOT NULL,
 	"email" text NOT NULL,
-	"password" text NOT NULL,
+	"name" text NOT NULL,
+	"nickname" text,
 	"first_name" text,
 	"last_name" text,
 	"age" date,
 	"coins" integer DEFAULT 0 NOT NULL,
 	"is_mfa_enabled" boolean DEFAULT false NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
 	"deleted_at" timestamp,
 	"image_id" integer,
+	CONSTRAINT "users_auth0Id_unique" UNIQUE("auth0_id"),
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint

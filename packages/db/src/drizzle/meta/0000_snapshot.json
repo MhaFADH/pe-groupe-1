@@ -1,5 +1,5 @@
 {
-  "id": "ad4ddc7d-fb91-4155-ba96-208ab236380f",
+  "id": "f1b5a36e-e2e4-49b2-92be-512804872256",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -709,18 +709,19 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "auth0_id": {
+          "name": "auth0_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "role": {
           "name": "role",
           "type": "role",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
-        },
-        "nickname": {
-          "name": "nickname",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'player'"
         },
         "email": {
           "name": "email",
@@ -728,11 +729,17 @@
           "primaryKey": false,
           "notNull": true
         },
-        "password": {
-          "name": "password",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "nickname": {
+          "name": "nickname",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "first_name": {
           "name": "first_name",
@@ -766,13 +773,6 @@
           "notNull": true,
           "default": false
         },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
         "deleted_at": {
           "name": "deleted_at",
           "type": "timestamp",
@@ -804,6 +804,13 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
+        "users_auth0Id_unique": {
+          "name": "users_auth0Id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "auth0_id"
+          ]
+        },
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,

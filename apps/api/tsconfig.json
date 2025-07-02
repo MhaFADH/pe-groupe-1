@@ -2,10 +2,10 @@
   "extends": "@pe/typescript/base",
   "compilerOptions": {
     "target": "ESNext",
-    "module": "NodeNext",
+    "module": "ESNext",
     "strict": true,
-    "moduleResolution": "NodeNext",
-    "verbatimModuleSyntax": true,
+    "moduleResolution": "Bundler",
+    "verbatimModuleSyntax": false,
     "skipLibCheck": true,
     "types": ["node"],
     "jsx": "react-jsx",

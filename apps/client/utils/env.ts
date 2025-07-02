@@ -1,6 +1,10 @@
 import { z } from "zod"
 
 const envSchema = z.object({
+  api: z.object({
+    baseUrl: z.string().url(),
+    port: z.string().optional(),
+  }),
   auth0: z.object({
     domain: z.string(),
     clientId: z.string(),
@@ -14,6 +18,10 @@ const envSchema = z.object({
 
 const getEnv = () =>
   envSchema.parse({
+    api: {
+      baseUrl: process.env.EXPO_PUBLIC_API_URL,
+      port: process.env.EXPO_PUBLIC_API_PORT,
+    },
     auth0: {
       domain: process.env.EXPO_PUBLIC_AUTH0_DOMAIN,
       clientId: process.env.EXPO_PUBLIC_AUTH0_CLIENT_ID,

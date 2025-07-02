@@ -16,6 +16,7 @@ Environment variables are managed using the `.env` file. These variables are loa
 
 - To make an environment variable accessible in the app, prefix it with `EXPO_PUBLIC_`.
 - Example:
+
   ```env
   EXPO_PUBLIC_API_URL=https://api.example.com
   ```
@@ -33,12 +34,14 @@ The `.env` file is managed using `dotenv-vault`. To pull or push the `.env` file
    ```
 
 2. Run the following commands:
-
    - **Pull the `.env` file**:
+
      ```bash
      npx dotenv-vault pull
      ```
+
    - **Push the `.env` file !!! the .env must be pushed only after pr approval in order to not confuse other developers**:
+
      ```bash
      npx dotenv-vault push
      ```

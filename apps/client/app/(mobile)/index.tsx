@@ -1,14 +1,16 @@
 import { Button, Text, View } from "react-native"
-import tailwind from "twrnc"
 
 import { useAuthManager } from "@/components/contexts/authManager"
+import { useTheme } from "@/components/contexts/theme-context"
+import CreateTreasureHuntForm from "@/components/treasure-hunts/create-treasure-hunt-form"
 
 const MobileRoot = () => {
   const { signIn, signOut, user, error, isAuthenticated, getTokens } =
     useAuthManager()
+  const { tw } = useTheme()
 
   return (
-    <View style={tailwind.style("flex-1 items-center justify-center bg-white")}>
+    <View style={tw.style("flex-1 items-center justify-center bg-background")}>
       {!isAuthenticated && (
         <>
           <Text>Not logged in</Text>
@@ -35,6 +37,7 @@ const MobileRoot = () => {
             title="Get access token"
           />
           <Button onPress={signOut} title="Sign out" />
+          <CreateTreasureHuntForm />
         </>
       )}
 

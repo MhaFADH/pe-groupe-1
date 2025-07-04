@@ -17,10 +17,12 @@ const useAuthManagerMobile = () => {
   const [user, setUser] = useState<User | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
-  const signIn = async () => {
+  const signIn = async (signUp = false) => {
     await authorize({
       scope: "openid profile email offline_access",
       audience: env.auth0.audience,
+      // eslint-disable-next-line camelcase
+      additionalParameters: { screen_hint: signUp ? "signup" : "" },
     }).catch((err) => {
       throw new AuthManagerError(`Error signing in:${err}`)
     })

@@ -6,8 +6,8 @@ const config: KnipConfig = {
       entry: ["app/**/*.tsx", "components/ui/**/index.tsx"],
     },
   },
-  ignore: ["packages/db/src/drizzle/**"],
-  ignoreDependencies: ["@babel/runtime", "@testing-library/*", "expo-asset"],
+  ignore: ["packages/db/src/drizzle/**", "tailwind.config.js"],
+  ignoreDependencies: ["@babel/runtime", "@testing-library/*"],
 }
 
 export default config

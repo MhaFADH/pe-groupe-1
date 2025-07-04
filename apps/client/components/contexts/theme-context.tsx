@@ -1,106 +1,81 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import {
-  DefaultTheme,
-  type Theme as RNTheme,
-  ThemeProvider as RNThemeProvider,
-} from "@react-navigation/native"
-import {
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react"
-import { useColorScheme } from "react-native"
-import { create } from "twrnc"
+import * as SecureStore from "expo-secure-store"
+import { useColorScheme } from "nativewind"
+import { type ReactNode, createContext, useContext, useEffect } from "react"
+import { Platform } from "react-native"
 
-import {
-  DarkTheme,
-  LightTheme,
-  darkConfig,
-  lightConfig,
-} from "@/constants/themes"
-import config from "@/utils/config"
+type Theme = "light" | "dark" | "system"
 
-export type Theme = "dark" | "light" | "system"
-type ResolvedTheme = Exclude<Theme, "system">
-
-type Context = {
-  themeColors: RNTheme["colors"]
-  tw: ReturnType<typeof create>
-  theme: Theme
-  setTheme: Dispatch<SetStateAction<Theme>>
-  resolvedTheme: ResolvedTheme
-  changeTheme: (newTheme: Theme) => Promise<void>
+type ThemeContextType = {
+  colorScheme: Theme
+  setTheme: (theme: Theme) => void
 }
 
-const ThemeContext = createContext<Context>({} as Context)
+const ThemeContext = createContext<ThemeContextType | null>(null)
 
-type Props = {
-  darkTheme?: RNTheme["colors"]
-  lightTheme?: RNTheme["colors"]
-  theme: Theme
+export const useTheme = () => {
+  const context = useContext(ThemeContext)
+
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider")
+  }
+
+  return context
+}
+
+type ThemeProviderProps = {
   children: ReactNode
 }
 
-export const ThemeProvider = ({
-  darkTheme = DarkTheme,
-  lightTheme = LightTheme,
-  theme: defaultTheme,
+const persistTheme = (theme: Theme) => {
+  if (Platform.OS === "web") {
+    localStorage.setItem("colorScheme", theme)
+
+    return
+  }
+
+  void SecureStore.setItemAsync("colorScheme", theme)
+}
+
+const getThemeFromStorage = async (): Promise<Theme> => {
+  if (Platform.OS === "web") {
+    const stored = localStorage.getItem("colorScheme")
+
+    return stored ? (stored as Theme) : "system"
+  }
+
+  const stored = await SecureStore.getItemAsync("colorScheme")
+
+  return stored ? (stored as Theme) : "system"
+}
+
+export const CustomThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
-}: Props) => {
-  const [theme, setTheme] = useState<Theme>(defaultTheme)
-  const colorScheme = useColorScheme()
+}) => {
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { colorScheme, setColorScheme } = useColorScheme()
 
-  const resolvedTheme = useMemo<ResolvedTheme>(() => {
-    if (theme === "system") {
-      return colorScheme ?? "light"
-    }
-
-    return theme
-  }, [colorScheme, theme])
-
-  const tw = resolvedTheme === "dark" ? create(darkConfig) : create(lightConfig)
-  const themeColors = resolvedTheme === "dark" ? darkTheme : lightTheme
-
-  const changeTheme = useCallback(
-    async (newTheme: Theme) => {
-      await AsyncStorage.setItem(config.store.theme, newTheme)
-      setTheme(newTheme)
-    },
-    [setTheme],
-  )
+  const setTheme = (newTheme: Theme) => {
+    setColorScheme(newTheme)
+    persistTheme(newTheme)
+  }
 
   useEffect(() => {
-    setTheme(defaultTheme)
-  }, [defaultTheme])
+    const loadTheme = async () => {
+      const storedTheme = await getThemeFromStorage()
+      setColorScheme(storedTheme)
+    }
+
+    void loadTheme()
+  }, [setColorScheme])
 
   return (
     <ThemeContext.Provider
       value={{
-        themeColors,
-        tw,
-        theme,
+        colorScheme: colorScheme ?? "system",
         setTheme,
-        resolvedTheme,
-        changeTheme,
       }}
     >
-      <RNThemeProvider
-        value={{
-          dark: resolvedTheme === "dark",
-          colors: { ...themeColors },
-          fonts: DefaultTheme.fonts,
-        }}
-      >
-        {children}
-      </RNThemeProvider>
+      {children}
     </ThemeContext.Provider>
   )
 }
-
-export const useTheme = () => useContext(ThemeContext)

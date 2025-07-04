@@ -1,23 +1,14 @@
-import { Platform } from "react-native";
-import tw from '../../lib/tailwind';
+import { Platform } from "react-native"
 
-export interface LoginProps {
-  onNavigate?: (page: "login" | "home") => void;
-  appName?: string;
-  logoIcon?: any;
-  onSignIn?: () => void;
-  onSignUp?: () => void;
-  className?: string;
-  logoClassName?: string;
-  titleClassName?: string;
-  subtitleClassName?: string;
-}
+import { LoginNative } from "./login.native"
+import { LoginWeb } from "./login.web"
 
-let LoginComponent;
-if (Platform.OS === 'web') {
-  LoginComponent = require("./login.web").LoginWeb;
+let LoginComponent = null
+
+if (Platform.OS === "web") {
+  LoginComponent = LoginWeb
 } else {
-  LoginComponent = require("./login.native").LoginNative;
+  LoginComponent = LoginNative
 }
 
-export const Login = LoginComponent;
+export const Login = LoginComponent

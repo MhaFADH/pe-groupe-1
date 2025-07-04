@@ -1,28 +1,17 @@
-import React from "react";
-import { Dimensions, Image, View, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
-import { ButtonNative as Button } from "../../components/button/button.native";
-import { useTheme } from "../../context";
-import tw from "../../lib/tailwind";
+import { Ionicons } from "@expo/vector-icons"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { Image, Text, View } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
 
-export interface LoginProps {
-  onNavigate?: (page: "login" | "home") => void;
-  appName?: string;
-  logoIcon?: any;
-  onSignIn?: () => void;
-  onSignUp?: () => void;
-  className?: string;
-  logoClassName?: string;
-  titleClassName?: string;
-  subtitleClassName?: string;
-}
+import { ButtonNative as Button } from "@/components/ui/button/button.native"
+import tw from "@/tailwind"
+
+import type { LoginProps } from "./login.web"
 
 export const LoginNative: React.FC<LoginProps> = ({
   onNavigate,
   appName,
-  logoIcon = "gift",
   onSignIn,
   onSignUp,
   className = "",
@@ -30,31 +19,27 @@ export const LoginNative: React.FC<LoginProps> = ({
   titleClassName = "",
   subtitleClassName = "",
 }) => {
-  const { t } = useTranslation();
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
+  const { t } = useTranslation()
 
   const handleSignIn = () => {
-    console.log("Resume Exploring pressed - navigating to home");
     if (onSignIn) {
-      onSignIn();
+      onSignIn()
     } else {
-      onNavigate?.("home");
+      onNavigate?.("home")
     }
-  };
+  }
 
   const handleSignUp = () => {
-    console.log("Join Adventure pressed - navigating to home");
     if (onSignUp) {
-      onSignUp();
+      onSignUp()
     } else {
-      onNavigate?.("home");
+      onNavigate?.("home")
     }
-  };
+  }
 
   return (
     <SafeAreaView
-      style={tw`flex-1 ${isDark ? "bg-gray-900" : "bg-white"}`}
+      style={tw`flex-1 dark:bg-gray-900 bg-white`}
       edges={["top", "bottom"]}
     >
       <View style={tw`flex-1 justify-center items-center px-6 ${className}`}>
@@ -64,42 +49,37 @@ export const LoginNative: React.FC<LoginProps> = ({
               style={tw`bg-primary rounded-3xl p-6 mb-4 shadow-lg shadow-primary/40 ${logoClassName}`}
             >
               <Image
-                source={require("../../../assets/scroll_256.png")}
+                // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment
+                source={require("@/assets/images/scroll_256.png")}
                 style={{ width: 48, height: 48 }}
                 resizeMode="contain"
               />
             </View>
 
             <Text
-              style={tw`text-4xl font-extrabold ${
-                isDark ? "text-white" : "text-gray-800"
-              } tracking-tight text-center mb-2 w-full ${titleClassName}`}
+              style={tw`text-4xl font-extrabold dark:text-white text-gray-800 tracking-tight text-center mb-2 w-full ${titleClassName}`}
             >
-              {appName || t("appName")}
+              {appName ?? t("appName")}
             </Text>
 
             <View style={tw`h-1 w-15 bg-primary rounded-full self-center`} />
           </View>
 
-          <View style={tw`items-center mb-8 w-full`}>
+          <View style={tw`items-center mb-8 w-full px-4`}>
             <Text
-              style={tw`text-2xl font-bold ${
-                isDark ? "text-gray-300" : "text-gray-700"
-              } text-center leading-tight mb-4 max-w-lg w-full ${subtitleClassName}`}
+              style={tw`text-2xl font-bold dark:text-gray-300 text-gray-700 text-center leading-tight mb-4 max-w-sm ${subtitleClassName}`}
             >
               {t("appDescription")}
             </Text>
 
             <Text
-              style={tw`text-lg ${
-                isDark ? "text-gray-400" : "text-gray-600"
-              } text-center leading-relaxed max-w-md mb-2 w-full`}
+              style={tw`text-lg dark:text-gray-400 text-gray-600 text-center leading-relaxed max-w-xs mb-2`}
             >
               {t("appSubtitle")}
             </Text>
 
             <Text
-              style={tw`text-base text-primary text-center font-semibold w-full`}
+              style={tw`text-base text-primary text-center font-semibold max-w-sm`}
             >
               {t("appCta")}
             </Text>
@@ -123,9 +103,7 @@ export const LoginNative: React.FC<LoginProps> = ({
             />
 
             <Text
-              style={tw`text-xs ${
-                isDark ? "text-gray-400" : "text-gray-600"
-              } text-center mt-2`}
+              style={tw`text-xs dark:text-gray-400 text-gray-600 text-center mt-2`}
             >
               {t("bothOptionsText")}
             </Text>
@@ -136,9 +114,7 @@ export const LoginNative: React.FC<LoginProps> = ({
               <View style={tw`items-center gap-2 flex-1 max-w-20`}>
                 <Ionicons name="map" size={20} color="#8B5CF6" />
                 <Text
-                  style={tw`text-xs ${
-                    isDark ? "text-gray-400" : "text-gray-600"
-                  } font-medium text-center`}
+                  style={tw`text-xs dark:text-gray-400 text-gray-600 font-medium text-center`}
                 >
                   {t("interactiveMaps")}
                 </Text>
@@ -147,9 +123,7 @@ export const LoginNative: React.FC<LoginProps> = ({
               <View style={tw`items-center gap-2 flex-1 max-w-20`}>
                 <Ionicons name="people" size={20} color="#8B5CF6" />
                 <Text
-                  style={tw`text-xs ${
-                    isDark ? "text-gray-400" : "text-gray-600"
-                  } font-medium text-center`}
+                  style={tw`text-xs dark:text-gray-400 text-gray-600 font-medium text-center`}
                 >
                   {t("teamAdventures")}
                 </Text>
@@ -158,9 +132,7 @@ export const LoginNative: React.FC<LoginProps> = ({
               <View style={tw`items-center gap-2 flex-1 max-w-20`}>
                 <Ionicons name="trophy" size={20} color="#8B5CF6" />
                 <Text
-                  style={tw`text-xs ${
-                    isDark ? "text-gray-400" : "text-gray-600"
-                  } font-medium text-center`}
+                  style={tw`text-xs dark:text-gray-400 text-gray-600 font-medium text-center`}
                 >
                   {t("epicRewards")}
                 </Text>
@@ -170,5 +142,5 @@ export const LoginNative: React.FC<LoginProps> = ({
         </View>
       </View>
     </SafeAreaView>
-  );
-};
+  )
+}

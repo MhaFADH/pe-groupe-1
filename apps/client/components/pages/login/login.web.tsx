@@ -1,22 +1,23 @@
-import React from "react";
-import { Dimensions, Image, View, Text, ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
-import { ButtonWeb as Button } from "../../components/button/button.web";
-import tw from "../../lib/tailwind";
+import { Ionicons } from "@expo/vector-icons"
+import { motion } from "framer-motion"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { Dimensions, Image, ScrollView, Text, View } from "react-native"
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+import { ButtonWeb as Button } from "@/components/ui/button/button.web"
+import tw from "@/tailwind"
 
-export interface LoginProps {
-  onNavigate?: (page: "login" | "home") => void;
-  appName?: string;
-  onSignIn?: () => void;
-  onSignUp?: () => void;
-  className?: string;
-  logoClassName?: string;
-  titleClassName?: string;
-  subtitleClassName?: string;
+const { height: screenHeight } = Dimensions.get("window")
+
+export type LoginProps = {
+  onNavigate?: (page: "login" | "home") => void
+  appName?: string
+  onSignIn?: () => void
+  onSignUp?: () => void
+  className?: string
+  logoClassName?: string
+  titleClassName?: string
+  subtitleClassName?: string
 }
 
 export const LoginWeb: React.FC<LoginProps> = ({
@@ -29,25 +30,22 @@ export const LoginWeb: React.FC<LoginProps> = ({
   titleClassName = "",
   subtitleClassName = "",
 }) => {
-  const { t } = useTranslation();
-
+  const { t } = useTranslation()
   const handleSignIn = () => {
-    console.log("Resume Exploring pressed - navigating to home");
     if (onSignIn) {
-      onSignIn();
+      onSignIn()
     } else {
-      onNavigate?.("home");
+      onNavigate?.("home")
     }
-  };
+  }
 
   const handleSignUp = () => {
-    console.log("Join Adventure pressed - navigating to home");
     if (onSignUp) {
-      onSignUp();
+      onSignUp()
     } else {
-      onNavigate?.("home");
+      onNavigate?.("home")
     }
-  };
+  }
 
   return (
     <View style={tw`flex-1 bg-white dark:bg-gray-900 ${className}`}>
@@ -72,7 +70,8 @@ export const LoginWeb: React.FC<LoginProps> = ({
               style={tw`bg-primary rounded-3xl p-6 mb-3 shadow-lg shadow-primary/40 flex items-center justify-center ${logoClassName}`}
             >
               <Image
-                source={require("../../../assets/scroll_256.png")}
+                // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment
+                source={require("@/assets/images/scroll_256.png")}
                 style={{ width: 48, height: 48 }}
                 resizeMode="contain"
               />
@@ -87,7 +86,7 @@ export const LoginWeb: React.FC<LoginProps> = ({
               <Text
                 style={tw`text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight text-center mb-3 w-full ${titleClassName}`}
               >
-                {appName || t("appName")}
+                {appName ?? t("appName")}
               </Text>
 
               <View
@@ -190,5 +189,5 @@ export const LoginWeb: React.FC<LoginProps> = ({
         </View>
       </ScrollView>
     </View>
-  );
-};
+  )
+}

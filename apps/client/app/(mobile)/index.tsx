@@ -2,19 +2,14 @@ import { Button, Text, View } from "react-native"
 import tailwind from "twrnc"
 
 import { useAuthManager } from "@/components/contexts/authManager"
+import { LoginNative } from "@/components/pages/login/login.native"
 
 const MobileRoot = () => {
-  const { signIn, signOut, user, error, isAuthenticated, getTokens } =
-    useAuthManager()
+  const { signOut, user, error, isAuthenticated, getTokens } = useAuthManager()
 
   return (
     <View style={tailwind.style("flex-1 items-center justify-center bg-white")}>
-      {!isAuthenticated && (
-        <>
-          <Text>Not logged in</Text>
-          <Button onPress={signIn} title="Sign in" />
-        </>
-      )}
+      {!isAuthenticated && <LoginNative />}
       {isAuthenticated && (
         <>
           <Text>Logged in as {user?.name}</Text>

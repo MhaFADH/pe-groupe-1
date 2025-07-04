@@ -1,25 +1,15 @@
-import tailwind from "twrnc"
-
 import { useAuthManager } from "@/components/contexts"
+import { Home } from "@/components/pages/home"
 import { Login } from "@/components/pages/login"
 
 const WebRoot = () => {
-  const { signOut, user, error, isAuthenticated } = useAuthManager()
+  const { isAuthenticated } = useAuthManager()
 
-  return (
-    <div
-      style={tailwind.style("flex flex-col items-center justify-center h-full")}
-    >
-      {user && (
-        <>
-          <span>Logged in as {user.name}</span>
-          <button onClick={() => signOut()}>Log out</button>
-        </>
-      )}
-      {!isAuthenticated && <Login />}
-      {error && <span>{error.message}</span>}
-    </div>
-  )
+  if (!isAuthenticated) {
+    return <Login />
+  }
+
+  return <Home />
 }
 
 export default WebRoot

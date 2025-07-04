@@ -6,6 +6,8 @@ import "react-native-reanimated"
 
 import Auth0ProviderWrapper from "@/components/allPlatformsWrappers/auth"
 import { AuthManagerProvider } from "@/components/contexts/authManager"
+import { LanguageProvider } from "@/components/contexts/language-context"
+import { ThemeProvider } from "@/components/contexts/theme-context"
 
 void SplashScreen.preventAutoHideAsync()
 
@@ -28,7 +30,11 @@ export default function RootLayout() {
   return (
     <Auth0ProviderWrapper>
       <AuthManagerProvider>
-        <Slot />
+        <LanguageProvider>
+          <ThemeProvider>
+            <Slot />
+          </ThemeProvider>
+        </LanguageProvider>
       </AuthManagerProvider>
     </Auth0ProviderWrapper>
   )

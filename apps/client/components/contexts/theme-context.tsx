@@ -1,4 +1,12 @@
-import { type ReactNode, createContext, useContext, useState } from "react"
+import * as SecureStore from "expo-secure-store"
+import {
+  type ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
+import { Platform } from "react-native"
 import { type RnColorScheme, useAppColorScheme } from "twrnc"
 
 import tw from "@/tailwind"
@@ -28,6 +36,26 @@ type ThemeProviderProps = {
   children: ReactNode
 }
 
+const persistTheme = (theme: RnColorScheme) => {
+  if (Platform.OS === "web") {
+    localStorage.setItem("colorScheme", theme ?? "light")
+
+    return null
+  }
+
+  SecureStore.setItem("colorScheme", theme ?? "light")
+
+  return null
+}
+
+const getThemeFromStorage = () => {
+  if (Platform.OS === "web") {
+    return localStorage.getItem("colorScheme") ?? "light"
+  }
+
+  return SecureStore.getItem("colorScheme") ?? "light"
+}
+
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [colorScheme, toggleScheme, setScheme] = useAppColorScheme(tw)
   const [version, setVersion] = useState(0)
@@ -35,12 +63,19 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const toggleTheme = () => {
     toggleScheme()
     setVersion((prev) => prev + 1)
+    persistTheme(colorScheme)
   }
 
   const setTheme = (newTheme: Theme) => {
     setScheme(newTheme)
     setVersion((prev) => prev + 1)
+    persistTheme(colorScheme)
   }
+
+  useEffect(() => {
+    const storedTheme = getThemeFromStorage()
+    setScheme(storedTheme as RnColorScheme)
+  }, [setScheme])
 
   return (
     <ThemeContext.Provider

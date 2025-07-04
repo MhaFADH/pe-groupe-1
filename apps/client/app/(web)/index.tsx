@@ -1,7 +1,7 @@
 import tailwind from "twrnc"
 
-import { useAuthManager } from "@/components/contexts/authManager"
-import { LoginWeb } from "@/components/pages/login/login.web"
+import { useAuthManager } from "@/components/contexts"
+import { Login } from "@/components/pages/login"
 
 const WebRoot = () => {
   const { signOut, user, error, isAuthenticated } = useAuthManager()
@@ -16,7 +16,7 @@ const WebRoot = () => {
           <button onClick={() => signOut()}>Log out</button>
         </>
       )}
-      {!isAuthenticated && <LoginWeb />}
+      {!isAuthenticated && <Login />}
       {error && <span>{error.message}</span>}
     </div>
   )

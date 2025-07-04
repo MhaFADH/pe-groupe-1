@@ -5,9 +5,11 @@ import { useEffect } from "react"
 import "react-native-reanimated"
 
 import Auth0ProviderWrapper from "@/components/allPlatformsWrappers/auth"
-import { AuthManagerProvider } from "@/components/contexts/authManager"
-import { LanguageProvider } from "@/components/contexts/language-context"
-import { ThemeProvider } from "@/components/contexts/theme-context"
+import {
+  AuthManagerProvider,
+  LanguageProvider,
+  ThemeProvider,
+} from "@/components/contexts"
 
 void SplashScreen.preventAutoHideAsync()
 

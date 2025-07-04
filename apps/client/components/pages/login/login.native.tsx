@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 import { Image, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
-import { ButtonNative as Button } from "@/components/ui/button/button.native"
+import { Button } from "@/components/ui/button"
 import tw from "@/tailwind"
 
 import type { LoginProps } from "./login.web"

@@ -4,7 +4,7 @@ import React from "react"
 import { useTranslation } from "react-i18next"
 import { Dimensions, Image, ScrollView, Text, View } from "react-native"
 
-import { ButtonWeb as Button } from "@/components/ui/button/button.web"
+import { Button } from "@/components/ui/button"
 import tw from "@/tailwind"
 
 const { height: screenHeight } = Dimensions.get("window")

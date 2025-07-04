@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 
@@ -40,19 +41,26 @@ const resources = {
       helpSupport: "Help & Support",
       logout: "Logout",
 
+      // Theme related
       selectTheme: "Select Theme",
       lightTheme: "Light",
       darkTheme: "Dark",
       themeDescription: "Customize your app appearance and theme preferences",
 
+      // Settings descriptions
+      settingsSubtitle: "Manage your app preferences",
       languageDescription: "Change your preferred language",
       notificationsDescription: "Manage notification preferences",
       privacyDescription: "Privacy and security settings",
       aboutDescription: "App information and details",
       helpDescription: "Get help and support",
+      lightThemeDescription: "Clean and bright interface",
+      darkThemeDescription: "Easy on the eyes in low light",
 
+      // Language selector
       selectLanguage: "Select Language",
 
+      // Notifications settings
       pushNotifications: "Push Notifications",
       pushNotificationsDescription: "Receive notifications on your device",
       emailNotifications: "Email Notifications",
@@ -64,6 +72,7 @@ const resources = {
       additionalOptions: "Additional Options",
       quietHours: "Quiet Hours",
 
+      // Privacy settings
       dataCollection: "Data Collection",
       dataCollectionDescription: "Allow anonymous usage data collection",
       analytics: "Analytics",
@@ -79,6 +88,7 @@ const resources = {
       deleteData: "Delete Data",
       deleteDataDescription: "Permanently delete your data",
 
+      // Help settings
       getHelp: "Get Help",
       faq: "FAQ",
       faqDescription: "Frequently asked questions",
@@ -142,20 +152,27 @@ const resources = {
       helpSupport: "Aide et Support",
       logout: "Déconnexion",
 
+      // Theme related
       selectTheme: "Sélectionner le Thème",
       lightTheme: "Clair",
       darkTheme: "Sombre",
       themeDescription:
         "Personnalisez l'apparence et les préférences de thème de votre application",
 
+      // Settings descriptions
+      settingsSubtitle: "Gérer vos préférences d'application",
       languageDescription: "Changez votre langue préférée",
       notificationsDescription: "Gérer les préférences de notification",
       privacyDescription: "Paramètres de confidentialité et de sécurité",
       aboutDescription: "Informations et détails de l'application",
       helpDescription: "Obtenez de l'aide et du support",
+      lightThemeDescription: "Interface claire et lumineuse",
+      darkThemeDescription: "Doux pour les yeux en faible luminosité",
 
+      // Language selector
       selectLanguage: "Sélectionner la Langue",
 
+      // Notifications settings
       pushNotifications: "Notifications Push",
       pushNotificationsDescription:
         "Recevoir des notifications sur votre appareil",
@@ -168,6 +185,7 @@ const resources = {
       additionalOptions: "Options Supplémentaires",
       quietHours: "Heures Silencieuses",
 
+      // Privacy settings
       dataCollection: "Collecte de Données",
       dataCollectionDescription:
         "Autoriser la collecte de données d'utilisation anonymes",

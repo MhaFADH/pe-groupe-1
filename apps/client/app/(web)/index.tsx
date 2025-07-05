@@ -3,10 +3,10 @@ import { Home } from "@/components/pages/home"
 import { Login } from "@/components/pages/login"
 
 const WebRoot = () => {
-  const { isAuthenticated } = useAuthManager()
+  const { isAuthenticated, signIn } = useAuthManager()
 
   if (!isAuthenticated) {
-    return <Login />
+    return <Login onSignIn={() => signIn()} onSignUp={() => signIn(true)} />
   }
 
   return <Home />

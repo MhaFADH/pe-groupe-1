@@ -12,8 +12,11 @@ const useAuthManagerWeb = () => {
     error,
   } = useAuth0()
 
-  const signIn = async () => {
-    await loginWithRedirect().catch((err) => {
+  const signIn = async (signUp = false) => {
+    await loginWithRedirect(
+      // eslint-disable-next-line camelcase
+      signUp ? { authorizationParams: { screen_hint: "signup" } } : {},
+    ).catch((err) => {
       throw new AuthManagerError(`Error signing in:${err}`)
     })
   }
@@ -71,7 +74,7 @@ type Tokens = {
 }
 
 export type IAuthManager = {
-  signIn: () => Promise<void>
+  signIn: (signUp?: boolean) => Promise<void>
   signOut: () => Promise<void>
   getUser: () => Promise<User>
   getTokens: () => Promise<Tokens | undefined>

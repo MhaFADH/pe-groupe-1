@@ -1,1 +1,1 @@
-export { FooterWeb } from "./footer.web"
+export { FooterWeb as Footer } from "./footer.web"

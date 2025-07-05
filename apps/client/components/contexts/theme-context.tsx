@@ -75,7 +75,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   useEffect(() => {
     const storedTheme = getThemeFromStorage()
     setScheme(storedTheme as RnColorScheme)
-  }, [setScheme])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <ThemeContext.Provider

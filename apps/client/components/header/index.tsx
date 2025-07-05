@@ -1,1 +1,1 @@
-export { HeaderWeb } from "./header.web"
+export { HeaderWeb as Header } from "./header.web"

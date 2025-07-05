@@ -32,7 +32,7 @@ export const HeaderWeb: React.FC<HeaderProps> = ({
       >
         <Image
           // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment
-          source={require("../../../assets/scroll_256.png")}
+          source={require("@/assets/images/scroll_256.png")}
           style={{ width: 24, height: 24 }}
           resizeMode="contain"
         />

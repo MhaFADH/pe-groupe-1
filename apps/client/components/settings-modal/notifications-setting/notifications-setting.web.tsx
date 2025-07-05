@@ -1,20 +1,18 @@
-import React from "react";
-import { View, Text, Pressable, Switch, ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
-import { useTheme } from "../../../context";
-import tw from "../../../lib/tailwind";
+import { Ionicons } from "@expo/vector-icons"
+import { motion } from "framer-motion"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { Pressable, ScrollView, Switch, Text, View } from "react-native"
+
+import tw from "@/tailwind"
 
 export const NotificationsSettingWeb: React.FC = () => {
-  const { t } = useTranslation();
-  const { colorScheme } = useTheme();
-  const isDark = colorScheme === "dark";
+  const { t } = useTranslation()
 
-  const [pushNotifications, setPushNotifications] = React.useState(true);
-  const [emailNotifications, setEmailNotifications] = React.useState(false);
-  const [inAppNotifications, setInAppNotifications] = React.useState(true);
-  const [soundEnabled, setSoundEnabled] = React.useState(true);
+  const [pushNotifications, setPushNotifications] = React.useState(true)
+  const [emailNotifications, setEmailNotifications] = React.useState(false)
+  const [inAppNotifications, setInAppNotifications] = React.useState(true)
+  const [soundEnabled, setSoundEnabled] = React.useState(true)
 
   const notificationSettings = [
     {
@@ -49,7 +47,7 @@ export const NotificationsSettingWeb: React.FC = () => {
       enabled: soundEnabled,
       onToggle: setSoundEnabled,
     },
-  ];
+  ]
 
   return (
     <motion.div
@@ -102,7 +100,7 @@ export const NotificationsSettingWeb: React.FC = () => {
                     <Ionicons
                       name={setting.icon}
                       size={24}
-                      color={tw.color(isDark ? "gray-300" : "gray-600")}
+                      color={tw.color("dark:gray-300 gray-600")}
                     />
                   </View>
                   <View style={tw`flex-1`}>
@@ -150,7 +148,7 @@ export const NotificationsSettingWeb: React.FC = () => {
               <Ionicons
                 name="time"
                 size={20}
-                color={tw.color(isDark ? "gray-400" : "gray-600")}
+                color={tw.color("dark:gray-400 gray-600")}
               />
               <Text
                 style={tw`ml-3 text-base font-medium text-gray-700 dark:text-gray-300`}
@@ -167,5 +165,5 @@ export const NotificationsSettingWeb: React.FC = () => {
         </View>
       </ScrollView>
     </motion.div>
-  );
-};
+  )
+}

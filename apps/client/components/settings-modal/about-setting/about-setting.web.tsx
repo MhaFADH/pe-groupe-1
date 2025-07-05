@@ -1,14 +1,12 @@
-import React from "react";
-import { View, Text } from "react-native";
-import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
-import { useTheme } from "../../../context";
-import tw from "../../../lib/tailwind";
+import { motion } from "framer-motion"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { Text, View } from "react-native"
+
+import tw from "@/tailwind"
 
 export const AboutSettingWeb: React.FC = () => {
-  const { colorScheme } = useTheme();
-  const { t } = useTranslation();
-  const isDark = colorScheme === "dark";
+  const { t } = useTranslation()
 
   return (
     <motion.div
@@ -22,73 +20,44 @@ export const AboutSettingWeb: React.FC = () => {
       <View style={tw`p-8`}>
         <View style={tw`mb-8`}>
           <Text
-            style={[
-              tw`text-3xl font-bold mb-2`,
-              { color: isDark ? "#ffffff" : "#111827" },
-            ]}
+            style={tw`text-3xl font-bold mb-2 text-gray-900 dark:text-white`}
           >
             {t("about")}
           </Text>
-          <Text style={[tw``, { color: isDark ? "#d1d5db" : "#6b7280" }]}>
+          <Text style={tw`text-gray-600 dark:text-gray-300`}>
             {t("aboutDescription")}
           </Text>
         </View>
 
         <View style={tw`space-y-6`}>
           <View
-            style={[
-              tw`rounded-2xl p-6 border shadow-sm`,
-              {
-                backgroundColor: isDark ? "#374151" : "#ffffff",
-                borderColor: isDark ? "#4b5563" : "#e5e7eb",
-              },
-            ]}
+            style={tw`rounded-2xl p-6 border shadow-sm bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700`}
           >
             <Text
-              style={[
-                tw`text-xl font-semibold mb-4`,
-                { color: isDark ? "#ffffff" : "#111827" },
-              ]}
+              style={tw`text-xl font-semibold mb-4 text-gray-900 dark:text-white`}
             >
               {t("appName")}
             </Text>
             <View style={tw`space-y-3`}>
               <View style={tw`flex-row justify-between`}>
-                <Text style={[tw``, { color: isDark ? "#d1d5db" : "#6b7280" }]}>
+                <Text style={tw`text-gray-600 dark:text-gray-300`}>
                   Version
                 </Text>
-                <Text
-                  style={[
-                    tw`font-medium`,
-                    { color: isDark ? "#ffffff" : "#111827" },
-                  ]}
-                >
+                <Text style={tw`font-medium text-gray-900 dark:text-white`}>
                   1.0.0
                 </Text>
               </View>
               <View style={tw`flex-row justify-between`}>
-                <Text style={[tw``, { color: isDark ? "#d1d5db" : "#6b7280" }]}>
-                  Build
-                </Text>
-                <Text
-                  style={[
-                    tw`font-medium`,
-                    { color: isDark ? "#ffffff" : "#111827" },
-                  ]}
-                >
+                <Text style={tw`text-gray-600 dark:text-gray-300`}>Build</Text>
+                <Text style={tw`font-medium text-gray-900 dark:text-white`}>
                   2024.01
                 </Text>
               </View>
               <View style={tw`flex-row justify-between`}>
-                <Text style={[tw``, { color: isDark ? "#d1d5db" : "#6b7280" }]}>
+                <Text style={tw`text-gray-600 dark:text-gray-300`}>
                   Platform
                 </Text>
-                <Text
-                  style={[
-                    tw`font-medium`,
-                    { color: isDark ? "#ffffff" : "#111827" },
-                  ]}
-                >
+                <Text style={tw`font-medium text-gray-900 dark:text-white`}>
                   Web
                 </Text>
               </View>
@@ -96,33 +65,19 @@ export const AboutSettingWeb: React.FC = () => {
           </View>
 
           <View
-            style={[
-              tw`rounded-2xl p-6 border shadow-sm`,
-              {
-                backgroundColor: isDark ? "#374151" : "#ffffff",
-                borderColor: isDark ? "#4b5563" : "#e5e7eb",
-              },
-            ]}
+            style={tw`rounded-2xl p-6 border shadow-sm bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700`}
           >
             <Text
-              style={[
-                tw`text-lg font-semibold mb-3`,
-                { color: isDark ? "#ffffff" : "#111827" },
-              ]}
+              style={tw`text-lg font-semibold mb-3 text-gray-900 dark:text-white`}
             >
               Description
             </Text>
-            <Text
-              style={[
-                tw`leading-relaxed`,
-                { color: isDark ? "#d1d5db" : "#6b7280" },
-              ]}
-            >
+            <Text style={tw`leading-relaxed text-gray-600 dark:text-gray-300`}>
               {t("appDescription")}
             </Text>
           </View>
         </View>
       </View>
     </motion.div>
-  );
-};
+  )
+}

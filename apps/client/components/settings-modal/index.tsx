@@ -1,2 +1,7 @@
-export { SettingsModalWeb } from "./settings-modal.web";
-export { SettingsModalNative } from "./settings-modal.native";
+export { HelpSetting } from "./help-setting"
+export { AboutSetting } from "./about-setting"
+export { DefaultSetting } from "./default-setting"
+export { LanguageSetting } from "./language-setting"
+export { NotificationsSetting } from "./notifications-setting"
+export { ThemeSetting } from "./theme-setting"
+export { PrivacySetting } from "./privacy-setting"

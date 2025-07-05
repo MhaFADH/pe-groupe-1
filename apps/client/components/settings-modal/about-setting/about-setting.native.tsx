@@ -1,13 +1,12 @@
-import React from "react";
-import { View, Text, ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
-import { useTheme } from "../../../context";
-import tw from "../../../lib/tailwind";
+import { Ionicons } from "@expo/vector-icons"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { ScrollView, Text, View } from "react-native"
+
+import tw from "@/tailwind"
 
 export const AboutSettingNative: React.FC = () => {
-  const { t } = useTranslation();
-  const { colorScheme } = useTheme();
+  const { t } = useTranslation()
 
   return (
     <ScrollView style={tw`flex-1 p-6`} showsVerticalScrollIndicator={false}>
@@ -102,5 +101,5 @@ export const AboutSettingNative: React.FC = () => {
         </View>
       </View>
     </ScrollView>
-  );
-};
+  )
+}

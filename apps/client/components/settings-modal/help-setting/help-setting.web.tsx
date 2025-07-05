@@ -1,15 +1,13 @@
-import React from "react";
-import { View, Text, Pressable, Linking, ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
-import { useTheme } from "../../../context";
-import tw from "../../../lib/tailwind";
+import { Ionicons } from "@expo/vector-icons"
+import { motion } from "framer-motion"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { Linking, Pressable, ScrollView, Text, View } from "react-native"
+
+import tw from "@/tailwind"
 
 export const HelpSettingWeb: React.FC = () => {
-  const { t } = useTranslation();
-  const { colorScheme } = useTheme();
-  const isDark = colorScheme === "dark";
+  const { t } = useTranslation()
 
   const helpOptions = [
     {
@@ -17,30 +15,30 @@ export const HelpSettingWeb: React.FC = () => {
       title: t("faq"),
       description: t("faqDescription"),
       icon: "help-circle" as const,
-      action: () => console.log("Open FAQ"),
+      action: () => void 0,
     },
     {
       id: "contactSupport",
       title: t("contactSupport"),
       description: t("contactSupportDescription"),
       icon: "mail" as const,
-      action: () => console.log("Contact support"),
+      action: () => void 0,
     },
     {
       id: "reportBug",
       title: t("reportBug"),
       description: t("reportBugDescription"),
       icon: "bug" as const,
-      action: () => console.log("Report bug"),
+      action: () => void 0,
     },
     {
       id: "featureRequest",
       title: t("featureRequest"),
       description: t("featureRequestDescription"),
       icon: "bulb" as const,
-      action: () => console.log("Feature request"),
+      action: () => void 0,
     },
-  ];
+  ]
 
   const quickLinks = [
     {
@@ -61,11 +59,11 @@ export const HelpSettingWeb: React.FC = () => {
       icon: "people" as const,
       url: "https://example.com/community",
     },
-  ];
+  ]
 
   const handleLinkPress = (url: string) => {
-    Linking.openURL(url);
-  };
+    void Linking.openURL(url)
+  }
 
   return (
     <motion.div
@@ -126,7 +124,7 @@ export const HelpSettingWeb: React.FC = () => {
                         <Ionicons
                           name={option.icon}
                           size={24}
-                          color={tw.color(isDark ? "gray-300" : "gray-600")}
+                          color={tw.color("dark:gray-300 gray-600")}
                         />
                       </View>
                       <View style={tw`flex-1`}>
@@ -203,5 +201,5 @@ export const HelpSettingWeb: React.FC = () => {
         </View>
       </ScrollView>
     </motion.div>
-  );
-};
+  )
+}

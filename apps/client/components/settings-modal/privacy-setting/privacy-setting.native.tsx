@@ -1,19 +1,17 @@
-import React from "react";
-import { View, Text, Pressable, Switch, ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
-import { useTheme } from "../../../context";
-import tw from "../../../lib/tailwind";
+import { Ionicons } from "@expo/vector-icons"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { Pressable, ScrollView, Switch, Text, View } from "react-native"
+
+import tw from "@/tailwind"
 
 export const PrivacySettingNative: React.FC = () => {
-  const { t } = useTranslation();
-  const { colorScheme } = useTheme();
-  const isDark = colorScheme === "dark";
+  const { t } = useTranslation()
 
-  const [dataCollection, setDataCollection] = React.useState(false);
-  const [analytics, setAnalytics] = React.useState(true);
-  const [crashReporting, setCrashReporting] = React.useState(true);
-  const [locationSharing, setLocationSharing] = React.useState(false);
+  const [dataCollection, setDataCollection] = React.useState(false)
+  const [analytics, setAnalytics] = React.useState(true)
+  const [crashReporting, setCrashReporting] = React.useState(true)
+  const [locationSharing, setLocationSharing] = React.useState(false)
 
   const privacySettings = [
     {
@@ -48,7 +46,7 @@ export const PrivacySettingNative: React.FC = () => {
       enabled: locationSharing,
       onToggle: setLocationSharing,
     },
-  ];
+  ]
 
   const privacyActions = [
     {
@@ -56,17 +54,17 @@ export const PrivacySettingNative: React.FC = () => {
       title: t("exportData"),
       description: t("exportDataDescription"),
       icon: "download" as const,
-      action: () => console.log("Export data"),
+      action: () => void 0,
     },
     {
       id: "deleteData",
       title: t("deleteData"),
       description: t("deleteDataDescription"),
       icon: "trash" as const,
-      action: () => console.log("Delete data"),
+      action: () => void 0,
       danger: true,
     },
-  ];
+  ]
 
   return (
     <ScrollView style={tw`flex-1 p-6`} showsVerticalScrollIndicator={false}>
@@ -114,7 +112,7 @@ export const PrivacySettingNative: React.FC = () => {
                     <Ionicons
                       name={setting.icon}
                       size={20}
-                      color={tw.color(isDark ? "gray-300" : "gray-600")}
+                      color={tw.color("dark:gray-300 gray-600")}
                     />
                   </View>
                   <View style={tw`flex-1`}>
@@ -167,11 +165,7 @@ export const PrivacySettingNative: React.FC = () => {
                     name={action.icon}
                     size={20}
                     color={tw.color(
-                      action.danger
-                        ? "red-500"
-                        : isDark
-                        ? "gray-400"
-                        : "gray-600"
+                      action.danger ? "red-500" : "dark:gray-400 gray-600",
                     )}
                   />
                   <View style={tw`ml-3`}>
@@ -200,5 +194,5 @@ export const PrivacySettingNative: React.FC = () => {
         </View>
       </View>
     </ScrollView>
-  );
-};
+  )
+}

@@ -1,18 +1,18 @@
-import React from "react";
-import { View, Text, Pressable, ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
-import { useTheme } from "../../../context";
-import tw from "../../../lib/tailwind";
+import { Ionicons } from "@expo/vector-icons"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { Pressable, ScrollView, Text, View } from "react-native"
+
+import { useTheme } from "@/components/contexts"
+import tw from "@/tailwind"
 
 export const ThemeSettingNative: React.FC = () => {
-  const { colorScheme, setTheme } = useTheme();
-  const { t } = useTranslation();
+  const { colorScheme, setTheme } = useTheme()
+  const { t } = useTranslation()
 
   return (
     <View style={tw`flex-1`}>
       <ScrollView style={tw`flex-1 p-6`} showsVerticalScrollIndicator={false}>
-        {/* Description */}
         <View style={tw`mb-6`}>
           <Text
             style={tw`text-gray-600 dark:text-gray-400 text-base leading-relaxed`}
@@ -31,7 +31,6 @@ export const ThemeSettingNative: React.FC = () => {
               {t("selectTheme")}
             </Text>
             <View style={tw`space-y-4`}>
-              {/* Light Theme Option */}
               <Pressable
                 style={tw`rounded-2xl p-4 border-2 ${
                   colorScheme === "light"
@@ -41,7 +40,6 @@ export const ThemeSettingNative: React.FC = () => {
                 onPress={() => setTheme("light")}
               >
                 <View style={tw`flex-row items-start`}>
-                  {/* Light Theme Preview */}
                   <View
                     style={tw`w-16 h-12 rounded-lg bg-white border border-gray-200 mr-4 overflow-hidden`}
                   >
@@ -86,7 +84,6 @@ export const ThemeSettingNative: React.FC = () => {
                 </View>
               </Pressable>
 
-              {/* Dark Theme Option */}
               <Pressable
                 style={tw`rounded-2xl p-4 border-2 ${
                   colorScheme === "dark"
@@ -96,7 +93,6 @@ export const ThemeSettingNative: React.FC = () => {
                 onPress={() => setTheme("dark")}
               >
                 <View style={tw`flex-row items-start`}>
-                  {/* Dark Theme Preview */}
                   <View
                     style={tw`w-16 h-12 rounded-lg bg-gray-900 border border-gray-700 mr-4 overflow-hidden`}
                   >
@@ -147,5 +143,5 @@ export const ThemeSettingNative: React.FC = () => {
         </View>
       </ScrollView>
     </View>
-  );
-};
+  )
+}

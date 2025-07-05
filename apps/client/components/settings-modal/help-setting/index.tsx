@@ -1,16 +1,14 @@
-import { Platform } from "react-native";
+import { Platform } from "react-native"
 
-export const HelpSettingWeb = Platform.select({
-  web: () => require("./help-setting.web").HelpSettingWeb,
-  default: () => require("./help-setting.native").HelpSettingNative,
-})();
+import { HelpSettingNative } from "./help-setting.native"
+import { HelpSettingWeb } from "./help-setting.web"
 
-export const HelpSettingNative = Platform.select({
-  web: () => require("./help-setting.web").HelpSettingWeb,
-  default: () => require("./help-setting.native").HelpSettingNative,
-})();
+let HelpSettingComponent = null
 
-export const HelpSetting = Platform.select({
-  web: () => require("./help-setting.web").HelpSettingWeb,
-  default: () => require("./help-setting.native").HelpSettingNative,
-})();
+if (Platform.OS === "web") {
+  HelpSettingComponent = HelpSettingWeb
+} else {
+  HelpSettingComponent = HelpSettingNative
+}
+
+export const HelpSetting = HelpSettingComponent

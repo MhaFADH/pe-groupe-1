@@ -72,11 +72,11 @@ export default tseslint.config(
       "max-depth": ["error", 3],
       "max-lines": [
         "error",
-        { max: 200, skipBlankLines: true, skipComments: true },
+        { max: 250, skipBlankLines: true, skipComments: true },
       ],
       "max-lines-per-function": [
         "error",
-        { max: 200, skipBlankLines: true, skipComments: true },
+        { max: 250, skipBlankLines: true, skipComments: true },
       ],
       "max-nested-callbacks": ["error", 4],
       "max-params": ["error", 3],

@@ -1,19 +1,17 @@
-import React from "react";
-import { View, Text, Switch, ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
-import { useTheme } from "../../../context";
-import tw from "../../../lib/tailwind";
+import { Ionicons } from "@expo/vector-icons"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { ScrollView, Switch, Text, View } from "react-native"
+
+import tw from "@/tailwind"
 
 export const NotificationsSettingNative: React.FC = () => {
-  const { t } = useTranslation();
-  const { colorScheme } = useTheme();
-  const isDark = colorScheme === "dark";
+  const { t } = useTranslation()
 
-  const [pushNotifications, setPushNotifications] = React.useState(true);
-  const [emailNotifications, setEmailNotifications] = React.useState(false);
-  const [inAppNotifications, setInAppNotifications] = React.useState(true);
-  const [soundEnabled, setSoundEnabled] = React.useState(true);
+  const [pushNotifications, setPushNotifications] = React.useState(true)
+  const [emailNotifications, setEmailNotifications] = React.useState(false)
+  const [inAppNotifications, setInAppNotifications] = React.useState(true)
+  const [soundEnabled, setSoundEnabled] = React.useState(true)
 
   const notificationSettings = [
     {
@@ -48,7 +46,7 @@ export const NotificationsSettingNative: React.FC = () => {
       enabled: soundEnabled,
       onToggle: setSoundEnabled,
     },
-  ];
+  ]
 
   return (
     <ScrollView style={tw`flex-1 p-6`} showsVerticalScrollIndicator={false}>
@@ -89,7 +87,7 @@ export const NotificationsSettingNative: React.FC = () => {
                 <Ionicons
                   name={setting.icon}
                   size={20}
-                  color={tw.color(isDark ? "gray-300" : "gray-600")}
+                  color={tw.color("dark:gray-300 gray-600")}
                 />
               </View>
               <View style={tw`flex-1`}>
@@ -120,5 +118,5 @@ export const NotificationsSettingNative: React.FC = () => {
         ))}
       </View>
     </ScrollView>
-  );
-};
+  )
+}

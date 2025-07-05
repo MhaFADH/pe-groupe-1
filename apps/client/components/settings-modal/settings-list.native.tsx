@@ -1,10 +1,10 @@
-import React from "react";
-import { View, Text, Pressable, ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
-import Animated, { FadeIn, SlideInRight } from "react-native-reanimated";
-import { useTheme } from "../../context";
-import tw from "../../lib/tailwind";
+import { Ionicons } from "@expo/vector-icons"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { Pressable, ScrollView, Text, View } from "react-native"
+import Animated, { FadeIn, SlideInRight } from "react-native-reanimated"
+
+import tw from "@/tailwind"
 
 export type SettingsScreen =
   | "theme"
@@ -12,22 +12,20 @@ export type SettingsScreen =
   | "about"
   | "notifications"
   | "privacy"
-  | "help";
+  | "help"
 
-interface SettingsListProps {
-  onSettingPress: (setting: SettingsScreen) => void;
-  onLogout: () => void;
+type SettingsListProps = {
+  onSettingPress: (setting: SettingsScreen) => void
+  onLogout: () => void
 }
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 export const SettingsListNative: React.FC<SettingsListProps> = ({
   onSettingPress,
   onLogout,
 }) => {
-  const { t } = useTranslation();
-  const { colorScheme } = useTheme();
-  const isDark = colorScheme === "dark";
+  const { t } = useTranslation()
 
   const settingsItems = [
     {
@@ -72,11 +70,10 @@ export const SettingsListNative: React.FC<SettingsListProps> = ({
       description: t("helpDescription"),
       color: "indigo",
     },
-  ];
+  ]
 
   return (
     <View style={tw`flex-1 bg-gray-50 dark:bg-gray-900`}>
-      {/* Header */}
       <View
         style={tw`bg-white dark:bg-gray-800 px-6 py-4 border-b border-gray-200 dark:border-gray-700`}
       >
@@ -88,7 +85,6 @@ export const SettingsListNative: React.FC<SettingsListProps> = ({
         </Text>
       </View>
 
-      {/* Settings List */}
       <ScrollView
         style={tw`flex-1 px-6 py-4`}
         showsVerticalScrollIndicator={false}
@@ -133,7 +129,6 @@ export const SettingsListNative: React.FC<SettingsListProps> = ({
           ))}
         </View>
 
-        {/* Logout Section */}
         <View
           style={tw`mt-8 pt-6 border-t border-gray-200 dark:border-gray-700`}
         >
@@ -162,5 +157,5 @@ export const SettingsListNative: React.FC<SettingsListProps> = ({
         </View>
       </ScrollView>
     </View>
-  );
-};
+  )
+}

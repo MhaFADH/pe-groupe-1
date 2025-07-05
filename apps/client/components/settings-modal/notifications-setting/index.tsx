@@ -1,19 +1,14 @@
-import { Platform } from "react-native";
+import { Platform } from "react-native"
 
-export const NotificationsSettingWeb = Platform.select({
-  web: () => require("./notifications-setting.web").NotificationsSettingWeb,
-  default: () =>
-    require("./notifications-setting.native").NotificationsSettingNative,
-})();
+import { NotificationsSettingNative } from "./notifications-setting.native"
+import { NotificationsSettingWeb } from "./notifications-setting.web"
 
-export const NotificationsSettingNative = Platform.select({
-  web: () => require("./notifications-setting.web").NotificationsSettingWeb,
-  default: () =>
-    require("./notifications-setting.native").NotificationsSettingNative,
-})();
+let NotificationsSettingComponent = null
 
-export const NotificationsSetting = Platform.select({
-  web: () => require("./notifications-setting.web").NotificationsSettingWeb,
-  default: () =>
-    require("./notifications-setting.native").NotificationsSettingNative,
-})();
+if (Platform.OS === "web") {
+  NotificationsSettingComponent = NotificationsSettingWeb
+} else {
+  NotificationsSettingComponent = NotificationsSettingNative
+}
+
+export const NotificationsSetting = NotificationsSettingComponent

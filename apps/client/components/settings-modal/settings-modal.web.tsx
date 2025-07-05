@@ -1,22 +1,25 @@
-import React, { useState } from "react";
-import { View, Text, Pressable, ScrollView, Modal } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "../../context";
-import { useLanguage } from "../../context";
-import { useTranslation } from "react-i18next";
-import { ThemeSettingWeb } from "./theme-setting";
-import { LanguageSettingWeb } from "./language-setting";
-import { AboutSettingWeb } from "./about-setting";
-import { NotificationsSettingWeb } from "./notifications-setting";
-import { PrivacySettingWeb } from "./privacy-setting";
-import { HelpSettingWeb } from "./help-setting";
-import { DefaultSettingWeb } from "./default-setting";
-import tw from "../../lib/tailwind";
+/* eslint-disable max-lines */
+/* eslint-disable max-lines-per-function */
+import { Ionicons } from "@expo/vector-icons"
+import { AnimatePresence, motion } from "framer-motion"
+import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
+import { Modal, Pressable, ScrollView, Text, View } from "react-native"
 
-interface SettingsModalProps {
-  isVisible: boolean;
-  onClose: () => void;
+import {
+  AboutSetting,
+  DefaultSetting,
+  HelpSetting,
+  LanguageSetting,
+  NotificationsSetting,
+  PrivacySetting,
+  ThemeSetting,
+} from "@/components/settings-modal"
+import tw from "@/tailwind"
+
+type SettingsModalProps = {
+  isVisible: boolean
+  onClose: () => void
 }
 
 type SettingsTab =
@@ -25,17 +28,14 @@ type SettingsTab =
   | "about"
   | "notifications"
   | "privacy"
-  | "help";
+  | "help"
 
 export const SettingsModalWeb: React.FC<SettingsModalProps> = ({
   isVisible,
   onClose,
 }) => {
-  const { colorScheme } = useTheme();
-  const { language, setLanguage, isLoading } = useLanguage();
-  const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState<SettingsTab>("theme");
-  const isDark = colorScheme === "dark";
+  const { t } = useTranslation()
+  const [activeTab, setActiveTab] = useState<SettingsTab>("theme")
 
   const settingsItems = [
     {
@@ -74,37 +74,44 @@ export const SettingsModalWeb: React.FC<SettingsModalProps> = ({
       icon: "help-circle",
       description: t("helpDescription"),
     },
-  ];
+  ]
 
   const handleLogout = () => {
-    console.log("Logout pressed");
-    onClose();
-  };
+    onClose()
+  }
 
   const renderContent = () => {
     switch (activeTab) {
       case "theme":
-        return <ThemeSettingWeb />;
+        return <ThemeSetting />
+
       case "language":
-        return <LanguageSettingWeb />;
+        return <LanguageSetting />
+
       case "notifications":
-        return <NotificationsSettingWeb />;
+        return <NotificationsSetting />
+
       case "privacy":
-        return <PrivacySettingWeb />;
+        return <PrivacySetting />
+
       case "about":
-        return <AboutSettingWeb />;
+        return <AboutSetting />
+
       case "help":
-        return <HelpSettingWeb />;
-      default:
-        const item = settingsItems.find((item) => item.id === activeTab);
+        return <HelpSetting />
+
+      default: {
+        const speItem = settingsItems.find((item) => item.id === activeTab)
+
         return (
-          <DefaultSettingWeb
-            title={item?.label || "Setting"}
-            description={item?.description || "Setting description"}
+          <DefaultSetting
+            title={speItem?.label ?? "Setting"}
+            description={speItem?.description ?? "Setting description"}
           />
-        );
+        )
+      }
     }
-  };
+  }
 
   return (
     <Modal
@@ -135,7 +142,6 @@ export const SettingsModalWeb: React.FC<SettingsModalProps> = ({
             }}
             onClick={onClose}
           >
-            {/* Modal Container - 3/4 width */}
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -166,11 +172,9 @@ export const SettingsModalWeb: React.FC<SettingsModalProps> = ({
                 perspective: 1000,
               }}
             >
-              {/* Sidebar - 1/3 of modal width */}
               <View
                 style={tw`w-1/3 min-w-[280px] bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col`}
               >
-                {/* Sidebar Header */}
                 <View
                   style={tw`p-6 border-b border-gray-200 dark:border-gray-700`}
                 >
@@ -193,21 +197,20 @@ export const SettingsModalWeb: React.FC<SettingsModalProps> = ({
                   </View>
                 </View>
 
-                {/* Navigation Items */}
                 <ScrollView
                   style={tw`flex-1 p-4`}
                   showsVerticalScrollIndicator={false}
                 >
                   <View style={tw`space-y-2`}>
                     {settingsItems.map((item) => {
-                      const isActive = activeTab === item.id;
+                      const isActive = activeTab === item.id
+
                       return (
                         <Pressable
                           key={item.id}
                           style={tw`relative w-full`}
                           onPress={() => setActiveTab(item.id as SettingsTab)}
                         >
-                          {/* Active indicator */}
                           {isActive && (
                             <motion.div
                               layoutId="activeTab"
@@ -232,6 +235,7 @@ export const SettingsModalWeb: React.FC<SettingsModalProps> = ({
                               } items-center justify-center mr-3 flex-shrink-0`}
                             >
                               <Ionicons
+                                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
                                 name={item.icon as any}
                                 size={18}
                                 color={
@@ -272,11 +276,10 @@ export const SettingsModalWeb: React.FC<SettingsModalProps> = ({
                             </View>
                           </View>
                         </Pressable>
-                      );
+                      )
                     })}
                   </View>
 
-                  {/* Logout Section */}
                   <View
                     style={tw`mt-8 pt-6 border-t border-gray-200 dark:border-gray-700`}
                   >
@@ -303,7 +306,6 @@ export const SettingsModalWeb: React.FC<SettingsModalProps> = ({
                 </ScrollView>
               </View>
 
-              {/* Content Area - 2/3 of modal width */}
               <View
                 style={tw`flex-1 flex flex-col bg-gray-50 dark:bg-gray-900`}
               >
@@ -314,5 +316,5 @@ export const SettingsModalWeb: React.FC<SettingsModalProps> = ({
         )}
       </AnimatePresence>
     </Modal>
-  );
-};
+  )
+}

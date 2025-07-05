@@ -1,31 +1,32 @@
-import React from "react";
-import { View, Text, Pressable, ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
-import { useLanguage } from "../../../context";
-import tw from "../../../lib/tailwind";
+import { Ionicons } from "@expo/vector-icons"
+import React from "react"
+import { useTranslation } from "react-i18next"
+import { Pressable, ScrollView, Text, View } from "react-native"
+
+import { useLanguage } from "@/components/contexts"
+import tw from "@/tailwind"
 
 export const LanguageSettingNative: React.FC = () => {
-  const { language, setLanguage } = useLanguage();
-  const { t } = useTranslation();
+  const { language, setLanguage } = useLanguage()
+  const { t } = useTranslation()
 
   const languages = [
     { code: "en", name: "English", nativeName: "English", flag: "🇺🇸" },
     { code: "fr", name: "French", nativeName: "Français", flag: "🇫🇷" },
-  ];
+  ]
 
   const handleLanguageSelect = async (languageCode: "en" | "fr") => {
     try {
-      await setLanguage(languageCode);
+      await setLanguage(languageCode)
     } catch (error) {
-      console.error("Error changing language:", error);
+      // eslint-disable-next-line no-console
+      console.error("Error changing language:", error)
     }
-  };
+  }
 
   return (
     <View style={tw`flex-1`}>
       <ScrollView style={tw`flex-1 p-6`} showsVerticalScrollIndicator={false}>
-        {/* Description */}
         <View style={tw`mb-6`}>
           <Text
             style={tw`text-gray-600 dark:text-gray-400 text-base leading-relaxed`}
@@ -36,7 +37,8 @@ export const LanguageSettingNative: React.FC = () => {
 
         <View style={tw`space-y-4`}>
           {languages.map((lang) => {
-            const isSelected = language === lang.code;
+            const isSelected = language === lang.code
+
             return (
               <Pressable
                 key={lang.code}
@@ -74,10 +76,10 @@ export const LanguageSettingNative: React.FC = () => {
                   )}
                 </View>
               </Pressable>
-            );
+            )
           })}
         </View>
       </ScrollView>
     </View>
-  );
-};
+  )
+}

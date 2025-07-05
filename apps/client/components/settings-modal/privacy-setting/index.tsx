@@ -1,16 +1,14 @@
-import { Platform } from "react-native";
+import { Platform } from "react-native"
 
-export const PrivacySettingWeb = Platform.select({
-  web: () => require("./privacy-setting.web").PrivacySettingWeb,
-  default: () => require("./privacy-setting.native").PrivacySettingNative,
-})();
+import { PrivacySettingNative } from "./privacy-setting.native"
+import { PrivacySettingWeb } from "./privacy-setting.web"
 
-export const PrivacySettingNative = Platform.select({
-  web: () => require("./privacy-setting.web").PrivacySettingWeb,
-  default: () => require("./privacy-setting.native").PrivacySettingNative,
-})();
+let PrivacySettingComponent = null
 
-export const PrivacySetting = Platform.select({
-  web: () => require("./privacy-setting.web").PrivacySettingWeb,
-  default: () => require("./privacy-setting.native").PrivacySettingNative,
-})();
+if (Platform.OS === "web") {
+  PrivacySettingComponent = PrivacySettingWeb
+} else {
+  PrivacySettingComponent = PrivacySettingNative
+}
+
+export const PrivacySetting = PrivacySettingComponent

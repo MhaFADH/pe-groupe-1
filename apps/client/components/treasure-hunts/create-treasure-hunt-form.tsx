@@ -13,6 +13,7 @@ import { useTheme } from "@/components/contexts/theme-context"
 import { Button } from "@/components/ui/button"
 import FormField from "@/components/ui/input/form-field"
 import { Switch } from "@/components/ui/switch"
+import apiClient from "@/services/api/apiClient"
 
 const CreateTreasureHuntForm = () => {
   const { control, handleSubmit, setValue, watch } = useForm({
@@ -30,8 +31,8 @@ const CreateTreasureHuntForm = () => {
   const [useEndDate, setUseEndDate] = useState(false)
   const date = watch("endDate") ?? new Date()
 
-  const onSubmit = (data: CreateTreasureHuntInput) => {
-    console.log("Form submitted", data)
+  const onSubmit = async (data: CreateTreasureHuntInput) => {
+    await apiClient.post("/treasure-hunts", data)
   }
 
   const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {

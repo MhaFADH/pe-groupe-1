@@ -34,6 +34,7 @@ The `.env` file is managed using `dotenv-vault`. To pull or push the `.env` file
    ```
 
 2. Run the following commands:
+
    - **Pull the `.env` file**:
 
      ```bash

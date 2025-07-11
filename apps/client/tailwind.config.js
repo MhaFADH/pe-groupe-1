@@ -15,7 +15,8 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#8B5CF6",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
           50: "#F3F0FF",
           100: "#E9E2FF",
           200: "#D4C9FF",
@@ -28,7 +29,8 @@ export default {
           900: "#4C1D95",
         },
         secondary: {
-          DEFAULT: "#F59E0B",
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
           50: "#FFFBEB",
           100: "#FEF3C7",
           200: "#FDE68A",
@@ -40,14 +42,10 @@ export default {
           800: "#92400E",
           900: "#78350F",
         },
-        backgroundLight: "#FFFFFF",
-        backgroundDark: "#1F2937",
-        background: "#FFFFFF",
-        textLight: "#111827",
-        textDark: "#F9FAFB",
-        text: "#111827",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         accent: {
-          DEFAULT: "#10B981",
+          DEFAULT: "hsl(var(--accent))",
           50: "#ECFDF5",
           100: "#D1FAE5",
           200: "#A7F3D0",
@@ -58,6 +56,26 @@ export default {
           700: "#047857",
           800: "#065F46",
           900: "#064E3B",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        danger: {
+          DEFAULT: "hsl(var(--danger))",
+          foreground: "hsl(var(--danger-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        content: {
+          DEFAULT: "hsl(var(--content))",
+          foreground: "hsl(var(--content-foreground))",
         },
       },
     },

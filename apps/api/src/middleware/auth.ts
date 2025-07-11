@@ -1,51 +1,53 @@
 import { createMiddleware } from "hono/factory"
 
-import { db, eq, users } from "@pe/db"
+import { eq, users } from "@pe/db"
 
 import { verifyToken } from "../lib/jwks.js"
 
-export type AuthVariables = {
-  authUserId: string
-  db: typeof db
+type Env = {
+  Variables: {
+    authUserId: string
+  }
 }
 
 const auth = (synced = true) =>
-  createMiddleware(async (c, next): Promise<Response | void> => {
-    const authHeader = c.req.header("Authorization")
+  createMiddleware<Env>(
+    async ({ var: { fail, db }, req, set }, next): Promise<Response | void> => {
+      const authHeader = req.header("Authorization")
 
-    if (!authHeader?.startsWith("Bearer ")) {
-      return c.json({ error: "Missing or invalid authorization header" }, 401)
-    }
-
-    try {
-      const token = authHeader.replace("Bearer ", "")
-      const decoded = await verifyToken(token)
-
-      if (!decoded.sub) {
-        return c.json({ error: "Invalid token - missing user ID" }, 401)
+      if (!authHeader?.startsWith("Bearer ")) {
+        return fail("missingAuthHeader")
       }
 
-      c.set("authUserId", decoded.sub)
-      c.set("db", db)
+      try {
+        const token = authHeader.replace("Bearer ", "")
+        const decoded = await verifyToken(token)
 
-      if (synced) {
-        const user = await db.query.users.findFirst({
-          columns: { id: true },
-          where: eq(users.auth0Id, decoded.sub),
-        })
-
-        if (!user) {
-          return c.json({ error: "User not synced" }, 404)
+        if (!decoded.sub) {
+          return fail("invalidToken")
         }
+
+        set("authUserId", decoded.sub)
+
+        if (synced) {
+          const user = await db.query.users.findFirst({
+            columns: { id: true },
+            where: eq(users.auth0Id, decoded.sub),
+          })
+
+          if (!user) {
+            return fail("userNotSynced")
+          }
+        }
+
+        return next()
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("JWT verification failed:", error)
+
+        return fail("invalidToken")
       }
-
-      return next()
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error("JWT verification failed:", error)
-
-      return c.json({ error: "Invalid token" }, 401)
-    }
-  })
+    },
+  )
 
 export default auth

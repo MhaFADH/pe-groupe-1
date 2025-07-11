@@ -16,6 +16,7 @@ export default {
       colors: {
         primary: {
           DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
           50: "#F3F0FF",
           100: "#E9E2FF",
           200: "#D4C9FF",
@@ -29,6 +30,7 @@ export default {
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
           50: "#FFFBEB",
           100: "#FEF3C7",
           200: "#FDE68A",
@@ -54,6 +56,26 @@ export default {
           700: "#047857",
           800: "#065F46",
           900: "#064E3B",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        danger: {
+          DEFAULT: "hsl(var(--danger))",
+          foreground: "hsl(var(--danger-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        content: {
+          DEFAULT: "hsl(var(--content))",
+          foreground: "hsl(var(--content-foreground))",
         },
       },
     },

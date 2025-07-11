@@ -34,7 +34,6 @@ export type UseInputProps = {
 } & Omit<ComponentPropsWithoutRef<typeof TextInput>, "style"> &
   Pick<InputVariantsProps, "color">
 
-// eslint-disable-next-line max-lines-per-function
 const useInput = ({
   isPassword,
   textContentType,

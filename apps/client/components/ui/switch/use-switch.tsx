@@ -1,18 +1,19 @@
+import { useColorScheme } from "nativewind"
 import {
   type ComponentPropsWithoutRef,
   type Ref,
   useCallback,
   useMemo,
 } from "react"
-import type { View, ViewProps } from "react-native"
-import { type Switch } from "react-native-gesture-handler"
+import type { Switch, View, ViewProps } from "react-native"
 
-import { useTheme } from "@/components/contexts/theme-context"
 import {
   type SwitchVariantsProps,
   switchVariants,
 } from "@/components/ui/switch/variants"
 import type { Text, TextProps } from "@/components/ui/text"
+import cn from "@/utils/cn"
+import { COLORS } from "@/utils/colors"
 
 type SwitchProps = ComponentPropsWithoutRef<typeof Switch>
 
@@ -27,23 +28,23 @@ export type UseSwitchProps = {
   SwitchVariantsProps
 
 const useSwitch = ({
-  color,
+  color = "primary",
   leftTextProps,
   rightTextProps,
   leftText,
   rightText,
-  wrapperProps: { style: wrapperStyle, ...wrapperProps } = {},
+  wrapperProps: { className: wrapperClassname, ...wrapperProps } = {},
   ...props
 }: UseSwitchProps) => {
-  const { tw } = useTheme()
   const slots = useMemo(() => switchVariants({ color }), [color])
+  const { colorScheme = "light" } = useColorScheme()
 
   const getWrapperProps = useCallback<() => ViewProps>(
     () => ({
-      style: [tw.style(slots.wrapper()), wrapperStyle],
+      className: cn(slots.wrapper(), wrapperClassname),
       ...wrapperProps,
     }),
-    [slots, tw, wrapperProps, wrapperStyle],
+    [slots, wrapperProps, wrapperClassname],
   )
 
   const getLeftTextProps = useCallback<() => TextProps>(
@@ -65,15 +66,15 @@ const useSwitch = ({
   const getSwitchProps = useCallback<() => SwitchProps>(
     () => ({
       trackColor: {
-        false: tw.color("card"),
-        true: tw.color(slots.trackColor()),
+        false: COLORS[colorScheme].card.DEFAULT,
+        true: COLORS[colorScheme].danger.DEFAULT,
       },
-      thumbColor: tw.color(slots.thumbColor()),
+      thumbColor: COLORS[colorScheme][color].DEFAULT,
       // eslint-disable-next-line camelcase
-      ios_backgroundColor: tw.color("card"),
+      ios_backgroundColor: COLORS[colorScheme].card.DEFAULT,
       ...props,
     }),
-    [props, slots, tw],
+    [color, colorScheme, props],
   )
 
   return {

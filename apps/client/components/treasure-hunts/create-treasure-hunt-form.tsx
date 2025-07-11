@@ -24,6 +24,8 @@ const CreateTreasureHuntForm = () => {
       worldType: "real",
       numberOfPlayers: 0,
       endDate: null,
+      latitude: 0,
+      longitude: 0,
     },
     resolver: zodResolver(CreateTreasureHunt),
   })
@@ -45,6 +47,18 @@ const CreateTreasureHuntForm = () => {
     >
       <FormField control={control} name="title" label="Title" />
       <FormField control={control} name="description" label="Description" />
+      <FormField
+        control={control}
+        name="latitude"
+        label="Latitude"
+        keyboardType="numeric"
+      />
+      <FormField
+        control={control}
+        name="longitude"
+        label="Longitude"
+        keyboardType="numeric"
+      />
       <FormField
         control={control}
         name="numberOfPlayers"

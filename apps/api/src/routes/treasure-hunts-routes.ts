@@ -18,6 +18,8 @@ const app = new Hono().post(
       numberOfPlayers,
       worldType,
       endDate,
+      latitude,
+      longitude,
     } = req.valid("json")
 
     await db.insert(treasureHunts).values({
@@ -29,9 +31,8 @@ const app = new Hono().post(
       worldType,
       endDate,
       creatorId: authUserId,
-      // Add required fields with placeholder values or extract from req.valid("json")
-      latitude: 0,
-      longitude: 0,
+      latitude,
+      longitude,
     })
 
     return send("Treasure hunt created successfully")

@@ -7,4 +7,6 @@ export const CreateTreasureHunt = z.object({
   isPublic: z.boolean(),
   numberOfPlayers: z.number().min(0),
   worldType: z.enum(["real", "cartographic"]),
+  latitude: z.number(),
+  longitude: z.number(),
 })

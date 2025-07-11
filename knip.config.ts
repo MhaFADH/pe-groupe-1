@@ -8,6 +8,7 @@ const config: KnipConfig = {
   },
   ignore: ["packages/db/src/drizzle/**", "tailwind.config.js"],
   ignoreDependencies: ["@babel/runtime", "@testing-library/*"],
+  ignoreBinaries: ["web", "ios", "android", "dev"],
 }
 
 export default config

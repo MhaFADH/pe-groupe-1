@@ -1,2 +1,6 @@
-export { default as Button, type ButtonProps } from "./button"
-export { default as useButton, type UseButtonProps } from "./use-button"
+import { Platform } from "react-native"
+
+import { ButtonNative } from "./button.native"
+import { ButtonWeb } from "./button.web"
+
+export const Button = Platform.OS === "web" ? ButtonWeb : ButtonNative

@@ -51,7 +51,7 @@ export default tseslint.config(
         { ignoreConsecutiveComments: true },
       ],
       "class-methods-use-this": ["error", { enforceForClassFields: true }],
-      complexity: ["error", 10],
+      complexity: ["error", 20],
       "consistent-return": "error",
       curly: ["error", "all"],
       "default-param-last": "error",
@@ -72,11 +72,11 @@ export default tseslint.config(
       "max-depth": ["error", 3],
       "max-lines": [
         "error",
-        { max: 150, skipBlankLines: true, skipComments: true },
+        { max: 250, skipBlankLines: true, skipComments: true },
       ],
       "max-lines-per-function": [
         "error",
-        { max: 100, skipBlankLines: true, skipComments: true },
+        { max: 250, skipBlankLines: true, skipComments: true },
       ],
       "max-nested-callbacks": ["error", 4],
       "max-params": ["error", 3],

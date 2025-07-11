@@ -9,7 +9,6 @@ import { View } from "react-native"
 import { CreateTreasureHunt } from "@pe/schemas"
 import type { CreateTreasureHuntInput } from "@pe/types"
 
-import { useTheme } from "@/components/contexts/theme-context"
 import { Button } from "@/components/ui/button"
 import FormField from "@/components/ui/input/form-field"
 import { Switch } from "@/components/ui/switch"
@@ -29,7 +28,6 @@ const CreateTreasureHuntForm = () => {
     },
     resolver: zodResolver(CreateTreasureHunt),
   })
-  const { tw } = useTheme()
   const [useEndDate, setUseEndDate] = useState(false)
   const date = watch("endDate") ?? new Date()
 
@@ -42,9 +40,7 @@ const CreateTreasureHuntForm = () => {
   }
 
   return (
-    <View
-      style={tw.style("gap-4 items-center justify-center rounded-lg w-full")}
-    >
+    <View className="gap-4 items-center justify-center rounded-lg w-full">
       <FormField control={control} name="title" label="Title" />
       <FormField control={control} name="description" label="Description" />
       <FormField
@@ -90,9 +86,7 @@ const CreateTreasureHuntForm = () => {
       {useEndDate && (
         <DateTimePicker value={date} mode={"date"} onChange={onChange} />
       )}
-      <Button isText onPress={handleSubmit(onSubmit)}>
-        Submit
-      </Button>
+      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>
   )
 }

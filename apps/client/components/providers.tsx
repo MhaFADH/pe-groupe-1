@@ -20,7 +20,7 @@ const Providers = ({ children }: Props) => (
       <AuthManagerProvider>
         <LanguageProvider>
           <CustomThemeProvider>
-            <GestureHandlerRootView>{children}</GestureHandlerRootView>{" "}
+            <GestureHandlerRootView>{children}</GestureHandlerRootView>
           </CustomThemeProvider>
         </LanguageProvider>
       </AuthManagerProvider>

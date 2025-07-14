@@ -23,12 +23,6 @@
 
     --warning: 37 95% 56%;
     --warning-foreground: 0 0% 100%;
-
-    --card: 240 5% 26%;
-    --card-foreground: 0 0% 0%;
-
-    --content: 240 5% 84%;
-    --content-foreground: 0 0% 0%;
   }
 
   .dark {

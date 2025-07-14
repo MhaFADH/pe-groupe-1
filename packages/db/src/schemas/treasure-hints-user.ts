@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm"
 import { pgTable, primaryKey, uuid } from "drizzle-orm/pg-core"
 
 import { timestamps } from "../helpers"
@@ -16,4 +17,18 @@ export const treasureHintsUser = pgTable(
     ...timestamps,
   },
   (t) => [primaryKey({ columns: [t.userId, t.hintId] })],
+)
+
+export const treasureHintsUserRelations = relations(
+  treasureHintsUser,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [treasureHintsUser.userId],
+      references: [users.id],
+    }),
+    hint: one(treasureHints, {
+      fields: [treasureHintsUser.hintId],
+      references: [treasureHints.id],
+    }),
+  }),
 )

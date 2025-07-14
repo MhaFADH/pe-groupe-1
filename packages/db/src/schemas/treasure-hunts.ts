@@ -10,6 +10,7 @@ import {
 } from "drizzle-orm/pg-core"
 
 import { timestamps } from "../helpers"
+import { treasureHints } from "./treasure-hints"
 import { treasureHuntImages } from "./treasure-hunt-images"
 import { treasureHuntLandmarks } from "./treasure-hunt-landmarks"
 import { treasureHuntParticipants } from "./treasure-hunt-participants"
@@ -64,5 +65,6 @@ export const treasureHuntsRelations = relations(
     landmarks: many(treasureHuntLandmarks),
     participants: many(treasureHuntParticipants),
     images: many(treasureHuntImages),
+    hints: many(treasureHints),
   }),
 )

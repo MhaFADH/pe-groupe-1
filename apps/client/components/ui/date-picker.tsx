@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import { Modal, Platform, Pressable, Text, View } from "react-native"
 import DateTimePicker from "@react-native-community/datetimepicker"
+import React, { useState } from "react"
 import { useTranslation } from "react-i18next"
+import { Modal, Platform, Pressable, Text, View } from "react-native"
 
 type DatePickerProps = {
   label?: string
@@ -30,13 +30,18 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   }
 
   return (
-    <View className={`gap-2 ${className}`}>    {label && (
-      <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
-        {label}
-        {optional && <Text className="text-gray-400 dark:text-gray-500"> (Optional)</Text>}
-      </Text>
-    )}
-      
+    <View className={`gap-2 ${className}`}>
+      {label && (
+        <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          {label}
+          {optional && (
+            <Text className="text-gray-400 dark:text-gray-500">
+              {" "}
+              (Optional)
+            </Text>
+          )}
+        </Text>
+      )}
       <Pressable
         onPress={handleOpenPicker}
         className={`
@@ -45,11 +50,12 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           ${error ? "border-primary/50" : ""}
         `}
       >
-        <Text className={`text-base ${value ? "text-gray-900 dark:text-white" : "text-gray-400 dark:text-gray-500"}`}>
+        <Text
+          className={`text-base ${value ? "text-gray-900 dark:text-white" : "text-gray-400 dark:text-gray-500"}`}
+        >
           {value ? value.toLocaleDateString() : t("selectEndDate")}
         </Text>
       </Pressable>
-
       {showPicker && (
         <Modal transparent animationType="fade">
           <View className="flex-1 justify-center bg-black/50">
@@ -81,7 +87,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                 <Pressable
                   onPress={() => {
                     setShowPicker(false)
-                    
+
                     if (tempDate) {
                       onChange(tempDate)
                     }
@@ -97,7 +103,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           </View>
         </Modal>
       )}
-
       {error && (
         <Text className="text-xs text-primary font-medium">{error}</Text>
       )}

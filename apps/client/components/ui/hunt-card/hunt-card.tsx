@@ -15,6 +15,7 @@ export type Hunt = {
   creatorId: string
   latitude: number
   longitude: number
+  location: string
   image?: string
 }
 
@@ -24,14 +25,14 @@ type HuntCardProps = {
   width?: number
 }
 
-export const HuntCard = ({ hunt, onPress, width = 264 }: HuntCardProps) => {
+export const HuntCard = ({ hunt, onPress, width }: HuntCardProps) => {
   const { getThemeColor } = useThemeColor()
 
   return (
     <TouchableOpacity
-      style={{ width }}
+      style={width ? { width } : null}
       onPress={onPress}
-      className="mr-4"
+      className={width ? "mr-4" : ""}
     >
       <View className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700 h-72">
         <Image
@@ -55,6 +56,19 @@ export const HuntCard = ({ hunt, onPress, width = 264 }: HuntCardProps) => {
                 {hunt.description}
               </Text>
             )}
+            <View className="flex-row items-center mb-3">
+              <Ionicons
+                name="location-outline"
+                size={14}
+                color={getThemeColor("gray-500", "gray-400")}
+              />
+              <Text 
+                className="text-gray-500 dark:text-gray-400 ml-1 text-xs"
+                numberOfLines={1}
+              >
+                {hunt.location}
+              </Text>
+            </View>
           </View>
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center">

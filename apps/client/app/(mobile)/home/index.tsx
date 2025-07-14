@@ -39,6 +39,8 @@ const HomePage = () => {
         creatorId: "user1",
         latitude: 40.7128,
         longitude: -74.0060,
+        location: "New York, NY",
+        image: "https://picsum.photos/300/200?random=1"
       },
       {
         id: "2",
@@ -51,7 +53,10 @@ const HomePage = () => {
         endDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         creatorId: "user2",
         latitude: 40.7614,
-        longitude: -73.9776      },
+        longitude: -73.9776,
+        location: "Manhattan, NY",
+        image: "https://picsum.photos/300/200?random=2"
+      },
       {
         id: "3",
         title: "Virtual Adventure",
@@ -64,6 +69,8 @@ const HomePage = () => {
         creatorId: "user3",
         latitude: 40.7505,
         longitude: -73.9934,
+        location: "Times Square, NY",
+        image: "https://picsum.photos/300/200?random=3"
       }
     ]
         
@@ -91,6 +98,7 @@ const HomePage = () => {
               key={hunt.id}
               hunt={hunt}
               onPress={() => router.replace("/explore")}
+              width={264}
             />
           ))}
         </ScrollView>

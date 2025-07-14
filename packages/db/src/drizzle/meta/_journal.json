@@ -8,6 +8,13 @@
       "when": 1751440898761,
       "tag": "0000_aspiring_jean_grey",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752514240679,
+      "tag": "0001_clumsy_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }

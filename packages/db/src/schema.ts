@@ -1,6 +1,8 @@
 import * as contacts from "./schemas/contacts"
 import * as images from "./schemas/images"
 import * as mfaTokens from "./schemas/mfa-tokens"
+import * as treasureHints from "./schemas/treasure-hints"
+import * as treasureHintsUser from "./schemas/treasure-hints-user"
 import * as treasureHuntImages from "./schemas/treasure-hunt-images"
 import * as treasureHuntLandmarks from "./schemas/treasure-hunt-landmarks"
 import * as treasureHuntParticipants from "./schemas/treasure-hunt-participants"
@@ -21,6 +23,8 @@ export const schema = {
   ...treasureHuntSteps,
   ...treasureHuntWinnings,
   ...treasureHunts,
+  ...treasureHints,
+  ...treasureHintsUser,
   ...userWinnings,
   ...users,
   ...winnings,

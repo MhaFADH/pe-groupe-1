@@ -20,7 +20,6 @@ const CreateTreasureHuntForm = () => {
       title: "",
       description: "",
       isPublic: true,
-      worldType: "real",
       numberOfPlayers: 0,
       endDate: null,
       latitude: 0,
@@ -67,14 +66,7 @@ const CreateTreasureHuntForm = () => {
         leftText="Private"
         rightText="Public"
       />
-      <Switch
-        onValueChange={(value) =>
-          setValue("worldType", value ? "cartographic" : "real")
-        }
-        value={watch("worldType") === "cartographic"}
-        leftText="Real"
-        rightText="Cartographic"
-      />
+
       <Switch
         onValueChange={(value) => {
           setUseEndDate(value)

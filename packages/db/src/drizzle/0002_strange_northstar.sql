@@ -1,0 +1,2 @@
+ALTER TABLE "treasure_hints" ADD COLUMN "treasure_hunt_id" uuid NOT NULL;--> statement-breakpoint
+ALTER TABLE "treasure_hints" ADD CONSTRAINT "treasure_hints_treasure_hunt_id_treasure_hunts_id_fk" FOREIGN KEY ("treasure_hunt_id") REFERENCES "public"."treasure_hunts"("id") ON DELETE no action ON UPDATE no action;

@@ -3,7 +3,6 @@ import {
   boolean,
   doublePrecision,
   integer,
-  pgEnum,
   pgTable,
   text,
   timestamp,
@@ -11,6 +10,7 @@ import {
 } from "drizzle-orm/pg-core"
 
 import { timestamps } from "../helpers"
+import { treasureHints } from "./treasure-hints"
 import { treasureHuntImages } from "./treasure-hunt-images"
 import { treasureHuntLandmarks } from "./treasure-hunt-landmarks"
 import { treasureHuntParticipants } from "./treasure-hunt-participants"
@@ -18,13 +18,10 @@ import { treasureHuntSteps } from "./treasure-hunt-steps"
 import { treasureHuntWinnings } from "./treasure-hunt-winnings"
 import { users } from "./users"
 
-export const worldTypeEnum = pgEnum("world_type", ["real", "cartographic"])
-
 export const treasureHunts = pgTable("treasure_hunts", {
   id: uuid().defaultRandom().primaryKey(),
   title: text().notNull(),
   description: text(),
-  worldType: worldTypeEnum().notNull(),
   latitude: doublePrecision().notNull(),
   longitude: doublePrecision().notNull(),
   // If null there is no limit of participants
@@ -43,6 +40,7 @@ export const treasureHunts = pgTable("treasure_hunts", {
   ...timestamps,
   // Only users who are 'players' can be added
   winnerId: uuid().references(() => users.id),
+  location: text().notNull(),
   // Only users who are 'organizers' or 'partners' can be added
   creatorId: uuid()
     .references(() => users.id)
@@ -67,5 +65,6 @@ export const treasureHuntsRelations = relations(
     landmarks: many(treasureHuntLandmarks),
     participants: many(treasureHuntParticipants),
     images: many(treasureHuntImages),
+    hints: many(treasureHints),
   }),
 )

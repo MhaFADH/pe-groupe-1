@@ -6,7 +6,9 @@ import { CreateTreasureHuntSchema } from "@pe/schemas"
 
 import auth from "../middleware/auth"
 
-const app = new Hono().post(
+const treasureHuntsRoutes = new Hono()
+
+treasureHuntsRoutes.post(
   "/",
   auth(),
   zValidator("json", CreateTreasureHuntSchema),
@@ -39,4 +41,22 @@ const app = new Hono().post(
   },
 )
 
-export default app
+treasureHuntsRoutes.get(
+  "/",
+  auth(),
+  async ({ var: { send, db } }) => {
+    const hunts = await db.query.treasureHunts.findMany({
+      with: {
+        creator: true,
+        images: true,
+        
+      },
+    })
+
+    return send(hunts)
+  },
+)
+
+
+
+export default treasureHuntsRoutes

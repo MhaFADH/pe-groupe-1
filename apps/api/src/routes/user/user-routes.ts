@@ -5,7 +5,7 @@ import { eq, users } from "@pe/db"
 
 import auth from "../../middleware/auth.js"
 import auth0ManagementClient from "../../services/userManagementClient.js"
-import { type Auth0User } from "./../../types/auth0"
+import { type Auth0User } from "../../types/auth0.js"
 
 const userRoute = new Hono()
 

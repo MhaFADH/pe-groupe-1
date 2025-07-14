@@ -9,7 +9,6 @@ import {
   uuid,
 } from "drizzle-orm/pg-core"
 
-import { timestamps } from "../helpers"
 import { treasureHints } from "./treasure-hints"
 import { treasureHuntImages } from "./treasure-hunt-images"
 import { treasureHuntLandmarks } from "./treasure-hunt-landmarks"
@@ -37,7 +36,6 @@ export const treasureHunts = pgTable("treasure_hunts", {
   // If null time is unlimited
   endDate: timestamp(),
   grade: integer(),
-  ...timestamps,
   // Only users who are 'players' can be added
   winnerId: uuid().references(() => users.id),
   location: text().notNull(),

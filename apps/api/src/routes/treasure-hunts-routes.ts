@@ -41,22 +41,21 @@ treasureHuntsRoutes.post(
   },
 )
 
-treasureHuntsRoutes.get(
-  "/",
-  auth(),
-  async ({ var: { send, db } }) => {
-    const hunts = await db.query.treasureHunts.findMany({
-      with: {
-        creator: true,
-        images: true,
-        
+treasureHuntsRoutes.get("/", async ({ var: { send, db } }) => {
+  const hunts = await db.query.treasureHunts.findMany({
+    with: {
+      winner: true,
+      images: true,
+      hints: {
+        with: {
+          users: true,
+        },
       },
-    })
+      participants: true,
+    },
+  })
 
-    return send(hunts)
-  },
-)
-
-
+  return send(hunts)
+})
 
 export default treasureHuntsRoutes

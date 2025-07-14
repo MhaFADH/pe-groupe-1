@@ -8,6 +8,8 @@ export { treasureHuntParticipants } from "./src/schemas/treasure-hunt-participan
 export { treasureHuntSteps } from "./src/schemas/treasure-hunt-steps"
 export { treasureHuntWinnings } from "./src/schemas/treasure-hunt-winnings"
 export { treasureHunts } from "./src/schemas/treasure-hunts"
+export { treasureHints } from "./src/schemas/treasure-hints"
+export { treasureHintsUser } from "./src/schemas/treasure-hints-user"
 export { userWinnings } from "./src/schemas/user-winnings"
 export { users } from "./src/schemas/users"
 export { winnings } from "./src/schemas/winnings"

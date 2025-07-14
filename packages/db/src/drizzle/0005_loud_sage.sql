@@ -1,0 +1,1 @@
+ALTER TABLE "treasure_hints_user" DROP COLUMN "created_at";

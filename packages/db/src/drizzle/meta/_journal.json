@@ -22,6 +22,27 @@
       "when": 1752515018079,
       "tag": "0002_strange_northstar",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1752522541473,
+      "tag": "0003_sleepy_mantis",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1752522718850,
+      "tag": "0004_silent_genesis",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1752522930721,
+      "tag": "0005_loud_sage",
+      "breakpoints": true
     }
   ]
 }

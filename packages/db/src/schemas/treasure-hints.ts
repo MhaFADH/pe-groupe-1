@@ -18,7 +18,7 @@ export const treasureHintsRelations = relations(
   ({ many, one }) => ({
     users: many(treasureHintsUser),
     hunt: one(treasureHunts, {
-      fields: [treasureHints.id],
+      fields: [treasureHints.treasureHuntId],
       references: [treasureHunts.id],
     }),
   }),

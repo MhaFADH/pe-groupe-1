@@ -16,7 +16,6 @@ const app = new Hono().post(
       description,
       isPublic,
       numberOfPlayers,
-      worldType,
       endDate,
       latitude,
       longitude,
@@ -28,11 +27,12 @@ const app = new Hono().post(
       isPrivate: !isPublic,
       startDate: new Date(),
       maxParticipants: numberOfPlayers,
-      worldType,
       endDate,
       creatorId: authUserId,
       latitude,
       longitude,
+      // Placeholder for location, to be replaced with actual logic
+      location: "PLACEHOLDER",
     })
 
     return send("Treasure hunt created successfully")

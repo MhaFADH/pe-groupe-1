@@ -49,6 +49,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "expo-system-ui",
     "expo-updates",
     "expo-secure-store",
+    "@reactvision/react-viro",
   ],
   experiments: {
     typedRoutes: true,

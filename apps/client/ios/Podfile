@@ -43,6 +43,9 @@ target 'client' do
     :app_path => "#{Pod::Config.instance.installation_root}/..",
     :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
   )
+  pod 'ViroReact', :path => '../node_modules/@reactvision/react-viro/ios'
+  pod 'ViroKit', :path => '../node_modules/@reactvision/react-viro/ios/dist/ViroRenderer/'
+
 
   post_install do |installer|
     react_native_post_install(

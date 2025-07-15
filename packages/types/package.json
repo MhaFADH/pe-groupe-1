@@ -18,6 +18,7 @@
     "typescript": "catalog:"
   },
   "dependencies": {
+    "@pe/db": "workspace:*",
     "zod": "^3.24.3",
     "@pe/schemas": "workspace:*"
   }

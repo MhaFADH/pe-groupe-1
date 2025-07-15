@@ -55,6 +55,9 @@ importers:
       '@pe/schemas':
         specifier: workspace:*
         version: link:../../packages/schemas
+      '@pe/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@types/jsonwebtoken':
         specifier: ^9.0.9
         version: 9.0.10
@@ -332,6 +335,9 @@ importers:
 
   packages/types:
     dependencies:
+      '@pe/db':
+        specifier: workspace:*
+        version: link:../db
       '@pe/schemas':
         specifier: workspace:*
         version: link:../schemas

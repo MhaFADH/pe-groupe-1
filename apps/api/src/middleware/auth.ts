@@ -1,12 +1,14 @@
 import { createMiddleware } from "hono/factory"
 
 import { eq, users } from "@pe/db"
+import { type UserType } from "@pe/types"
 
 import { verifyToken } from "../lib/jwks.js"
 
 type Env = {
   Variables: {
     authUserId: string
+    user?: UserType
   }
 }
 
@@ -31,13 +33,14 @@ const auth = (synced = true) =>
 
         if (synced) {
           const user = await db.query.users.findFirst({
-            columns: { id: true },
             where: eq(users.auth0Id, decoded.sub),
           })
 
           if (!user) {
             return fail("userNotSynced")
           }
+
+          set("user", user)
         }
 
         return next()

@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator"
 import { Hono } from "hono"
+import { logger } from "hono/logger"
 
 import { treasureHunts } from "@pe/db"
 import { CreateTreasureHuntSchema } from "@pe/schemas"
@@ -41,21 +42,31 @@ treasureHuntsRoutes.post(
   },
 )
 
-treasureHuntsRoutes.get("/", async ({ var: { send, db } }) => {
-  const hunts = await db.query.treasureHunts.findMany({
-    with: {
-      winner: true,
-      images: true,
-      hints: {
-        with: {
-          users: true,
+treasureHuntsRoutes.get(
+  "/",
+  auth(),
+  logger(),
+  async ({ var: { send, db, user } }) => {
+    const allHunts = await db.query.treasureHunts.findMany({
+      with: {
+        winner: true,
+        images: true,
+        hints: {
+          with: {
+            users: true,
+          },
         },
+        participants: true,
       },
-      participants: true,
-    },
-  })
+    })
 
-  return send(hunts)
-})
+    const currentUserHunt =
+      allHunts.find((hunt) =>
+        hunt.participants.some((p) => p.userId === user?.id),
+      ) ?? null
+
+    return send({ allHunts, currentUserHunt })
+  },
+)
 
 export default treasureHuntsRoutes

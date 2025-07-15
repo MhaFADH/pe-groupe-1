@@ -26,7 +26,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
 }) => {
   const handleChange = (text: string) => {
     const numValue = parseInt(text, 10)
-    
+
     if (!isNaN(numValue) && numValue >= min && numValue <= max) {
       onChange(numValue)
     }

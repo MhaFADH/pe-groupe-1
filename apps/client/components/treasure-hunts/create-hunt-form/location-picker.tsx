@@ -1,10 +1,19 @@
-import React, { useEffect, useState, useCallback } from "react"
-import { View, Text, PermissionsAndroid, Platform, TextInput, Pressable, Alert } from "react-native"
-import MapView, { type MapPressEvent, Marker } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
+import React, { useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import {
+  Alert,
+  PermissionsAndroid,
+  Platform,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+} from "react-native"
+import MapView, { type MapPressEvent, Marker } from "react-native-maps"
 
 import { useTheme } from "@/components/contexts"
+
 import { darkMapStyle } from "./map-styles"
 
 type LocationPickerProps = {
@@ -30,40 +39,38 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
     if (Platform.OS === "android") {
       try {
         const permission = PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-        
+
         if (!permission) {
           return false
         }
-        
-        const granted = await PermissionsAndroid.request(
-          permission,
-          {
-            title: "Location Permission",
-            message: "This app needs access to location to show your current position.",
-            buttonNeutral: "Ask Me Later",
-            buttonNegative: "Cancel",
-            buttonPositive: "OK",
-          },
-        )
-        
+
+        const granted = await PermissionsAndroid.request(permission, {
+          title: "Location Permission",
+          message:
+            "This app needs access to location to show your current position.",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK",
+        })
+
         return granted === PermissionsAndroid.RESULTS.GRANTED
       } catch (err) {
         // eslint-disable-next-line no-console
         console.warn(err)
-        
+
         return false
       }
     }
-    
+
     return true
   }
 
   const getCurrentLocation = useCallback(async () => {
     const hasPermission = await requestLocationPermission()
-    
+
     if (!hasPermission) {
       setLoading(false)
-      
+
       return
     }
 
@@ -79,11 +86,11 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
         // Silently fail - just set loading to false and keep default location
         setLoading(false)
       },
-      { 
-        enableHighAccuracy: true, 
-        timeout: 15000, 
-        maximumAge: 10000 
-      }
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 10000,
+      },
     )
   }, [onLocationSelect])
 
@@ -107,10 +114,10 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
       // Use Nominatim OpenStreetMap geocoding service (free)
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-          searchQuery
-        )}&limit=1`
+          searchQuery,
+        )}&limit=1`,
       )
-      const data = await response.json() as {
+      const data = (await response.json()) as {
         lat: string
         lon: string
         display_name: string
@@ -118,27 +125,21 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
 
       if (data.length > 0) {
         const [result] = data
-        
+
         if (result) {
           const lat = parseFloat(result.lat)
           const lng = parseFloat(result.lon)
-          
+
           onLocationSelect(lat, lng)
           setSearchQuery("")
         }
       } else {
-        Alert.alert(
-          t("searchLocationError"),
-          t("searchLocationNotFound")
-        )
+        Alert.alert(t("searchLocationError"), t("searchLocationNotFound"))
       }
     } catch (searchError) {
       // eslint-disable-next-line no-console
       console.warn("Search error:", searchError)
-      Alert.alert(
-        t("searchLocationError"),
-        t("searchLocationFailed")
-      )
+      Alert.alert(t("searchLocationError"), t("searchLocationFailed"))
     } finally {
       setIsSearching(false)
     }
@@ -172,7 +173,10 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
       </View>
 
       {/* Map */}
-      <View className="rounded-xl overflow-hidden" style={{ backgroundColor: "transparent" }}>
+      <View
+        className="rounded-xl overflow-hidden"
+        style={{ backgroundColor: "transparent" }}
+      >
         <MapView
           style={{ height: 176, width: "100%" }}
           region={{
@@ -208,7 +212,7 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
             {latitude.toFixed(6)}
           </Text>
         </View>
-        
+
         <View className="flex-1 bg-white dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-600">
           <Text className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
             {t("longitude")}

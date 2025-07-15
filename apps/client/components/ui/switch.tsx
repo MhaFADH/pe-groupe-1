@@ -16,10 +16,12 @@ export const Switch: React.FC<SwitchProps> = ({
   onValueChange,
   className = "",
 }) => (
-  <View className={`
+  <View
+    className={`
     flex-row items-center justify-between bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-600
     ${className}
-  `}>
+  `}
+  >
     <View className="flex-1 pr-4">
       {label && (
         <Text className="text-base font-medium text-gray-900 dark:text-white mb-1">

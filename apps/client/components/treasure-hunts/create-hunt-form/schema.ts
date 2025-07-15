@@ -5,7 +5,6 @@ export const createHuntFormSchema = z.object({
   description: z.string().max(500, "descriptionMaxLength").optional(),
   isPublic: z.boolean(),
   maxParticipants: z.number().min(1, "maxParticipantsMin"),
-  worldType: z.enum(["real", "cartographic"]),
   endDate: z.date().nullable().optional(),
   latitude: z.number(),
   longitude: z.number(),
@@ -18,7 +17,6 @@ export const defaultFormValues: CreateHuntFormData = {
   description: "",
   isPublic: true,
   maxParticipants: 10,
-  worldType: "real",
   endDate: null,
   // Default to San Francisco
   latitude: 37.78825,

@@ -3,16 +3,15 @@ import { useRouter } from "expo-router"
 import React from "react"
 import { Controller, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
-import { Alert, ScrollView, Text, View } from "react-native"
+import { ScrollView, Text, View } from "react-native"
 
-import { useAuthManager } from "@/components/contexts"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { DatePicker } from "@/components/ui/date-picker"
 import { Input } from "@/components/ui/input"
 import { NumberInput } from "@/components/ui/number-input"
-import { SegmentedControl } from "@/components/ui/segmented-control"
 import { Switch } from "@/components/ui/switch"
+import apiClient from "@/services/api/apiClient"
 
 import { LocationPicker } from "./location-picker"
 import {
@@ -24,7 +23,6 @@ import {
 export const CreateHuntForm: React.FC = () => {
   const { t } = useTranslation()
   const router = useRouter()
-  const { user } = useAuthManager()
 
   const {
     control,
@@ -39,34 +37,13 @@ export const CreateHuntForm: React.FC = () => {
 
   const watchedLocation = watch(["latitude", "longitude"])
 
-  const onSubmit = (data: CreateHuntFormData) => {
+  const onSubmit = async (data: CreateHuntFormData) => {
     try {
-      const huntData = {
-        title: data.title,
-        description: data.description ?? "",
-        isPrivate: !data.isPublic,
-        startDate: new Date(),
-        maxParticipants: data.maxParticipants,
-        worldType: data.worldType,
-        endDate: data.endDate,
-        creatorId: user?.sub ?? "",
-        latitude: data.latitude,
-        longitude: data.longitude,
-      }
-
-      // eslint-disable-next-line no-console
-      console.log("Hunt created:", huntData)
-
-      Alert.alert(t("createHunt"), "Hunt created successfully! (Mock data)", [
-        {
-          text: "OK",
-          onPress: () => router.back(),
-        },
-      ])
+      await apiClient.post("/treasure-hunts", data)
+      router.back()
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Error creating hunt:", error)
-      Alert.alert("Error", "Failed to create hunt")
     }
   }
 
@@ -74,11 +51,6 @@ export const CreateHuntForm: React.FC = () => {
     setValue("latitude", latitude)
     setValue("longitude", longitude)
   }
-
-  const worldTypeOptions = [
-    { label: t("worldTypeReal"), value: "real" },
-    { label: t("worldTypeCartographic"), value: "cartographic" },
-  ]
 
   return (
     <View className="flex-1 bg-white dark:bg-gray-900">
@@ -173,21 +145,6 @@ export const CreateHuntForm: React.FC = () => {
                     min={1}
                     max={100}
                     required
-                  />
-                )}
-              />
-            </View>
-
-            <View className="mt-4">
-              <Controller
-                control={control}
-                name="worldType"
-                render={({ field: { onChange, value } }) => (
-                  <SegmentedControl
-                    label={t("worldType")}
-                    options={worldTypeOptions}
-                    value={value}
-                    onChange={onChange}
                   />
                 )}
               />

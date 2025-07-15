@@ -42,19 +42,6 @@ export const HuntCard = ({ hunt, onPress, width }: HuntCardProps) => {
                 {hunt.description}
               </Text>
             )}
-            <View className="flex-row items-center mb-3">
-              <Ionicons
-                name="location-outline"
-                size={14}
-                color={getThemeColor("gray-500", "gray-400")}
-              />
-              <Text
-                className="text-gray-500 dark:text-gray-400 ml-1 text-xs"
-                numberOfLines={1}
-              >
-                {hunt.location}
-              </Text>
-            </View>
           </View>
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center">
@@ -65,6 +52,19 @@ export const HuntCard = ({ hunt, onPress, width }: HuntCardProps) => {
               />
               <Text className="text-gray-500 dark:text-gray-400 ml-1 text-xs">
                 {hunt.maxParticipants}
+              </Text>
+            </View>
+            <View className="flex-row items-center">
+              <Ionicons
+                name="location-outline"
+                size={14}
+                color={getThemeColor("gray-500", "gray-400")}
+              />
+              <Text
+                className="text-gray-500 dark:text-gray-400 ml-1 text-xs"
+                numberOfLines={1}
+              >
+                {hunt.location}
               </Text>
             </View>
           </View>

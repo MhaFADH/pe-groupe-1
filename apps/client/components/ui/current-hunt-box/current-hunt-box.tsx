@@ -4,12 +4,12 @@ import { t } from "i18next"
 import { Text, TouchableOpacity, View } from "react-native"
 import Animated, { FadeIn } from "react-native-reanimated"
 
+import { type TreasureHuntType } from "@pe/types"
+
 import { useThemeColor } from "@/utils/colors"
 
-import type { Hunt } from "../hunt-card/hunt-card"
-
 type CurrentHuntBoxProps = {
-  currentHunt: Hunt | null
+  currentHunt: TreasureHuntType | null
 }
 
 export const CurrentHuntBox = ({ currentHunt }: CurrentHuntBoxProps) => {
@@ -37,7 +37,7 @@ export const CurrentHuntBox = ({ currentHunt }: CurrentHuntBoxProps) => {
             color={getThemeColor("gray-500", "gray-400")}
           />
           <Text className="text-gray-500 dark:text-gray-400 ml-2">
-            {t("maxParticipants", { count: currentHunt.maxParticipants })}
+            {`${t("maxParticipants")} ${currentHunt.maxParticipants}`}
           </Text>
         </View>
         <TouchableOpacity

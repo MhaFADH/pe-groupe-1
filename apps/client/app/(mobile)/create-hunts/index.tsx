@@ -1,4 +1,3 @@
-import React from "react"
 import { View } from "react-native"
 
 import { CreateHuntForm } from "@/components/treasure-hunts/create-hunt-form"

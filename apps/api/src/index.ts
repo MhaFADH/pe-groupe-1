@@ -22,7 +22,6 @@ app.use(cors(), (ctx, next) => {
 
 app.get("/", (c) => c.text("Hello Hono!"))
 
-
 app.get("/", (c) =>
   c.json({
     message: "PE Groupe 1 API",
@@ -44,7 +43,6 @@ app.get("/test-auth", auth(), (c) => {
 
 app.route("/user", userRoute)
 app.route("/treasure-hunts", treasureHuntsRoutes)
-
 
 serve(
   {

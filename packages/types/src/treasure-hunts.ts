@@ -9,9 +9,10 @@ import type {
   treasureHuntSteps,
   treasureHuntWinnings,
   treasureHunts,
-  users,
 } from "@pe/db"
 import type { CreateTreasureHuntSchema } from "@pe/schemas"
+
+import { type UserType } from "./user"
 
 export type TreasureHuntType = typeof treasureHunts.$inferSelect
 export type TreasureHintUserType = typeof treasureHintsUser.$inferSelect
@@ -22,7 +23,6 @@ export type TreasureHuntImageType = typeof treasureHuntImages.$inferSelect
 
 export type CreateTreasureHunt = z.infer<typeof CreateTreasureHuntSchema>
 
-export type UserType = typeof users.$inferSelect
 export type TreasureHuntWinningsType = typeof treasureHuntWinnings.$inferSelect
 export type TreasureHuntStepType = typeof treasureHuntSteps.$inferSelect
 export type TreasureHuntLandmarkType = typeof treasureHuntLandmarks.$inferSelect

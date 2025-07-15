@@ -24,7 +24,6 @@ const defaultFormValues: CreateTreasureHunt = {
   isPublic: true,
   maxParticipants: 10,
   endDate: null,
-  // Default to San Francisco
   latitude: 37.78825,
   longitude: -122.4324,
 }
@@ -69,19 +68,7 @@ export const CreateHuntForm: React.FC = () => {
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
       >
-        {/* Header */}
-        <View className="items-center mb-8">
-          <Text className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            {t("createHunt")}
-          </Text>
-          <Text className="text-gray-600 dark:text-gray-400 text-center">
-            Create your treasure hunt
-          </Text>
-        </View>
-
-        {/* Form Content */}
         <View className="gap-4">
-          {/* Basic Info */}
           <Card>
             <Controller
               control={control}
@@ -121,7 +108,6 @@ export const CreateHuntForm: React.FC = () => {
             </View>
           </Card>
 
-          {/* Settings */}
           <Card>
             <Controller
               control={control}
@@ -178,7 +164,6 @@ export const CreateHuntForm: React.FC = () => {
             </View>
           </Card>
 
-          {/* Location */}
           <Card>
             <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
               {t("location")}
@@ -191,7 +176,6 @@ export const CreateHuntForm: React.FC = () => {
             />
           </Card>
 
-          {/* Actions */}
           <View className="gap-3 mt-4">
             <Button
               title={t("createHuntButton")}

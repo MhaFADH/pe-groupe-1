@@ -6,8 +6,9 @@ import Animated, { FadeIn } from "react-native-reanimated"
 
 import { type FullTreasureHuntType } from "@pe/types"
 
-import { ErrorDisplay, LoadingIndicator } from "@/components"
+import { LoadingIndicator } from "@/components"
 import { useAuthManager } from "@/components/contexts"
+import { ErrorDisplay } from "@/components/ui/error-display"
 import {
   HintsSection,
   HuntActions,

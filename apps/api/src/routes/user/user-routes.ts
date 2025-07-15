@@ -3,9 +3,9 @@ import { logger } from "hono/logger"
 
 import { eq, users } from "@pe/db"
 
-import auth from "../../middleware/auth.js"
-import auth0ManagementClient from "../../services/userManagementClient.js"
-import { type Auth0User } from "../../types/auth0.js"
+import auth from "../../middleware/auth"
+import auth0ManagementClient from "../../services/userManagementClient"
+import { type Auth0User } from "../../types/auth0"
 
 const userRoute = new Hono()
 

@@ -33,13 +33,14 @@ const resources = {
       availableHunts: "Available Hunts",
       yourCurrentHunt: "Your Current Hunt",
       joined: "Joined",
-      maxParticipants: "Max {{count}} participants",
+      maxParticipants: "Max participants",
       location: "Location",
       unknownLocation: "Unknown Location",
       noHuntsAvailable: "No hunts available",
       noHuntsMessage:
         "Be the first to create an adventure or check back later for new hunts!",
       createHunt: "Create Hunt",
+      "create-hunts/index": "Create Hunt",
 
       home: "Home",
       explore: "Explore",
@@ -151,7 +152,6 @@ const resources = {
       copyright: "© 2025 Lootopia. All rights reserved.",
 
       // Create Hunt Form
-      createHunt: "Create Hunt",
       huntTitle: "Hunt Title",
       huntTitlePlaceholder: "Enter a captivating title",
       huntDescription: "Description",
@@ -159,7 +159,6 @@ const resources = {
       huntSettings: "Hunt Settings",
       isPublic: "Public Hunt",
       isPublicDescription: "Allow anyone to join",
-      maxParticipants: "Max Participants",
       maxParticipantsPlaceholder: "Enter maximum number",
       worldType: "World Type",
       worldTypeReal: "Real World",
@@ -167,7 +166,6 @@ const resources = {
       endDate: "End Date",
       endDateOptional: "Optional",
       selectEndDate: "Select end date",
-      location: "Location",
       selectLocation: "Select Location",
       tapToSelectLocation: "Tap on the map to select a location",
       coordinates: "Coordinates",
@@ -178,7 +176,6 @@ const resources = {
       searchLocationNotFound: "No location found for this search",
       searchLocationFailed: "Failed to search location. Please try again.",
       createHuntButton: "Create Hunt",
-      cancel: "Cancel",
       close: "Close",
       clear: "Clear",
       validate: "Validate",
@@ -223,13 +220,13 @@ const resources = {
       availableHunts: "Chasses Disponibles",
       yourCurrentHunt: "Votre Chasse Actuelle",
       joined: "Rejoint",
-      maxParticipants: "Max {{count}} participants",
       location: "Localisation",
       unknownLocation: "Localisation Inconnue",
       noHuntsAvailable: "Aucune chasse disponible",
       noHuntsMessage:
         "Soyez le premier à créer une aventure ou revenez plus tard pour de nouvelles chasses !",
       createHunt: "Créer une Chasse",
+      "create-hunts/index": "Créer une Chasse",
 
       home: "Accueil",
       explore: "Explorer",
@@ -349,7 +346,6 @@ const resources = {
       copyright: "© 2025 Lootopia. Tous droits réservés.",
 
       // Create Hunt Form
-      createHunt: "Créer une Chasse",
       huntTitle: "Titre de la Chasse",
       huntTitlePlaceholder: "Entrez un titre captivant",
       huntDescription: "Description",
@@ -365,7 +361,6 @@ const resources = {
       endDate: "Date de Fin",
       endDateOptional: "Optionnel",
       selectEndDate: "Sélectionner la date de fin",
-      location: "Localisation",
       selectLocation: "Sélectionner la Localisation",
       tapToSelectLocation:
         "Appuyez sur la carte pour sélectionner un emplacement",
@@ -377,7 +372,6 @@ const resources = {
       searchLocationNotFound: "Aucun lieu trouvé pour cette recherche",
       searchLocationFailed: "Échec de la recherche. Veuillez réessayer.",
       createHuntButton: "Créer la Chasse",
-      cancel: "Annuler",
       close: "Fermer",
       clear: "Effacer",
       validate: "Valider",

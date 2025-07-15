@@ -7,8 +7,9 @@ import Animated, { FadeIn } from "react-native-reanimated"
 
 import type { FullTreasureHuntType, TreasureHuntType } from "@pe/types"
 
-import { ErrorDisplay, HuntCard, LoadingIndicator } from "@/components"
+import { HuntCard, LoadingIndicator } from "@/components"
 import { useAuthManager } from "@/components/contexts"
+import { ErrorDisplay } from "@/components/ui/error-display"
 import apiClient from "@/services/api/apiClient"
 import { type TreasureHuntFetchResponse } from "@/types/api-calls"
 import { useThemeColor } from "@/utils/colors"

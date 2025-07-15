@@ -38,7 +38,9 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({
       id: "explore",
       title: t("explore", { defaultValue: "Explore" }),
       icon: "map",
-      description: t("exploreHuntsDescription", { defaultValue: "Discover new treasure hunts" }),
+      description: t("exploreHuntsDescription", {
+        defaultValue: "Discover new treasure hunts",
+      }),
     },
     {
       id: "create-hunts",

@@ -24,25 +24,28 @@ const resources = {
       welcomeHome: "Welcome to Lootopia",
       contentComingSoon: "Main content area - Coming soon!",
       backToLogin: "Back to Login",
-      
+
       readyForAdventure: "Ready for your next adventure?",
       currentHunt: "Current Hunt",
       resumeHunt: "Resume Hunt",
       pleaseJoinHunt: "Please join a hunt",
       exploreHunts: "Explore Hunts",
       availableHunts: "Available Hunts",
+      yourCurrentHunt: "Your Current Hunt",
+      joined: "Joined",
       maxParticipants: "Max {{count}} participants",
       location: "Location",
       unknownLocation: "Unknown Location",
       noHuntsAvailable: "No hunts available",
-      noHuntsMessage: "Be the first to create an adventure or check back later for new hunts!",
+      noHuntsMessage:
+        "Be the first to create an adventure or check back later for new hunts!",
       createHunt: "Create Hunt",
 
       home: "Home",
       explore: "Explore",
       profile: "Profile",
       settings: "Settings",
-      
+
       dashboard: "Dashboard",
       yourProfile: "Your Profile",
       appSettings: "App Settings",
@@ -50,12 +53,13 @@ const resources = {
 
       exploreComingSoon: "Explore new adventures - Coming soon!",
       profileComingSoon: "Your adventure profile - Coming soon!",
-      
+
       joinHunt: "Join Hunt",
       leaveHunt: "Leave Hunt",
       playHunt: "Play Hunt",
       huntDetails: "Hunt Details",
       participants: "Participants",
+      ends: "Ends",
       hints: "Hints",
       hintsFound: "Hints Found",
       noHintsYet: "No hints found yet",
@@ -210,25 +214,28 @@ const resources = {
       welcomeHome: "Bienvenue à Lootopia",
       contentComingSoon: "Zone de contenu principal - Bientôt disponible !",
       backToLogin: "Retour à la Connexion",
-      
+
       readyForAdventure: "Prêt pour votre prochaine aventure ?",
       currentHunt: "Chasse Actuelle",
       resumeHunt: "Reprendre la Chasse",
       pleaseJoinHunt: "Veuillez rejoindre une chasse",
       exploreHunts: "Explorer les Chasses",
       availableHunts: "Chasses Disponibles",
+      yourCurrentHunt: "Votre Chasse Actuelle",
+      joined: "Rejoint",
       maxParticipants: "Max {{count}} participants",
       location: "Localisation",
       unknownLocation: "Localisation Inconnue",
       noHuntsAvailable: "Aucune chasse disponible",
-      noHuntsMessage: "Soyez le premier à créer une aventure ou revenez plus tard pour de nouvelles chasses !",
+      noHuntsMessage:
+        "Soyez le premier à créer une aventure ou revenez plus tard pour de nouvelles chasses !",
       createHunt: "Créer une Chasse",
 
       home: "Accueil",
       explore: "Explorer",
       profile: "Profil",
       settings: "Paramètres",
-      
+
       dashboard: "Tableau de Bord",
       yourProfile: "Votre Profil",
       appSettings: "Paramètres de l'App",
@@ -237,18 +244,20 @@ const resources = {
       exploreComingSoon:
         "Explorez de nouvelles aventures - Bientôt disponible !",
       profileComingSoon: "Votre profil d'aventure - Bientôt disponible !",
-      
+
       joinHunt: "Rejoindre la Chasse",
       leaveHunt: "Quitter la Chasse",
       playHunt: "Jouer la Chasse",
       huntDetails: "Détails de la Chasse",
       participants: "Participants",
+      ends: "Se termine le",
       hints: "Indices",
       hintsFound: "Indices Trouvés",
       noHintsYet: "Aucun indice trouvé pour l'instant",
       startExploring: "Commencez à explorer pour trouver des indices !",
       alreadyJoinedHunt: "Vous êtes déjà dans une chasse",
-      mustLeaveCurrentHunt: "Quittez votre chasse actuelle pour en rejoindre une nouvelle",
+      mustLeaveCurrentHunt:
+        "Quittez votre chasse actuelle pour en rejoindre une nouvelle",
       viewCurrentHunt: "Voir la Chasse Actuelle",
       cancel: "Annuler",
       success: "Succès",

@@ -23,9 +23,9 @@ const HomePage = () => {
   const [currentHunt, setCurrentHunt] = useState<FullTreasureHuntType | null>(
     null,
   )
-  const [availableHunts, setAvailableHunts] = useState<FullTreasureHuntType[]>(
-    [],
-  )
+  const [availableHunts, setAvailableHunts] = useState<
+    FullTreasureHuntType[] | null
+  >(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -36,25 +36,27 @@ const HomePage = () => {
   }, [isAuthenticated, router])
 
   useEffect(() => {
-    if (isAuthenticated) {
-      setLoading(true)
-      setError(null)
-
-      void apiClient
-        .get<TreasureHuntFetchResponse>("/treasure-hunts")
-        .then((result) => {
-          const { allHunts, currentUserHunt } = result.data
-          setAvailableHunts(allHunts)
-          setCurrentHunt(currentUserHunt)
-        })
-        .catch(() => {
-          setError("Failed to fetch hunts. Please try again later.")
-        })
-        .finally(() => {
-          setLoading(false)
-        })
+    if (!isAuthenticated) {
+      router.replace("/(mobile)/login")
     }
-  }, [isAuthenticated])
+
+    setLoading(true)
+    setError(null)
+
+    void apiClient
+      .get<TreasureHuntFetchResponse>("/treasure-hunts")
+      .then((result) => {
+        const { allHunts, currentUserHunt } = result.data.result
+        setAvailableHunts(allHunts)
+        setCurrentHunt(currentUserHunt)
+      })
+      .catch(() => {
+        setError("Failed to fetch hunts. Please try again later.")
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [isAuthenticated, router])
 
   if (loading) {
     return <LoadingIndicator />
@@ -85,7 +87,7 @@ const HomePage = () => {
           <Text className="text-xl font-bold text-gray-800 dark:text-white mb-4">
             {t("availableHunts")}
           </Text>
-          {availableHunts.length > 0 ? (
+          {availableHunts && availableHunts.length > 0 ? (
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -96,7 +98,15 @@ const HomePage = () => {
                 <HuntCard
                   key={hunt.id}
                   hunt={hunt}
-                  onPress={() => router.push(`/explore/${hunt.id}`)}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/explore/hunt-details",
+                      params: {
+                        huntId: hunt.id,
+                        currentHuntId: currentHunt?.id,
+                      },
+                    })
+                  }
                   width={264}
                 />
               ))}

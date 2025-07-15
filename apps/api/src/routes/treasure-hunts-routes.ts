@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator"
 import { Hono } from "hono"
 import { logger } from "hono/logger"
 
-import { treasureHunts } from "@pe/db"
+import { eq, treasureHunts } from "@pe/db"
 import { CreateTreasureHuntSchema } from "@pe/schemas"
 
 import auth from "../middleware/auth"
@@ -66,6 +66,35 @@ treasureHuntsRoutes.get(
       ) ?? null
 
     return send({ allHunts, currentUserHunt })
+  },
+)
+
+treasureHuntsRoutes.get(
+  "/:id",
+  auth(),
+  logger(),
+  async ({ req, var: { send, db, fail } }) => {
+    const { id } = req.param()
+
+    const hunt = await db.query.treasureHunts.findFirst({
+      where: eq(treasureHunts.id, id),
+      with: {
+        winner: true,
+        images: true,
+        hints: {
+          with: {
+            users: true,
+          },
+        },
+        participants: true,
+      },
+    })
+
+    if (!hunt) {
+      return fail("notFound")
+    }
+
+    return send(hunt)
   },
 )
 

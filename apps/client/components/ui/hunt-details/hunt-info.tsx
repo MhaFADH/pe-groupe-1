@@ -1,24 +1,25 @@
 import { Ionicons } from "@expo/vector-icons"
-import { t } from "i18next"
+import { useTranslation } from "react-i18next"
 import { Text, View } from "react-native"
+
+import { type TreasureHuntType } from "@pe/types"
 
 import { useThemeColor } from "@/utils/colors"
 
-import type { Hunt } from "@/components/ui/hunt-card/hunt-card"
-
-interface HuntInfoProps {
-  hunt: Hunt
+type HuntInfoProps = {
+  hunt: TreasureHuntType
 }
 
 export const HuntInfo = ({ hunt }: HuntInfoProps) => {
   const { getThemeColor } = useThemeColor()
+  const { t, i18n } = useTranslation()
 
   return (
     <View>
       <Text className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
         {t("huntDetails")}
       </Text>
-      
+
       {hunt.description && (
         <Text className="text-gray-600 dark:text-gray-300 mb-4 leading-6">
           {hunt.description}
@@ -29,7 +30,11 @@ export const HuntInfo = ({ hunt }: HuntInfoProps) => {
       <View className="bg-white dark:bg-gray-800 rounded-2xl p-4 mb-6 border border-gray-200 dark:border-gray-700">
         <View className="flex-row items-center justify-between mb-3">
           <View className="flex-row items-center">
-            <Ionicons name="people" size={20} color={getThemeColor("gray-600", "gray-400")} />
+            <Ionicons
+              name="people"
+              size={20}
+              color={getThemeColor("gray-600", "gray-400")}
+            />
             <Text className="text-gray-700 dark:text-gray-300 ml-2 font-medium">
               {t("participants")}
             </Text>
@@ -38,33 +43,40 @@ export const HuntInfo = ({ hunt }: HuntInfoProps) => {
             {hunt.maxParticipants}
           </Text>
         </View>
-        
+
         <View className="flex-row items-center justify-between mb-3">
           <View className="flex-row items-center">
-            <Ionicons 
-              name={hunt.worldType === "real" ? "location" : "map"} 
-              size={20} 
-              color={getThemeColor("gray-600", "gray-400")} 
+            <Ionicons
+              name={!hunt.isPrivate ? "earth" : "lock-closed"}
+              size={20}
+              color={getThemeColor("gray-600", "gray-400")}
             />
             <Text className="text-gray-700 dark:text-gray-300 ml-2 font-medium">
               Type
             </Text>
           </View>
           <Text className="text-gray-900 dark:text-white font-semibold capitalize">
-            {hunt.worldType}
+            {!hunt.isPrivate ? "Public" : "Private"}
           </Text>
         </View>
 
         {hunt.endDate && (
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center">
-              <Ionicons name="calendar" size={20} color={getThemeColor("gray-600", "gray-400")} />
+              <Ionicons
+                name="calendar"
+                size={20}
+                color={getThemeColor("gray-600", "gray-400")}
+              />
               <Text className="text-gray-700 dark:text-gray-300 ml-2 font-medium">
-                Ends
+                {t("ends")}
               </Text>
             </View>
             <Text className="text-gray-900 dark:text-white font-semibold">
-              {hunt.endDate.toLocaleDateString()}
+              {new Date(hunt.endDate).toLocaleString(i18n.language, {
+                dateStyle: "medium",
+                timeStyle: "short",
+              })}
             </Text>
           </View>
         )}

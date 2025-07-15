@@ -1,12 +1,12 @@
 import { Ionicons } from "@expo/vector-icons"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 
-import { type FullTreasureHuntType } from "@pe/types"
+import { type TreasureHuntType } from "@pe/types"
 
 import { useThemeColor } from "@/utils/colors"
 
 type HuntCardProps = {
-  hunt: FullTreasureHuntType
+  hunt: TreasureHuntType
   onPress: () => void
   width?: number
 }

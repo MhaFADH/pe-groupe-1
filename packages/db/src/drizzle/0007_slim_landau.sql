@@ -1,0 +1,1 @@
+ALTER TABLE "treasure_hints_user" ADD COLUMN "found_at" date DEFAULT now() NOT NULL;

@@ -237,6 +237,8 @@ PODS:
     - ExpoModulesCore
   - ExpoLinking (7.0.5):
     - ExpoModulesCore
+  - ExpoLocation (18.0.10):
+    - ExpoModulesCore
   - ExpoModulesCore (2.2.3):
     - DoubleConversion
     - glog
@@ -2241,6 +2243,7 @@ DEPENDENCIES:
   - "ExpoHead (from `../../../node_modules/.pnpm/expo-router@4.0.21_4055716dce8fb99ba10187d8eba74268/node_modules/expo-router/ios`)"
   - "ExpoKeepAwake (from `../../../node_modules/.pnpm/expo-keep-awake@14.0.3_expo@52.0.47_@babel+core@7.28.0_@babel+preset-env@7.28.0_@babel+_47da7f1f7fc1e9a1132e054cd5cdfb1d/node_modules/expo-keep-awake/ios`)"
   - "ExpoLinking (from `../../../node_modules/.pnpm/expo-linking@7.0.5_expo@52.0.47_@babel+core@7.28.0_@babel+preset-env@7.28.0_@babel+core_0a04a95be8c7f0fc01d73a7a1a902c4b/node_modules/expo-linking/ios`)"
+  - "ExpoLocation (from `../../../node_modules/.pnpm/expo-location@18.0.10_expo@52.0.47_@babel+core@7.28.0_@babel+preset-env@7.28.0_@babel+c_02afacd4b4a95323b80dafd3e5824073/node_modules/expo-location/ios`)"
   - "ExpoModulesCore (from `../../../node_modules/.pnpm/expo-modules-core@2.2.3/node_modules/expo-modules-core`)"
   - "ExpoSecureStore (from `../../../node_modules/.pnpm/expo-secure-store@14.0.1_expo@52.0.47_@babel+core@7.28.0_@babel+preset-env@7.28.0_@babe_6948ffbadd4dac5d06f062116ee5463e/node_modules/expo-secure-store/ios`)"
   - "ExpoSplashScreen (from `../../../node_modules/.pnpm/expo-splash-screen@0.29.24_expo@52.0.47_@babel+core@7.28.0_@babel+preset-env@7.28.0_@ba_247d58ad477694be81c378679510da84/node_modules/expo-splash-screen/ios`)"
@@ -2368,6 +2371,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/.pnpm/expo-keep-awake@14.0.3_expo@52.0.47_@babel+core@7.28.0_@babel+preset-env@7.28.0_@babel+_47da7f1f7fc1e9a1132e054cd5cdfb1d/node_modules/expo-keep-awake/ios"
   ExpoLinking:
     :path: "../../../node_modules/.pnpm/expo-linking@7.0.5_expo@52.0.47_@babel+core@7.28.0_@babel+preset-env@7.28.0_@babel+core_0a04a95be8c7f0fc01d73a7a1a902c4b/node_modules/expo-linking/ios"
+  ExpoLocation:
+    :path: "../../../node_modules/.pnpm/expo-location@18.0.10_expo@52.0.47_@babel+core@7.28.0_@babel+preset-env@7.28.0_@babel+c_02afacd4b4a95323b80dafd3e5824073/node_modules/expo-location/ios"
   ExpoModulesCore:
     :path: "../../../node_modules/.pnpm/expo-modules-core@2.2.3/node_modules/expo-modules-core"
   ExpoSecureStore:
@@ -2548,6 +2553,7 @@ SPEC CHECKSUMS:
   ExpoHead: df924203fbf8e0913fc38b0f6aec71f9a9115482
   ExpoKeepAwake: b0171a73665bfcefcfcc311742a72a956e6aa680
   ExpoLinking: 8d12bee174ba0cdf31239706578e29e74a417402
+  ExpoLocation: de58a60756fad907139ec422ccabb1ba734e080d
   ExpoModulesCore: c25d77625038b1968ea1afefc719862c0d8dd993
   ExpoSecureStore: 9a3665d7161dd1031be386e278bffd623658f316
   ExpoSplashScreen: 8261985ce9778f904abc7e31bed3538dce67ed4d

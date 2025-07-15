@@ -50,6 +50,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "expo-updates",
     "expo-secure-store",
     "@reactvision/react-viro",
+    [
+      "expo-location",
+      {
+        locationAlwaysAndWhenInUsePermission:
+          "Allow $(PRODUCT_NAME) to use your location.",
+      },
+    ],
   ],
   experiments: {
     typedRoutes: true,

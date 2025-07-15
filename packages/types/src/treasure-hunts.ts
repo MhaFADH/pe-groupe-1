@@ -1,5 +1,5 @@
 import type { z } from "zod"
 
-import type { CreateTreasureHunt } from "@pe/schemas"
+import type { CreateTreasureHuntSchema } from "@pe/schemas"
 
-export type CreateTreasureHuntInput = z.infer<typeof CreateTreasureHunt>
+export type CreateTreasureHunt = z.infer<typeof CreateTreasureHuntSchema>

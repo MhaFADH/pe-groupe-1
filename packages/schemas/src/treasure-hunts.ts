@@ -1,11 +1,11 @@
 import { z } from "zod"
 
-export const CreateTreasureHunt = z.object({
-  title: z.string().min(1, "Title is required"),
-  description: z.string().optional(),
-  endDate: z.date().nullable(),
+export const CreateTreasureHuntSchema = z.object({
+  title: z.string().min(1, "titleRequired").min(3, "titleMinLength"),
+  description: z.string().max(500, "descriptionMaxLength").optional(),
   isPublic: z.boolean(),
-  numberOfPlayers: z.number().min(0),
+  maxParticipants: z.number().min(1, "maxParticipantsMin"),
+  endDate: z.date().nullable().optional(),
   latitude: z.number(),
   longitude: z.number(),
 })

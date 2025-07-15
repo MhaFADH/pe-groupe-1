@@ -1,0 +1,1207 @@
+diff --git a/.vscode/settings.json b/.vscode/settings.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..99617b333724dd33fb27de1fba7b96e63a415855
+--- /dev/null
++++ b/.vscode/settings.json
+@@ -0,0 +1,8 @@
++{
++  "workbench.colorCustomizations": {
++    "activityBar.background": "#213031",
++    "titleBar.activeBackground": "#2E4445",
++    "titleBar.activeForeground": "#FAFBFC"
++  },
++  "idf.pythonInstallPath": "/opt/homebrew/bin/python3"
++}
+\ No newline at end of file
+diff --git a/src/Geojson.tsx b/src/Geojson.tsx
+index 549c0d67babb07ae8fd2970cbe6ad0cb000f673a..605659b61d7eb0cbb911d70a5e338d4f4a05a3f4 100644
+--- a/src/Geojson.tsx
++++ b/src/Geojson.tsx
+@@ -1,21 +1,22 @@
+-import * as React from 'react';
+ import type {
+   Feature,
+   FeatureCollection,
+-  Point,
+-  Position,
+-  MultiPoint,
+   LineString,
+   MultiLineString,
+-  Polygon,
++  MultiPoint,
+   MultiPolygon,
+-} from 'geojson';
+-import Marker, {type MapMarkerProps as MarkerProps} from './MapMarker';
+-import type {MapPolygonProps as PolygonProps} from './MapPolygon';
+-import type {MapPolylineProps as PolylineProps} from './MapPolyline';
+-import Polyline from './MapPolyline';
+-import MapPolygon from './MapPolygon';
+-import type {LatLng} from './sharedTypes';
++  Point,
++  Polygon,
++  Position,
++} from "geojson"
++import * as React from "react"
++
++import Marker, { type MapMarkerProps as MarkerProps } from "./MapMarker"
++import type { MapPolygonProps as PolygonProps } from "./MapPolygon"
++import MapPolygon from "./MapPolygon"
++import type { MapPolylineProps as PolylineProps } from "./MapPolyline"
++import Polyline from "./MapPolyline"
++import type { LatLng } from "./sharedTypes"
+ 
+ export type GeojsonProps = {
+   /**
+@@ -32,7 +33,7 @@ export type GeojsonProps = {
+    * @platform iOS: Google Maps only. For Apple Maps, see the `centerOffset` prop
+    * @platform Android: Supported
+    */
+-  anchor?: MarkerProps['anchor'];
++  anchor?: MarkerProps["anchor"]
+ 
+   /**
+    * The offset (in points) at which to display the annotation view.
+@@ -45,7 +46,7 @@ export type GeojsonProps = {
+    * @platform iOS: Apple Maps only. For Google Maps, see the `anchor` prop
+    * @platform Android: Not supported. See see the `anchor` prop
+    */
+-  centerOffset?: MarkerProps['centerOffset'];
++  centerOffset?: MarkerProps["centerOffset"]
+ 
+   /**
+    * The pincolor used on markers
+@@ -53,7 +54,7 @@ export type GeojsonProps = {
+    * @platform iOS: Supported
+    * @platform Android: Supported
+    */
+-  color?: MarkerProps['pinColor'];
++  color?: MarkerProps["pinColor"]
+ 
+   /**
+    * The fill color to use for the path.
+@@ -61,7 +62,7 @@ export type GeojsonProps = {
+    * @platform iOS: Supported
+    * @platform Android: Supported
+    */
+-  fillColor?: PolygonProps['fillColor'];
++  fillColor?: PolygonProps["fillColor"]
+ 
+   /**
+    * [Geojson](https://geojson.org/) description of object.
+@@ -69,7 +70,7 @@ export type GeojsonProps = {
+    * @platform iOS: Supported
+    * @platform Android: Supported
+    */
+-  geojson: FeatureCollection;
++  geojson: FeatureCollection
+ 
+   /**
+    * A custom image to be used as the marker's icon. Only local image resources are allowed to be
+@@ -78,7 +79,7 @@ export type GeojsonProps = {
+    * @platform iOS: Supported
+    * @platform Android: Supported
+    */
+-  image?: MarkerProps['image'];
++  image?: MarkerProps["image"]
+ 
+   /**
+    * The line cap style to apply to the open ends of the path.
+@@ -87,7 +88,7 @@ export type GeojsonProps = {
+    * @platform iOS: Apple Maps only
+    * @platform Android: Supported
+    */
+-  lineCap?: PolylineProps['lineCap'];
++  lineCap?: PolylineProps["lineCap"]
+ 
+   /**
+    * An array of numbers specifying the dash pattern to use for the path.
+@@ -103,8 +104,8 @@ export type GeojsonProps = {
+    * @platform Android: Supported
+    */
+   lineDashPattern?:
+-    | PolygonProps['lineDashPattern']
+-    | PolylineProps['lineDashPattern'];
++    | PolygonProps["lineDashPattern"]
++    | PolylineProps["lineDashPattern"]
+ 
+   /**
+    * The offset (in points) at which to start drawing the dash pattern.
+@@ -118,7 +119,7 @@ export type GeojsonProps = {
+    * @platform iOS: Apple Maps only
+    * @platform Android: Not supported
+    */
+-  lineDashPhase?: PolylineProps['lineDashPhase'];
++  lineDashPhase?: PolylineProps["lineDashPhase"]
+ 
+   /**
+    * The line join style to apply to corners of the path.
+@@ -127,7 +128,7 @@ export type GeojsonProps = {
+    * @platform iOS: Apple Maps only
+    * @platform Android: Not supported
+    */
+-  lineJoin?: PolylineProps['lineJoin'];
++  lineJoin?: PolylineProps["lineJoin"]
+ 
+   /**
+    * Component to render in place of the default marker when the overlay type is a `point`
+@@ -135,7 +136,7 @@ export type GeojsonProps = {
+    * @platform iOS: Supported
+    * @platform Android: Supported
+    */
+-  markerComponent?: MarkerProps['children'];
++  markerComponent?: MarkerProps["children"]
+ 
+   /**
+    * The limiting value that helps avoid spikes at junctions between connected line segments.
+@@ -148,12 +149,12 @@ export type GeojsonProps = {
+    * @platform iOS: Apple Maps only
+    * @platform Android: Not supported
+    */
+-  miterLimit?: PolylineProps['miterLimit'];
++  miterLimit?: PolylineProps["miterLimit"]
+ 
+   /**
+    * Callback that is called when the user presses any of the overlays
+    */
+-  onPress?: (event: OverlayPressEvent) => void;
++  onPress?: (event: OverlayPressEvent) => void
+ 
+   /**
+    * The stroke color to use for the path.
+@@ -161,7 +162,7 @@ export type GeojsonProps = {
+    * @platform — iOS: Supported
+    * @platform — Android: Supported
+    */
+-  strokeColor?: PolygonProps['strokeColor'] | PolylineProps['strokeColor'];
++  strokeColor?: PolygonProps["strokeColor"] | PolylineProps["strokeColor"]
+ 
+   /**
+    * The stroke width to use for the path.
+@@ -169,7 +170,7 @@ export type GeojsonProps = {
+    * @platform — iOS: Supported
+    * @platform — Android: Supported
+    */
+-  strokeWidth?: PolygonProps['strokeWidth'] | PolylineProps['strokeWidth'];
++  strokeWidth?: PolygonProps["strokeWidth"] | PolylineProps["strokeWidth"]
+ 
+   /**
+    * Make the `Polygon` or `Polyline` tappable
+@@ -177,7 +178,7 @@ export type GeojsonProps = {
+    * @platform — iOS: Google Maps only
+    * @platform — Android: Supported
+    */
+-  tappable?: PolygonProps['tappable'] | PolylineProps['tappable'];
++  tappable?: PolygonProps["tappable"] | PolylineProps["tappable"]
+ 
+   /**
+    * The title of the marker. This is only used if the <Marker /> component has no children that
+@@ -187,7 +188,7 @@ export type GeojsonProps = {
+    * @platform — iOS: Supported
+    * @platform — Android: Supported
+    */
+-  title?: MarkerProps['title'];
++  title?: MarkerProps["title"]
+ 
+   /**
+    * Sets whether this marker should track view changes.
+@@ -199,7 +200,7 @@ export type GeojsonProps = {
+    * @platform iOS: Google Maps only
+    * @platform Android: Supported
+    */
+-  tracksViewChanges?: boolean;
++  tracksViewChanges?: boolean
+ 
+   /**
+    * The order in which this tile overlay is drawn with respect to other overlays. An overlay
+@@ -210,10 +211,10 @@ export type GeojsonProps = {
+    * @platform Android: Supported
+    */
+   zIndex?:
+-    | MarkerProps['zIndex']
+-    | PolygonProps['zIndex']
+-    | PolylineProps['zIndex'];
+-};
++    | MarkerProps["zIndex"]
++    | PolygonProps["zIndex"]
++    | PolylineProps["zIndex"]
++}
+ 
+ const Geojson = (props: GeojsonProps) => {
+   const {
+@@ -236,16 +237,16 @@ const Geojson = (props: GeojsonProps) => {
+     lineDashPhase,
+     lineDashPattern,
+     markerComponent,
+-  } = props;
+-  const pointOverlays = makePointOverlays(geojson.features);
+-  const lineOverlays = makeLineOverlays(geojson.features);
+-  const polygonOverlays = makePolygonOverlays(geojson.features);
++  } = props
++  const pointOverlays = makePointOverlays(geojson.features)
++  const lineOverlays = makeLineOverlays(geojson.features)
++  const polygonOverlays = makePolygonOverlays(geojson.features)
+   return (
+     <React.Fragment>
+       {pointOverlays.map((overlay, index) => {
+-        const markerColor = getColor(color, overlay, 'marker-color');
++        const markerColor = getColor(color, overlay, "marker-color")
+         const pointOverlayTracksViewChanges =
+-          overlay.feature.properties?.tracksViewChanges || tracksViewChanges;
++          overlay.feature.properties?.tracksViewChanges || tracksViewChanges
+         return (
+           <Marker
+             key={index}
+@@ -257,14 +258,15 @@ const Geojson = (props: GeojsonProps) => {
+             zIndex={zIndex}
+             anchor={anchor}
+             centerOffset={centerOffset}
+-            onPress={() => onPress && onPress(overlay)}>
++            onPress={() => onPress && onPress(overlay)}
++          >
+             {markerComponent}
+           </Marker>
+-        );
++        )
+       })}
+       {lineOverlays.map((overlay, index) => {
+-        const lineStrokeColor = getColor(strokeColor, overlay, 'stroke');
+-        const lineStrokeWidth = getStrokeWidth(strokeWidth, overlay);
++        const lineStrokeColor = getColor(strokeColor, overlay, "stroke")
++        const lineStrokeWidth = getStrokeWidth(strokeWidth, overlay)
+ 
+         return (
+           <Polyline
+@@ -281,12 +283,12 @@ const Geojson = (props: GeojsonProps) => {
+             tappable={tappable}
+             onPress={() => onPress && onPress(overlay)}
+           />
+-        );
++        )
+       })}
+       {polygonOverlays.map((overlay, index) => {
+-        const polygonFillColor = getColor(fillColor, overlay, 'fill');
+-        const lineStrokeColor = getColor(strokeColor, overlay, 'stroke');
+-        const lineStrokeWidth = getStrokeWidth(strokeWidth, overlay);
++        const polygonFillColor = getColor(fillColor, overlay, "fill")
++        const lineStrokeColor = getColor(strokeColor, overlay, "stroke")
++        const lineStrokeWidth = getStrokeWidth(strokeWidth, overlay)
+ 
+         return (
+           <MapPolygon
+@@ -305,134 +307,134 @@ const Geojson = (props: GeojsonProps) => {
+             onPress={() => onPress && onPress(overlay)}
+             zIndex={zIndex}
+           />
+-        );
++        )
+       })}
+     </React.Fragment>
+-  );
+-};
++  )
++}
+ 
+-export default Geojson;
++export default Geojson
+ 
+ const makePointOverlays = (features: Feature[]): AnyPointOverlay[] => {
+   return features
+     .filter(isAnyPointFeature)
+-    .map(feature =>
+-      makeCoordinatesForAnyPoint(feature.geometry).map(coordinates =>
++    .map((feature) =>
++      makeCoordinatesForAnyPoint(feature.geometry).map((coordinates) =>
+         makeOverlayForAnyPoint(coordinates, feature),
+       ),
+     )
+     .reduce((prev, curr) => prev.concat(curr), [])
+-    .map(overlay => ({...overlay, type: 'point'}));
+-};
++    .map((overlay) => ({ ...overlay, type: "point" }))
++}
+ 
+ const makeLineOverlays = (features: Feature[]): AnyLineStringOverlay[] => {
+   return features
+     .filter(isAnyLineStringFeature)
+-    .map(feature =>
+-      makeCoordinatesForAnyLine(feature.geometry).map(coordinates =>
++    .map((feature) =>
++      makeCoordinatesForAnyLine(feature.geometry).map((coordinates) =>
+         makeOverlayForAnyLine(coordinates, feature),
+       ),
+     )
+     .reduce((prev, curr) => prev.concat(curr), [])
+-    .map(overlay => ({...overlay, type: 'polyline'}));
+-};
++    .map((overlay) => ({ ...overlay, type: "polyline" }))
++}
+ 
+ const makePolygonOverlays = (features: Feature[]): AnyPolygonOverlay[] => {
+   const multipolygons: AnyPolygonOverlay[] = features
+     .filter(isMultiPolygonFeature)
+-    .map(feature =>
+-      makeCoordinatesForMultiPolygon(feature.geometry).map(coordinates =>
++    .map((feature) =>
++      makeCoordinatesForMultiPolygon(feature.geometry).map((coordinates) =>
+         makeOverlayForAnyPolygon(coordinates, feature),
+       ),
+     )
+     .reduce((prev, curr) => prev.concat(curr), [])
+-    .map(overlay => ({...overlay, type: 'polygon'}));
++    .map((overlay) => ({ ...overlay, type: "polygon" }))
+ 
+   const polygons: AnyPolygonOverlay[] = features
+     .filter(isPolygonFeature)
+-    .map(feature =>
++    .map((feature) =>
+       makeOverlayForAnyPolygon(
+         makeCoordinatesForPolygon(feature.geometry),
+         feature,
+       ),
+     )
+-    .reduce<Omit<AnyPolygonOverlay, 'type'>[]>(
++    .reduce<Omit<AnyPolygonOverlay, "type">[]>(
+       (prev, curr) => prev.concat(curr),
+       [],
+     )
+-    .map(overlay => ({...overlay, type: 'polygon'}));
++    .map((overlay) => ({ ...overlay, type: "polygon" }))
+ 
+-  return polygons.concat(multipolygons);
+-};
++  return polygons.concat(multipolygons)
++}
+ 
+ const makeOverlayForAnyPoint = (
+   coordinates: LatLng,
+   feature: Feature<Point | MultiPoint>,
+-): Omit<AnyPointOverlay, 'type'> => {
+-  return {feature, coordinates};
+-};
++): Omit<AnyPointOverlay, "type"> => {
++  return { feature, coordinates }
++}
+ 
+ const makeOverlayForAnyLine = (
+   coordinates: LatLng[],
+   feature: Feature<LineString | MultiLineString>,
+-): Omit<AnyLineStringOverlay, 'type'> => {
+-  return {feature, coordinates};
+-};
++): Omit<AnyLineStringOverlay, "type"> => {
++  return { feature, coordinates }
++}
+ 
+ const makeOverlayForAnyPolygon = (
+   coordinates: LatLng[][],
+   feature: Feature<Polygon | MultiPolygon>,
+-): Omit<AnyPolygonOverlay, 'type'> => {
++): Omit<AnyPolygonOverlay, "type"> => {
+   return {
+     feature,
+-    coordinates: coordinates[0],
++    coordinates: coordinates[0]!,
+     holes: coordinates.length > 1 ? coordinates.slice(1) : undefined,
+-  };
+-};
++  }
++}
+ 
+ const makePoint = (c: Position): LatLng => ({
+-  latitude: c[1],
+-  longitude: c[0],
+-});
++  latitude: c[1]!,
++  longitude: c[0]!,
++})
+ 
+-const makeLine = (l: Position[]) => l.map(makePoint);
++const makeLine = (l: Position[]) => l.map(makePoint)
+ 
+ const makeCoordinatesForAnyPoint = (geometry: Point | MultiPoint) => {
+-  if (geometry.type === 'Point') {
+-    return [makePoint(geometry.coordinates)];
++  if (geometry.type === "Point") {
++    return [makePoint(geometry.coordinates)]
+   }
+-  return geometry.coordinates.map(makePoint);
+-};
++  return geometry.coordinates.map(makePoint)
++}
+ 
+ const makeCoordinatesForAnyLine = (geometry: LineString | MultiLineString) => {
+-  if (geometry.type === 'LineString') {
+-    return [makeLine(geometry.coordinates)];
++  if (geometry.type === "LineString") {
++    return [makeLine(geometry.coordinates)]
+   }
+-  return geometry.coordinates.map(makeLine);
+-};
++  return geometry.coordinates.map(makeLine)
++}
+ 
+ const makeCoordinatesForPolygon = (geometry: Polygon) => {
+-  return geometry.coordinates.map(makeLine);
+-};
++  return geometry.coordinates.map(makeLine)
++}
+ 
+ const makeCoordinatesForMultiPolygon = (geometry: MultiPolygon) => {
+-  return geometry.coordinates.map(p => p.map(makeLine));
+-};
++  return geometry.coordinates.map((p) => p.map(makeLine))
++}
+ 
+ const getRgbaFromHex = (hex: string, alpha: number = 1) => {
+-  const matchArray = hex.match(/\w\w/g);
++  const matchArray = hex.match(/\w\w/g)
+   if (!matchArray || matchArray.length < 3) {
+-    throw new Error('Invalid hex string');
++    throw new Error("Invalid hex string")
+   }
+-  const [r, g, b] = matchArray.map(x => {
+-    const subColor = parseInt(x, 16);
++  const [r, g, b] = matchArray.map((x) => {
++    const subColor = parseInt(x, 16)
+     if (Number.isNaN(subColor)) {
+-      throw new Error('Invalid hex string');
++      throw new Error("Invalid hex string")
+     }
+-    return subColor;
+-  });
+-  return `rgba(${r},${g},${b},${alpha})`;
+-};
++    return subColor
++  })
++  return `rgba(${r},${g},${b},${alpha})`
++}
+ 
+ const getColor = (
+   prop: string | undefined,
+@@ -440,102 +442,102 @@ const getColor = (
+   colorType: string,
+ ) => {
+   if (prop) {
+-    return prop;
++    return prop
+   }
+-  let color = overlay.feature.properties?.[colorType];
++  let color = overlay.feature.properties?.[colorType]
+   if (color) {
+-    const opacityProperty = colorType + '-opacity';
+-    const alpha = overlay.feature.properties?.[opacityProperty];
+-    if (alpha && alpha !== '0' && color[0] === '#') {
+-      color = getRgbaFromHex(color, alpha);
++    const opacityProperty = colorType + "-opacity"
++    const alpha = overlay.feature.properties?.[opacityProperty]
++    if (alpha && alpha !== "0" && color[0] === "#") {
++      color = getRgbaFromHex(color, alpha)
+     }
+-    return color;
++    return color
+   }
+-  return undefined;
+-};
++  return undefined
++}
+ 
+ const getStrokeWidth = (
+-  prop: GeojsonProps['strokeWidth'],
++  prop: GeojsonProps["strokeWidth"],
+   overlay: Overlay,
+ ) => {
+   if (prop) {
+-    return prop;
++    return prop
+   }
+-  return overlay.feature.properties?.['stroke-width'];
+-};
++  return overlay.feature.properties?.["stroke-width"]
++}
+ 
+ // GeoJSON.Feature type-guards
+ const isPointFeature = (feature: Feature): feature is Feature<Point> =>
+-  feature.geometry.type === 'Point';
++  feature.geometry.type === "Point"
+ 
+ const isMultiPointFeature = (
+   feature: Feature,
+-): feature is Feature<MultiPoint> => feature.geometry.type === 'MultiPoint';
++): feature is Feature<MultiPoint> => feature.geometry.type === "MultiPoint"
+ 
+ const isAnyPointFeature = (
+   feature: Feature,
+ ): feature is Feature<Point> | Feature<MultiPoint> =>
+-  isPointFeature(feature) || isMultiPointFeature(feature);
++  isPointFeature(feature) || isMultiPointFeature(feature)
+ 
+ const isLineStringFeature = (
+   feature: Feature,
+-): feature is Feature<LineString> => feature.geometry.type === 'LineString';
++): feature is Feature<LineString> => feature.geometry.type === "LineString"
+ 
+ const isMultiLineStringFeature = (
+   feature: Feature,
+ ): feature is Feature<MultiLineString> =>
+-  feature.geometry.type === 'MultiLineString';
++  feature.geometry.type === "MultiLineString"
+ 
+ const isAnyLineStringFeature = (
+   feature: Feature,
+ ): feature is Feature<LineString> | Feature<MultiLineString> =>
+-  isLineStringFeature(feature) || isMultiLineStringFeature(feature);
++  isLineStringFeature(feature) || isMultiLineStringFeature(feature)
+ 
+ const isPolygonFeature = (feature: Feature): feature is Feature<Polygon> =>
+-  feature.geometry.type === 'Polygon';
++  feature.geometry.type === "Polygon"
+ 
+ const isMultiPolygonFeature = (
+   feature: Feature,
+-): feature is Feature<MultiPolygon> => feature.geometry.type === 'MultiPolygon';
++): feature is Feature<MultiPolygon> => feature.geometry.type === "MultiPolygon"
+ 
+ type OverlayPressEvent = {
+   type:
+-    | AnyPointOverlay['type']
+-    | AnyLineStringOverlay['type']
+-    | AnyPolygonOverlay['type'];
++    | AnyPointOverlay["type"]
++    | AnyLineStringOverlay["type"]
++    | AnyPolygonOverlay["type"]
+   feature:
+-    | AnyPointOverlay['feature']
+-    | AnyLineStringOverlay['feature']
+-    | AnyPolygonOverlay['feature'];
++    | AnyPointOverlay["feature"]
++    | AnyLineStringOverlay["feature"]
++    | AnyPolygonOverlay["feature"]
+   coordinates:
+-    | AnyPointOverlay['coordinates']
+-    | AnyLineStringOverlay['coordinates']
+-    | AnyPolygonOverlay['coordinates'];
+-  holes?: AnyPolygonOverlay['holes'];
+-};
++    | AnyPointOverlay["coordinates"]
++    | AnyLineStringOverlay["coordinates"]
++    | AnyPolygonOverlay["coordinates"]
++  holes?: AnyPolygonOverlay["holes"]
++}
+ 
+ type AnyPointOverlay = {
+-  type: 'point';
+-  feature: Feature<Point | MultiPoint>;
+-  coordinates: LatLng;
+-};
++  type: "point"
++  feature: Feature<Point | MultiPoint>
++  coordinates: LatLng
++}
+ 
+ type AnyLineStringOverlay = {
+-  type: 'polyline';
+-  feature: Feature<LineString | MultiLineString>;
+-  coordinates: LatLng[];
+-};
++  type: "polyline"
++  feature: Feature<LineString | MultiLineString>
++  coordinates: LatLng[]
++}
+ 
+ type AnyPolygonOverlay = {
+-  type: 'polygon';
+-  feature: Feature<Polygon | MultiPolygon>;
+-  coordinates: LatLng[];
+-  holes?: LatLng[][];
+-};
++  type: "polygon"
++  feature: Feature<Polygon | MultiPolygon>
++  coordinates: LatLng[]
++  holes?: LatLng[][]
++}
+ 
+ type Overlay = {
+-  type: 'point' | 'polyline' | 'polygon';
+-  feature: Feature;
+-  coordinates: LatLng | LatLng[];
+-  holes?: LatLng[][];
+-};
++  type: "point" | "polyline" | "polygon"
++  feature: Feature
++  coordinates: LatLng | LatLng[]
++  holes?: LatLng[][]
++}
+diff --git a/src/MapOverlay.tsx b/src/MapOverlay.tsx
+index 1db5d07a18a527f7afe4d9af94eb865758b4687c..ef9d1b99612d472ec05ae2af1e598e73b310b411 100644
+--- a/src/MapOverlay.tsx
++++ b/src/MapOverlay.tsx
+@@ -1,25 +1,25 @@
+-import * as React from 'react';
++import * as React from "react"
+ import {
+-  StyleSheet,
+   Animated,
+-  Platform,
+-  type ViewProps,
+-  type ImageURISource,
+   type ImageRequireSource,
++  type ImageURISource,
+   type NativeSyntheticEvent,
+-} from 'react-native';
++  Platform,
++  StyleSheet,
++  type ViewProps,
++} from "react-native"
+ 
+ import decorateMapComponent, {
+-  ProviderContext,
+-  SUPPORTED,
+-  USES_DEFAULT_IMPLEMENTATION,
+   type MapManagerCommand,
+   type NativeComponent,
++  ProviderContext,
++  SUPPORTED,
+   type UIManagerCommand,
+-} from './decorateMapComponent';
+-import type {LatLng, Point} from './sharedTypes';
+-import type {Modify} from './sharedTypesInternal';
+-import {fixImageProp} from './fixImageProp';
++  USES_DEFAULT_IMPLEMENTATION,
++} from "./decorateMapComponent"
++import { fixImageProp } from "./fixImageProp"
++import type { LatLng, Point } from "./sharedTypes"
++import type { Modify } from "./sharedTypesInternal"
+ 
+ export type MapOverlayProps = ViewProps & {
+   /**
+@@ -29,7 +29,7 @@ export type MapOverlayProps = ViewProps & {
+    * @platform iOS: Google Maps only
+    * @platform Android: Supported
+    */
+-  bearing?: number;
++  bearing?: number
+ 
+   /**
+    * The coordinates for the image (right-top corner, left-bottom corner). ie.```[[lat, long], [lat, long]]```
+@@ -37,7 +37,7 @@ export type MapOverlayProps = ViewProps & {
+    * @platform iOS: Supported
+    * @platform Android: Supported
+    */
+-  bounds: [Coordinate, Coordinate];
++  bounds: [Coordinate, Coordinate]
+ 
+   /**
+    * A custom image to be used as the overlay.
+@@ -46,7 +46,7 @@ export type MapOverlayProps = ViewProps & {
+    * @platform iOS: Supported
+    * @platform Android: Supported
+    */
+-  image: ImageURISource | ImageRequireSource;
++  image: ImageURISource | ImageRequireSource
+ 
+   /**
+    * Callback that is called when the user presses on the overlay
+@@ -54,7 +54,7 @@ export type MapOverlayProps = ViewProps & {
+    * @platform iOS: Apple Maps only
+    * @platform Android: Supported
+    */
+-  onPress?: (event: OverlayPressEvent) => void;
++  onPress?: (event: OverlayPressEvent) => void
+ 
+   /**
+    * The opacity of the overlay.
+@@ -63,7 +63,7 @@ export type MapOverlayProps = ViewProps & {
+    * @platform iOS: Google Maps only
+    * @platform Android: Supported
+    */
+-  opacity?: number;
++  opacity?: number
+ 
+   /**
+    * Boolean to allow an overlay to be tappable and use the onPress function.
+@@ -72,53 +72,53 @@ export type MapOverlayProps = ViewProps & {
+    * @platform iOS: Not supported
+    * @platform Android: Supported
+    */
+-  tappable?: boolean;
+-};
++  tappable?: boolean
++}
+ 
+-type NativeProps = Modify<MapOverlayProps, {image?: string}>;
++type NativeProps = Modify<MapOverlayProps, { image?: string }>
+ 
+ function normalizeBounds(bounds: [number, number][]): any {
+   return {
+-    northEast: {latitude: bounds[0][0], longitude: bounds[0][1]},
+-    southWest: {latitude: bounds[1][0], longitude: bounds[1][1]},
+-  };
++    northEast: { latitude: bounds![0]![0], longitude: bounds![0]![1] },
++    southWest: { latitude: bounds![1]![0], longitude: bounds![1]![1] },
++  }
+ }
+ 
+ export class MapOverlay extends React.Component<MapOverlayProps> {
+   // declaration only, as they are set through decorateMap
+   /// @ts-ignore
+-  context!: React.ContextType<typeof ProviderContext>;
+-  getNativeComponent!: () => NativeComponent<NativeProps>;
+-  getMapManagerCommand!: (name: string) => MapManagerCommand;
+-  getUIManagerCommand!: (name: string) => UIManagerCommand;
++  context!: React.ContextType<typeof ProviderContext>
++  getNativeComponent!: () => NativeComponent<NativeProps>
++  getMapManagerCommand!: (name: string) => MapManagerCommand
++  getUIManagerCommand!: (name: string) => UIManagerCommand
+ 
+-  static Animated: Animated.AnimatedComponent<typeof MapOverlay>;
++  static Animated: Animated.AnimatedComponent<typeof MapOverlay>
+ 
+-  private fabricOverlay?: Boolean = undefined;
++  private fabricOverlay?: Boolean = undefined
+ 
+   render() {
+-    const {opacity = 1.0, bounds} = this.props;
++    const { opacity = 1.0, bounds } = this.props
+ 
+     if (this.fabricOverlay === undefined) {
+-      this.fabricOverlay = Platform.OS === 'android';
++      this.fabricOverlay = Platform.OS === "android"
+     }
+ 
+-    const AIRMapOverlay = this.getNativeComponent();
+-    let image: any = this.props.image;
++    const AIRMapOverlay = this.getNativeComponent()
++    let image: any = this.props.image
+ 
+-    let boundsParam: any = bounds;
++    let boundsParam: any = bounds
+     if (this.fabricOverlay) {
+       if (this.props.image) {
+-        image = fixImageProp(this.props.image);
++        image = fixImageProp(this.props.image)
+       }
+       if (bounds) {
+-        boundsParam = normalizeBounds(bounds);
++        boundsParam = normalizeBounds(bounds)
+       }
+     } else {
+       if (this.props.image) {
+-        image = fixImageProp(this.props.image);
++        image = fixImageProp(this.props.image)
+         if (image.uri) {
+-          image = image.uri;
++          image = image.uri
+         }
+       }
+     }
+@@ -131,48 +131,48 @@ export class MapOverlay extends React.Component<MapOverlayProps> {
+         image={image}
+         style={[styles.overlay, this.props.style]}
+       />
+-    );
++    )
+   }
+ }
+ 
+-type Coordinate = [number, number];
++type Coordinate = [number, number]
+ 
+ type OverlayPressEvent = NativeSyntheticEvent<{
+   /**
+    * @platform iOS: Apple Maps: `image-overlay-press`
+    * @platform Android: `overlay-press`
+    */
+-  action: 'overlay-press' | 'image-overlay-press';
++  action: "overlay-press" | "image-overlay-press"
+ 
+   /**
+    * @platform iOS: Apple Maps
+    */
+-  name?: string;
++  name?: string
+ 
+   /**
+    * @platform iOS: Apple Maps
+    * @platform Android
+    */
+-  coordinate?: LatLng;
++  coordinate?: LatLng
+ 
+   /**
+    * @platform Android
+    */
+-  position?: Point;
+-}>;
++  position?: Point
++}>
+ 
+ const styles = StyleSheet.create({
+   overlay: {
+-    position: 'absolute',
+-    backgroundColor: 'transparent',
++    position: "absolute",
++    backgroundColor: "transparent",
+   },
+-});
++})
+ 
+-MapOverlay.Animated = Animated.createAnimatedComponent(MapOverlay);
++MapOverlay.Animated = Animated.createAnimatedComponent(MapOverlay)
+ 
+-export default decorateMapComponent(MapOverlay, 'Overlay', {
++export default decorateMapComponent(MapOverlay, "Overlay", {
+   google: {
+     ios: SUPPORTED,
+     android: USES_DEFAULT_IMPLEMENTATION,
+   },
+-});
++})
+diff --git a/src/decorateMapComponent.ts b/src/decorateMapComponent.ts
+index 3b52d775ed4bf8ece8c99ab4259fdff4ba837e0f..d76b0e173937b4e16410894531458eaa929fa2a9 100644
+--- a/src/decorateMapComponent.ts
++++ b/src/decorateMapComponent.ts
+@@ -1,65 +1,66 @@
+-import {createContext} from 'react';
++import { createContext } from "react"
+ import {
+-  requireNativeComponent,
++  type HostComponent,
+   NativeModules,
+   Platform,
+   UIManager,
+-  type HostComponent,
+-} from 'react-native';
+-import {PROVIDER_DEFAULT, PROVIDER_GOOGLE} from './ProviderConstants';
+-import type {Provider} from './sharedTypes';
+-import {MapCallout} from './MapCallout';
+-import {MapOverlay} from './MapOverlay';
+-import {MapCalloutSubview} from './MapCalloutSubview';
+-import {MapCircle} from './MapCircle';
+-import {MapHeatmap} from './MapHeatmap';
+-import {MapLocalTile} from './MapLocalTile';
+-import {MapMarker} from './MapMarker';
+-import {MapPolygon} from './MapPolygon';
+-import {MapPolyline} from './MapPolyline';
+-import {MapUrlTile} from './MapUrlTile';
+-import {MapWMSTile} from './MapWMSTile';
+-import {Commands} from './MapViewNativeComponent';
+-import GooglePolygon from './specs/NativeComponentGooglePolygon';
+-import FabricMarker from './specs/NativeComponentMarker';
+-import FabricUrlTile from './specs/NativeComponentUrlTile';
+-import FabricWMSTile from './specs/NativeComponentWMSTile';
+-import FabricCallout from './specs/NativeComponentCallout';
+-import FabricPolyline from './specs/NativeComponentPolyline';
+-import FabricCircle from './specs/NativeComponentCircle';
+-import FabricOverlay from './specs/NativeComponentOverlay';
+-
+-export const SUPPORTED: ImplementationStatus = 'SUPPORTED';
++  requireNativeComponent,
++} from "react-native"
++
++import { MapCallout } from "./MapCallout"
++import { MapCalloutSubview } from "./MapCalloutSubview"
++import { MapCircle } from "./MapCircle"
++import { MapHeatmap } from "./MapHeatmap"
++import { MapLocalTile } from "./MapLocalTile"
++import { MapMarker } from "./MapMarker"
++import { MapOverlay } from "./MapOverlay"
++import { MapPolygon } from "./MapPolygon"
++import { MapPolyline } from "./MapPolyline"
++import { MapUrlTile } from "./MapUrlTile"
++import { Commands } from "./MapViewNativeComponent"
++import { MapWMSTile } from "./MapWMSTile"
++import { PROVIDER_DEFAULT, PROVIDER_GOOGLE } from "./ProviderConstants"
++import type { Provider } from "./sharedTypes"
++import FabricCallout from "./specs/NativeComponentCallout"
++import FabricCircle from "./specs/NativeComponentCircle"
++import GooglePolygon from "./specs/NativeComponentGooglePolygon"
++import FabricMarker from "./specs/NativeComponentMarker"
++import FabricOverlay from "./specs/NativeComponentOverlay"
++import FabricPolyline from "./specs/NativeComponentPolyline"
++import FabricUrlTile from "./specs/NativeComponentUrlTile"
++import FabricWMSTile from "./specs/NativeComponentWMSTile"
++
++export const SUPPORTED: ImplementationStatus = "SUPPORTED"
+ export const USES_DEFAULT_IMPLEMENTATION: ImplementationStatus =
+-  'USES_DEFAULT_IMPLEMENTATION';
+-export const NOT_SUPPORTED: ImplementationStatus = 'NOT_SUPPORTED';
++  "USES_DEFAULT_IMPLEMENTATION"
++export const NOT_SUPPORTED: ImplementationStatus = "NOT_SUPPORTED"
+ 
+-export const ProviderContext = createContext<Provider>(undefined);
++export const ProviderContext = createContext<Provider>(undefined)
+ 
+ export function getNativeMapName(provider: Provider) {
+-  if (Platform.OS === 'android') {
+-    return 'AIRMap';
++  if (Platform.OS === "android") {
++    return "AIRMap"
+   }
+   if (provider === PROVIDER_GOOGLE) {
+-    return 'AIRGoogleMap';
++    return "AIRGoogleMap"
+   }
+-  return 'AIRMap';
++  return "AIRMap"
+ }
+ 
+ function getNativeComponentName(provider: Provider, component: ComponentName) {
+-  return `${getNativeMapName(provider)}${component}`;
++  return `${getNativeMapName(provider)}${component}`
+ }
+ 
+ export const createNotSupportedComponent = (message: string): (() => null) => {
+   return () => {
+-    console.error(message);
+-    return null;
+-  };
+-};
++    console.error(message)
++    return null
++  }
++}
+ 
+ export const googleMapIsInstalled = !!UIManager.hasViewManagerConfig(
+   getNativeMapName(PROVIDER_GOOGLE),
+-);
++)
+ 
+ export default function decorateMapComponent<Type extends Component>(
+   Component: Type,
+@@ -67,104 +68,104 @@ export default function decorateMapComponent<Type extends Component>(
+   providers: Providers,
+ ): Type {
+   const components: {
+-    [key: string]: NativeComponent;
+-  } = {};
++    [key: string]: NativeComponent
++  } = {}
+ 
+   const getDefaultComponent = () =>
+-    requireNativeComponent(getNativeComponentName(undefined, componentName));
++    requireNativeComponent(getNativeComponentName(undefined, componentName))
+ 
+   // @ts-ignore
+-  Component.contextType = ProviderContext;
++  Component.contextType = ProviderContext
+ 
+   Component.prototype.getNativeComponent =
+     function getNativeComponent(): NativeComponent {
+-      const provider = this.context;
++      const provider = this.context
+       if (
+-        componentName === 'Marker' &&
+-        (Platform.OS !== 'ios' || provider !== PROVIDER_GOOGLE)
++        componentName === "Marker" &&
++        (Platform.OS !== "ios" || provider !== PROVIDER_GOOGLE)
+       ) {
+         // @ts-ignore
+-        return FabricMarker;
++        return FabricMarker
+       }
+       if (
+-        componentName === 'Polygon' &&
++        componentName === "Polygon" &&
+         ((provider === PROVIDER_GOOGLE &&
+-          Platform.OS === 'ios' &&
++          Platform.OS === "ios" &&
+           googleMapIsInstalled) ||
+-          Platform.OS === 'android')
++          Platform.OS === "android")
+       ) {
+         // @ts-ignore
+-        return GooglePolygon;
++        return GooglePolygon
+       }
+-      if (Platform.OS === 'android') {
+-        if (componentName === 'Callout') {
++      if (Platform.OS === "android") {
++        if (componentName === "Callout") {
+           // @ts-ignore
+-          return FabricCallout;
+-        } else if (componentName === 'Polyline') {
++          return FabricCallout
++        } else if (componentName === "Polyline") {
+           // @ts-ignore
+-          return FabricPolyline;
+-        } else if (componentName === 'Circle') {
++          return FabricPolyline
++        } else if (componentName === "Circle") {
+           // @ts-ignore
+-          return FabricCircle;
+-        } else if (componentName === 'Overlay') {
++          return FabricCircle
++        } else if (componentName === "Overlay") {
+           // @ts-ignore
+-          return FabricOverlay;
+-        } else if (componentName === 'UrlTile') {
++          return FabricOverlay
++        } else if (componentName === "UrlTile") {
+           // @ts-ignore
+-          return FabricUrlTile;
+-        } else if (componentName === 'WMSTile') {
++          return FabricUrlTile
++        } else if (componentName === "WMSTile") {
+           // @ts-ignore
+-          return FabricWMSTile;
++          return FabricWMSTile
+         }
+       }
+-      const key = provider || 'default';
++      const key = provider || "default"
+       if (components[key]) {
+-        return components[key];
++        return components[key]!
+       }
+ 
+       if (provider === PROVIDER_DEFAULT) {
+-        components[key] = getDefaultComponent();
+-        return components[key];
++        components[key] = getDefaultComponent()
++        return components[key]!
+       }
+ 
+       if (!provider) {
+-        throw new Error('react-native-maps: provider is not set');
++        throw new Error("react-native-maps: provider is not set")
+       }
+ 
+       // @ts-ignore
+-      const providerInfo = providers[provider];
++      const providerInfo = providers[provider]
+ 
+       // quick fix. Previous code assumed android | ios
+-      if (Platform.OS !== 'android' && Platform.OS !== 'ios') {
+-        throw new Error(`react-native-maps doesn't support ${Platform.OS}`);
++      if (Platform.OS !== "android" && Platform.OS !== "ios") {
++        throw new Error(`react-native-maps doesn't support ${Platform.OS}`)
+       }
+ 
+-      const platformSupport = providerInfo[Platform.OS];
++      const platformSupport = providerInfo[Platform.OS]
+       const nativeComponentName = getNativeComponentName(
+         provider,
+         componentName,
+-      );
++      )
+       if (platformSupport === NOT_SUPPORTED) {
+         components[key] = createNotSupportedComponent(
+           `react-native-maps: ${nativeComponentName} is not supported on ${Platform.OS}`,
+-        );
++        )
+       } else if (platformSupport === SUPPORTED) {
+         if (
+           provider !== PROVIDER_GOOGLE ||
+-          (Platform.OS === 'ios' && googleMapIsInstalled)
++          (Platform.OS === "ios" && googleMapIsInstalled)
+         ) {
+-          components[key] = requireNativeComponent(nativeComponentName);
++          components[key] = requireNativeComponent(nativeComponentName)
+         }
+       } else {
+         // (platformSupport === USES_DEFAULT_IMPLEMENTATION)
+         if (!components.default) {
+-          components.default = getDefaultComponent();
++          components.default = getDefaultComponent()
+         }
+-        components[key] = components.default;
++        components[key] = components.default
+       }
+ 
+-      return components[key];
+-    };
++      return components[key]!
++    }
+ 
+   Component.prototype.getUIManagerCommand = function getUIManagerCommand(
+     name: string,
+@@ -172,9 +173,9 @@ export default function decorateMapComponent<Type extends Component>(
+     const nativeComponentName = getNativeComponentName(
+       this.context,
+       componentName,
+-    );
+-    return UIManager.getViewManagerConfig(nativeComponentName).Commands[name];
+-  };
++    )
++    return UIManager.getViewManagerConfig(nativeComponentName).Commands[name]!
++  }
+ 
+   Component.prototype.getMapManagerCommand = function getMapManagerCommand(
+     name: string,
+@@ -182,32 +183,32 @@ export default function decorateMapComponent<Type extends Component>(
+     const nativeComponentName = `${getNativeComponentName(
+       this.context,
+       componentName,
+-    )}Manager`;
+-    return NativeModules[nativeComponentName][name];
+-  };
++    )}Manager`
++    return NativeModules[nativeComponentName][name]
++  }
+ 
+-  return Component;
++  return Component
+ }
+ 
+ type ImplementationStatus =
+-  | 'SUPPORTED'
+-  | 'USES_DEFAULT_IMPLEMENTATION'
+-  | 'NOT_SUPPORTED';
++  | "SUPPORTED"
++  | "USES_DEFAULT_IMPLEMENTATION"
++  | "NOT_SUPPORTED"
+ 
+ type Providers = {
+   google: {
+-    ios: ImplementationStatus;
+-    android: ImplementationStatus;
+-  };
+-};
++    ios: ImplementationStatus
++    android: ImplementationStatus
++  }
++}
+ 
+-export type UIManagerCommand = number;
++export type UIManagerCommand = number
+ 
+-export type MapManagerCommand = keyof typeof Commands;
++export type MapManagerCommand = keyof typeof Commands
+ 
+ export type NativeComponent<H = unknown> =
+   | HostComponent<H>
+-  | ReturnType<typeof createNotSupportedComponent>;
++  | ReturnType<typeof createNotSupportedComponent>
+ 
+ type Component =
+   | typeof MapCallout
+@@ -220,17 +221,17 @@ type Component =
+   | typeof MapPolygon
+   | typeof MapPolyline
+   | typeof MapUrlTile
+-  | typeof MapWMSTile;
++  | typeof MapWMSTile
+ 
+ type ComponentName =
+-  | 'Callout'
+-  | 'CalloutSubview'
+-  | 'Circle'
+-  | 'Heatmap'
+-  | 'LocalTile'
+-  | 'Marker'
+-  | 'Overlay'
+-  | 'Polygon'
+-  | 'Polyline'
+-  | 'UrlTile'
+-  | 'WMSTile';
++  | "Callout"
++  | "CalloutSubview"
++  | "Circle"
++  | "Heatmap"
++  | "LocalTile"
++  | "Marker"
++  | "Overlay"
++  | "Polygon"
++  | "Polyline"
++  | "UrlTile"
++  | "WMSTile"

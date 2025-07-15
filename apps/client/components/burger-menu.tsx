@@ -41,7 +41,7 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({
       description: t("interactiveMaps", { defaultValue: "Interactive Maps" }),
     },
     {
-      id: "profile",
+      id: "create-hunts",
       title: t("profile", { defaultValue: "Profile" }),
       icon: "person",
       description: t("yourProfile", { defaultValue: "Your Profile" }),

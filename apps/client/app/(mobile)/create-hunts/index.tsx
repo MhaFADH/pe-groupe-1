@@ -1,5 +1,12 @@
-import CreateTreasureHuntForm from "@/components/treasure-hunts/create-treasure-hunt-form"
+import React from "react"
+import { View } from "react-native"
 
-const CreateHunts = () => <CreateTreasureHuntForm />
+import { CreateHuntForm } from "@/components/treasure-hunts/create-hunt-form"
+
+const CreateHunts = () => (
+  <View className="flex-1">
+    <CreateHuntForm />
+  </View>
+)
 
 export default CreateHunts

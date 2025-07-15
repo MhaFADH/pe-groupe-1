@@ -5,6 +5,9 @@ import { Controller, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { ScrollView, Text, View } from "react-native"
 
+import { CreateTreasureHuntSchema } from "@pe/schemas"
+import type { CreateTreasureHunt } from "@pe/types"
+
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { DatePicker } from "@/components/ui/date-picker"
@@ -14,11 +17,17 @@ import { Switch } from "@/components/ui/switch"
 import apiClient from "@/services/api/apiClient"
 
 import { LocationPicker } from "./location-picker"
-import {
-  type CreateHuntFormData,
-  createHuntFormSchema,
-  defaultFormValues,
-} from "./schema"
+
+const defaultFormValues: CreateTreasureHunt = {
+  title: "",
+  description: "",
+  isPublic: true,
+  maxParticipants: 10,
+  endDate: null,
+  // Default to San Francisco
+  latitude: 37.78825,
+  longitude: -122.4324,
+}
 
 export const CreateHuntForm: React.FC = () => {
   const { t } = useTranslation()
@@ -30,14 +39,14 @@ export const CreateHuntForm: React.FC = () => {
     formState: { errors, isSubmitting },
     setValue,
     watch,
-  } = useForm<CreateHuntFormData>({
-    resolver: zodResolver(createHuntFormSchema),
+  } = useForm<CreateTreasureHunt>({
+    resolver: zodResolver(CreateTreasureHuntSchema),
     defaultValues: defaultFormValues,
   })
 
   const watchedLocation = watch(["latitude", "longitude"])
 
-  const onSubmit = async (data: CreateHuntFormData) => {
+  const onSubmit = async (data: CreateTreasureHunt) => {
     try {
       await apiClient.post("/treasure-hunts", data)
       router.back()

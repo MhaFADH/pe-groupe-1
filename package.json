@@ -27,5 +27,10 @@
     "prettier": "^3.5.3",
     "turbo": "^2.5.1",
     "typescript": "catalog:"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "react-native-maps@1.24.5": "patches/react-native-maps@1.24.5.patch"
+    }
   }
 }

@@ -6,8 +6,11 @@ import { eq, treasureHunts } from "@pe/db"
 import { CreateTreasureHuntSchema } from "@pe/schemas"
 
 import auth from "../middleware/auth"
+import participationRoutes from "./hunt/participation-routes"
 
 const treasureHuntsRoutes = new Hono()
+
+treasureHuntsRoutes.route("/participation", participationRoutes)
 
 treasureHuntsRoutes.post(
   "/",

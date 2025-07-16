@@ -1,11 +1,10 @@
 import { Ionicons } from "@expo/vector-icons"
+import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "expo-router"
 import { t } from "i18next"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { ScrollView, Text, TouchableOpacity, View } from "react-native"
 import Animated, { FadeIn } from "react-native-reanimated"
-
-import type { FullTreasureHuntType } from "@pe/types"
 
 import { CurrentHuntBox, HuntCard } from "@/components"
 import { useAuthManager } from "@/components/contexts"
@@ -15,56 +14,44 @@ import apiClient from "@/services/api/apiClient"
 import type { TreasureHuntFetchResponse } from "@/types/api-calls"
 import { useThemeColor } from "@/utils/colors"
 
+export const fetchHunts = async () => {
+  const response =
+    await apiClient.get<TreasureHuntFetchResponse>("/treasure-hunts")
+
+  return response.data.result
+}
+
 const HomePage = () => {
   const { isAuthenticated } = useAuthManager()
   const { getThemeColor } = useThemeColor()
   const router = useRouter()
 
-  const [currentHunt, setCurrentHunt] = useState<FullTreasureHuntType | null>(
-    null,
-  )
-  const [availableHunts, setAvailableHunts] = useState<
-    FullTreasureHuntType[] | null
-  >(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace("/(mobile)")
-    }
-  }, [isAuthenticated, router])
+  const {
+    data: hunts,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["hunts"],
+    queryFn: fetchHunts,
+    enabled: isAuthenticated,
+  })
 
   useEffect(() => {
     if (!isAuthenticated) {
       router.replace("/(mobile)/login")
     }
-
-    setLoading(true)
-    setError(null)
-
-    void apiClient
-      .get<TreasureHuntFetchResponse>("/treasure-hunts")
-      .then((result) => {
-        const { allHunts, currentUserHunt } = result.data.result
-        setAvailableHunts(allHunts)
-        setCurrentHunt(currentUserHunt)
-      })
-      .catch(() => {
-        setError("Failed to fetch hunts. Please try again later.")
-      })
-      .finally(() => {
-        setLoading(false)
-      })
   }, [isAuthenticated, router])
 
-  if (loading) {
+  if (isLoading) {
     return <LoadingIndicator />
   }
 
   if (error) {
-    return <ErrorDisplay message={error} />
+    return <ErrorDisplay message={t("errorLoadingHunts")} />
   }
+
+  const currentHunt = hunts?.currentUserHunt
+  const availableHunts = hunts?.allHunts
 
   return (
     <View className="flex-1 bg-gray-50 dark:bg-gray-900">
@@ -81,7 +68,7 @@ const HomePage = () => {
           </Text>
         </Animated.View>
 
-        <CurrentHuntBox currentHunt={currentHunt} />
+        <CurrentHuntBox currentHunt={currentHunt ?? null} />
 
         <Animated.View entering={FadeIn.delay(400)} className="w-full">
           <Text className="text-xl font-bold text-gray-800 dark:text-white mb-4">

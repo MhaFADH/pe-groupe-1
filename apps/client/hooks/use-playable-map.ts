@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import * as Location from "expo-location"
+import { router } from "expo-router"
 import { getDistance } from "geolib"
 import { useCallback, useEffect, useState } from "react"
+import { Alert } from "react-native"
 
 import { type TreasureHintType } from "@pe/types"
 
@@ -63,6 +65,8 @@ const usePlayableMap = (
       return distance <= proximityThreshold
     })
 
+    let treasureFound = false
+
     setHints((prev) => {
       const existingIds = new Set(prev.map(({ id }) => id))
 
@@ -72,7 +76,19 @@ const usePlayableMap = (
         return prev
       }
 
-      setSelectedHint(newHints[0]!)
+      newHints.forEach((newHint) => {
+        if (newHint.id === newHint.treasureHuntId) {
+          treasureFound = true
+
+          Alert.alert("Congratulations!", "You just found the treasure 🥳", [
+            { onPress: () => router.push("/(mobile)/home") },
+          ])
+        }
+      })
+
+      if (!treasureFound) {
+        setSelectedHint(newHints[0]!)
+      }
 
       return [...prev, ...newHints]
     })

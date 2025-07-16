@@ -11,7 +11,7 @@ const MarkerModal = (props: Props) => {
   const { hint, onClose } = props
 
   return (
-    <Modal visible={Boolean(hint)} transparent>
+    <Modal visible={Boolean(hint)} animationType="fade" transparent>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           {hint && (

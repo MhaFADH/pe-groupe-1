@@ -36,6 +36,22 @@ const hintsData: TreasureHintType[] = [
     description: "Lorem ipsum 4...",
     latitude: 48.86817,
     longitude: 2.35368,
+    treasureHuntId: "4",
+  },
+  {
+    id: "5",
+    title: "Hint 5",
+    description: "Lorem ipsum 5...",
+    latitude: 48.94243,
+    longitude: 2.25084,
+    treasureHuntId: "1",
+  },
+  {
+    id: "6",
+    title: "Hint 6",
+    description: "Lorem ipsum 6...",
+    latitude: 48.9425,
+    longitude: 2.25071,
     treasureHuntId: "1",
   },
 ]

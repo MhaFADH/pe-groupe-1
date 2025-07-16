@@ -10,7 +10,7 @@ import type {
   treasureHuntWinnings,
   treasureHunts,
 } from "@pe/db"
-import type { CreateTreasureHuntSchema } from "@pe/schemas"
+import type { CreateTreasureHuntSchema, HintSchema } from "@pe/schemas"
 
 import { type UserType } from "./user"
 
@@ -38,3 +38,5 @@ export type FullTreasureHuntType = TreasureHuntType & {
   images: TreasureHuntImageType[]
   hints: FullTreasureHintType[]
 }
+
+export type Hint = z.infer<typeof HintSchema>

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 import { ScrollView, Text, View } from "react-native"
 
 import { CreateTreasureHuntSchema } from "@pe/schemas"
-import type { CreateTreasureHunt } from "@pe/types"
+import type { CreateTreasureHunt, Hint } from "@pe/types"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -16,6 +16,7 @@ import { NumberInput } from "@/components/ui/number-input"
 import { Switch } from "@/components/ui/switch"
 import apiClient from "@/services/api/apiClient"
 
+import { HintsSection } from "./hints-section"
 import { LocationPicker } from "./location-picker"
 
 const defaultFormValues: CreateTreasureHunt = {
@@ -26,6 +27,7 @@ const defaultFormValues: CreateTreasureHunt = {
   endDate: null,
   latitude: 37.78825,
   longitude: -122.4324,
+  hints: [],
 }
 
 export const CreateHuntForm: React.FC = () => {
@@ -44,6 +46,7 @@ export const CreateHuntForm: React.FC = () => {
   })
 
   const watchedLocation = watch(["latitude", "longitude"])
+  const watchedHints = watch("hints")
 
   const onSubmit = async (data: CreateTreasureHunt) => {
     try {
@@ -58,6 +61,30 @@ export const CreateHuntForm: React.FC = () => {
   const handleLocationSelect = (latitude: number, longitude: number) => {
     setValue("latitude", latitude)
     setValue("longitude", longitude)
+  }
+
+  const addHint = () => {
+    const currentHints = watchedHints ?? []
+    const newHint: Hint = {
+      title: "",
+      description: "",
+      latitude: watchedLocation[0] || defaultFormValues.latitude,
+      longitude: watchedLocation[1] || defaultFormValues.longitude,
+    }
+    setValue("hints", [...currentHints, newHint])
+  }
+
+  const updateHint = (index: number, updatedHint: Hint) => {
+    const currentHints = watchedHints ?? []
+    const newHints = [...currentHints]
+    newHints[index] = updatedHint
+    setValue("hints", newHints)
+  }
+
+  const removeHint = (index: number) => {
+    const currentHints = watchedHints ?? []
+    const newHints = currentHints.filter((_, i) => i !== index)
+    setValue("hints", newHints)
   }
 
   return (
@@ -175,6 +202,13 @@ export const CreateHuntForm: React.FC = () => {
               error={errors.latitude?.message ?? errors.longitude?.message}
             />
           </Card>
+
+          <HintsSection
+            hints={watchedHints ?? []}
+            onAddHint={addHint}
+            onUpdateHint={updateHint}
+            onRemoveHint={removeHint}
+          />
 
           <View className="gap-3 mt-4">
             <Button

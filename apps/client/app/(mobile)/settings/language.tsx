@@ -40,7 +40,7 @@ const LanguageSettingNative: React.FC = () => {
                   "w-full rounded-2xl p-6 border-2 transition-all duration-200 mb-4",
                   isSelected
                     ? "bg-primary/10 border-primary shadow-lg"
-                    : "bg-background dark:bg-backgroundDark border-gray-300 dark:border-gray-600",
+                    : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600",
                 ].join(" ")}
                 onPress={() => handleLanguageSelect(lang.code as "en" | "fr")}
               >
@@ -52,7 +52,7 @@ const LanguageSettingNative: React.FC = () => {
                         "text-xl font-semibold",
                         isSelected
                           ? "text-primary"
-                          : "text-text dark:text-textDark",
+                          : "text-black dark:text-white",
                       ].join(" ")}
                     >
                       {lang.nativeName}

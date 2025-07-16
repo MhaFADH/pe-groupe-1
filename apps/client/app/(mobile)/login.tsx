@@ -1,4 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
+import { useRouter } from "expo-router"
+import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { Image, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -8,7 +10,8 @@ import { Button } from "@/components/ui/button"
 
 const LoginNative = () => {
   const { t } = useTranslation()
-  const { signIn, signOut } = useAuthManager()
+  const { signIn, signOut, isAuthenticated } = useAuthManager()
+  const router = useRouter()
 
   const handleSignIn = async () => {
     await signIn()
@@ -17,6 +20,12 @@ const LoginNative = () => {
   const handleSignUp = async () => {
     await signOut()
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/(mobile)/home")
+    }
+  }, [isAuthenticated, router])
 
   return (
     <SafeAreaView

@@ -83,7 +83,6 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
       (locationError) => {
         // eslint-disable-next-line no-console
         console.warn("Error getting location:", locationError)
-        // Silently fail - just set loading to false and keep default location
         setLoading(false)
       },
       {
@@ -111,7 +110,6 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
     setIsSearching(true)
 
     try {
-      // Use Nominatim OpenStreetMap geocoding service (free)
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
           searchQuery,
@@ -147,7 +145,6 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
 
   return (
     <View className="gap-3">
-      {/* Search Bar */}
       <View className="flex-row gap-2">
         <TextInput
           value={searchQuery}
@@ -172,7 +169,6 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
         </Pressable>
       </View>
 
-      {/* Map */}
       <View
         className="rounded-xl overflow-hidden"
         style={{ backgroundColor: "transparent" }}

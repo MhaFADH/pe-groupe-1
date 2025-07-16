@@ -24,9 +24,13 @@ const RootHeader: React.FC<RootHeaderProps> = ({ route, onOpenDrawer }) => {
     "/settings/about",
     "/settings/help",
     "/settings/theme",
+    "/explore/[huntId]",
+    "/create-hunts",
   ]
 
-  const canGoBack = goBackRoutes.includes(usePathname())
+  const currentPath = usePathname()
+  const canGoBack =
+    goBackRoutes.includes(currentPath) || currentPath.includes("/explore/")
 
   const handlePress = () => {
     if (canGoBack) {

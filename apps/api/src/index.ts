@@ -5,7 +5,7 @@ import { cors } from "hono/cors"
 import { Config } from "../utils/config"
 import auth from "./middleware/auth"
 import treasureHuntsRoutes from "./routes/treasure-hunts-routes"
-import userRoute from "./routes/user/userRoute"
+import userRoute from "./routes/user/user-routes"
 import { contextVariables, fail, send } from "./utils/context"
 
 const app = new Hono().basePath("/api")
@@ -21,8 +21,6 @@ app.use(cors(), (ctx, next) => {
 })
 
 app.get("/", (c) => c.text("Hello Hono!"))
-
-app.route("/treasure-hunts", treasureHuntsRoutes)
 
 app.get("/", (c) =>
   c.json({
@@ -44,6 +42,7 @@ app.get("/test-auth", auth(), (c) => {
 })
 
 app.route("/user", userRoute)
+app.route("/treasure-hunts", treasureHuntsRoutes)
 
 serve(
   {

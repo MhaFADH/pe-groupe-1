@@ -1,0 +1,1076 @@
+{
+  "id": "2d8b9c89-c651-49ad-ae02-2cc7524156a2",
+  "prevId": "68d41e95-45cc-45e3-9cbc-65c13d918332",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.contacts": {
+      "name": "contacts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.images": {
+      "name": "images",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "images_key_unique": {
+          "name": "images_key_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "key"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.mfa_tokens": {
+      "name": "mfa_tokens",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "otp_code": {
+          "name": "otp_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "mfa_tokens_user_id_users_id_fk": {
+          "name": "mfa_tokens_user_id_users_id_fk",
+          "tableFrom": "mfa_tokens",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.treasure_hints_user": {
+      "name": "treasure_hints_user",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hint_id": {
+          "name": "hint_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "treasure_hints_user_user_id_users_id_fk": {
+          "name": "treasure_hints_user_user_id_users_id_fk",
+          "tableFrom": "treasure_hints_user",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "treasure_hints_user_hint_id_treasure_hints_id_fk": {
+          "name": "treasure_hints_user_hint_id_treasure_hints_id_fk",
+          "tableFrom": "treasure_hints_user",
+          "tableTo": "treasure_hints",
+          "columnsFrom": [
+            "hint_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "treasure_hints_user_user_id_hint_id_pk": {
+          "name": "treasure_hints_user_user_id_hint_id_pk",
+          "columns": [
+            "user_id",
+            "hint_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.treasure_hints": {
+      "name": "treasure_hints",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "treasure_hunt_id": {
+          "name": "treasure_hunt_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "treasure_hints_treasure_hunt_id_treasure_hunts_id_fk": {
+          "name": "treasure_hints_treasure_hunt_id_treasure_hunts_id_fk",
+          "tableFrom": "treasure_hints",
+          "tableTo": "treasure_hunts",
+          "columnsFrom": [
+            "treasure_hunt_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.treasure_hunt_images": {
+      "name": "treasure_hunt_images",
+      "schema": "",
+      "columns": {
+        "treasure_hunt_id": {
+          "name": "treasure_hunt_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "treasure_hunt_images_treasure_hunt_id_treasure_hunts_id_fk": {
+          "name": "treasure_hunt_images_treasure_hunt_id_treasure_hunts_id_fk",
+          "tableFrom": "treasure_hunt_images",
+          "tableTo": "treasure_hunts",
+          "columnsFrom": [
+            "treasure_hunt_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "treasure_hunt_images_image_id_images_id_fk": {
+          "name": "treasure_hunt_images_image_id_images_id_fk",
+          "tableFrom": "treasure_hunt_images",
+          "tableTo": "images",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "treasure_hunt_images_treasure_hunt_id_image_id_pk": {
+          "name": "treasure_hunt_images_treasure_hunt_id_image_id_pk",
+          "columns": [
+            "treasure_hunt_id",
+            "image_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.treasure_hunt_landmarks": {
+      "name": "treasure_hunt_landmarks",
+      "schema": "",
+      "columns": {
+        "treasure_hunt_id": {
+          "name": "treasure_hunt_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "treasure_hunt_landmarks_treasure_hunt_id_treasure_hunts_id_fk": {
+          "name": "treasure_hunt_landmarks_treasure_hunt_id_treasure_hunts_id_fk",
+          "tableFrom": "treasure_hunt_landmarks",
+          "tableTo": "treasure_hunts",
+          "columnsFrom": [
+            "treasure_hunt_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "treasure_hunt_landmarks_user_id_users_id_fk": {
+          "name": "treasure_hunt_landmarks_user_id_users_id_fk",
+          "tableFrom": "treasure_hunt_landmarks",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "treasure_hunt_landmarks_treasure_hunt_id_user_id_latitude_longitude_pk": {
+          "name": "treasure_hunt_landmarks_treasure_hunt_id_user_id_latitude_longitude_pk",
+          "columns": [
+            "treasure_hunt_id",
+            "user_id",
+            "latitude",
+            "longitude"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.treasure_hunt_participants": {
+      "name": "treasure_hunt_participants",
+      "schema": "",
+      "columns": {
+        "treasure_hunt_id": {
+          "name": "treasure_hunt_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_attempt": {
+          "name": "last_attempt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "current_step": {
+          "name": "current_step",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "treasure_hunt_participants_treasure_hunt_id_treasure_hunts_id_fk": {
+          "name": "treasure_hunt_participants_treasure_hunt_id_treasure_hunts_id_fk",
+          "tableFrom": "treasure_hunt_participants",
+          "tableTo": "treasure_hunts",
+          "columnsFrom": [
+            "treasure_hunt_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "treasure_hunt_participants_user_id_users_id_fk": {
+          "name": "treasure_hunt_participants_user_id_users_id_fk",
+          "tableFrom": "treasure_hunt_participants",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "treasure_hunt_participants_treasure_hunt_id_user_id_pk": {
+          "name": "treasure_hunt_participants_treasure_hunt_id_user_id_pk",
+          "columns": [
+            "treasure_hunt_id",
+            "user_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.treasure_hunt_steps": {
+      "name": "treasure_hunt_steps",
+      "schema": "",
+      "columns": {
+        "treasure_hunt_id": {
+          "name": "treasure_hunt_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "clue": {
+          "name": "clue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "validation_key": {
+          "name": "validation_key",
+          "type": "validation_key",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "validation_data": {
+          "name": "validation_data",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "treasure_hunt_steps_treasure_hunt_id_treasure_hunts_id_fk": {
+          "name": "treasure_hunt_steps_treasure_hunt_id_treasure_hunts_id_fk",
+          "tableFrom": "treasure_hunt_steps",
+          "tableTo": "treasure_hunts",
+          "columnsFrom": [
+            "treasure_hunt_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.treasure_hunt_winnings": {
+      "name": "treasure_hunt_winnings",
+      "schema": "",
+      "columns": {
+        "treasure_hunt_id": {
+          "name": "treasure_hunt_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "winning_id": {
+          "name": "winning_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "coins": {
+          "name": "coins",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "condition_of_award": {
+          "name": "condition_of_award",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "treasure_hunt_winnings_treasure_hunt_id_treasure_hunts_id_fk": {
+          "name": "treasure_hunt_winnings_treasure_hunt_id_treasure_hunts_id_fk",
+          "tableFrom": "treasure_hunt_winnings",
+          "tableTo": "treasure_hunts",
+          "columnsFrom": [
+            "treasure_hunt_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "treasure_hunt_winnings_winning_id_winnings_id_fk": {
+          "name": "treasure_hunt_winnings_winning_id_winnings_id_fk",
+          "tableFrom": "treasure_hunt_winnings",
+          "tableTo": "winnings",
+          "columnsFrom": [
+            "winning_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "treasure_hunt_winnings_treasure_hunt_id_winning_id_pk": {
+          "name": "treasure_hunt_winnings_treasure_hunt_id_winning_id_pk",
+          "columns": [
+            "treasure_hunt_id",
+            "winning_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.treasure_hunts": {
+      "name": "treasure_hunts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "max_participants": {
+          "name": "max_participants",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "participation_fees": {
+          "name": "participation_fees",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "digging_time": {
+          "name": "digging_time",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 60
+        },
+        "digging_cost": {
+          "name": "digging_cost",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_private": {
+          "name": "is_private",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "start_date": {
+          "name": "start_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "end_date": {
+          "name": "end_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "grade": {
+          "name": "grade",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "winner_id": {
+          "name": "winner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location": {
+          "name": "location",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "creator_id": {
+          "name": "creator_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "treasure_hunts_winner_id_users_id_fk": {
+          "name": "treasure_hunts_winner_id_users_id_fk",
+          "tableFrom": "treasure_hunts",
+          "tableTo": "users",
+          "columnsFrom": [
+            "winner_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "treasure_hunts_creator_id_users_id_fk": {
+          "name": "treasure_hunts_creator_id_users_id_fk",
+          "tableFrom": "treasure_hunts",
+          "tableTo": "users",
+          "columnsFrom": [
+            "creator_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.user_winnings": {
+      "name": "user_winnings",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "winning_id": {
+          "name": "winning_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "obtained_at": {
+          "name": "obtained_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_winnings_user_id_users_id_fk": {
+          "name": "user_winnings_user_id_users_id_fk",
+          "tableFrom": "user_winnings",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "user_winnings_winning_id_winnings_id_fk": {
+          "name": "user_winnings_winning_id_winnings_id_fk",
+          "tableFrom": "user_winnings",
+          "tableTo": "winnings",
+          "columnsFrom": [
+            "winning_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "user_winnings_user_id_winning_id_pk": {
+          "name": "user_winnings_user_id_winning_id_pk",
+          "columns": [
+            "user_id",
+            "winning_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "auth0_id": {
+          "name": "auth0_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "role",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'player'"
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nickname": {
+          "name": "nickname",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "age": {
+          "name": "age",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "coins": {
+          "name": "coins",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "is_mfa_enabled": {
+          "name": "is_mfa_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "users_image_id_images_id_fk": {
+          "name": "users_image_id_images_id_fk",
+          "tableFrom": "users",
+          "tableTo": "images",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_auth0Id_unique": {
+          "name": "users_auth0Id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "auth0_id"
+          ]
+        },
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.winnings": {
+      "name": "winnings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "category": {
+          "name": "category",
+          "type": "category",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rarity": {
+          "name": "rarity",
+          "type": "winning_rarity",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'common'"
+        },
+        "data": {
+          "name": "data",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.validation_key": {
+      "name": "validation_key",
+      "schema": "public",
+      "values": [
+        "hunt_discovery",
+        "passphrase",
+        "landmark"
+      ]
+    },
+    "public.role": {
+      "name": "role",
+      "schema": "public",
+      "values": [
+        "player",
+        "organizer",
+        "partner",
+        "admin"
+      ]
+    },
+    "public.category": {
+      "name": "category",
+      "schema": "public",
+      "values": [
+        "intern",
+        "extern"
+      ]
+    },
+    "public.winning_rarity": {
+      "name": "winning_rarity",
+      "schema": "public",
+      "values": [
+        "common",
+        "rare",
+        "epic",
+        "legendary"
+      ]
+    },
+    "public.type": {
+      "name": "type",
+      "schema": "public",
+      "values": [
+        "artefact",
+        "discount",
+        "hardware"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

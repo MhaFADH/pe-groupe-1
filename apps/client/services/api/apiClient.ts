@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { type AxiosResponse } from "axios"
 import { Platform } from "react-native"
 
 import refreshInterceptor from "@/services/auth/auth0Client/refreshInterceptor"
@@ -20,7 +20,9 @@ const isWeb = Platform.OS === "web"
 
 const createApiClient =
   (method: ApiClientMethods) =>
-  async (...args: [url: string, config?: object]) => {
+  async <T = unknown>(
+    ...args: [url: string, config?: object]
+  ): Promise<AxiosResponse<T>> => {
     const authManager = getAuthManager()
 
     const accessToken = await authManager
@@ -38,7 +40,7 @@ const createApiClient =
       client.interceptors.request.use(refreshInterceptor)
     }
 
-    return client[method](...args).catch((error) => {
+    return client[method]<T>(...args).catch((error) => {
       throw new ApiClientError(`Error in api client: ${error}`)
     })
   }

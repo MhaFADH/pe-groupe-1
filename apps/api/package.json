@@ -12,6 +12,7 @@
     "@hono/node-server": "^1.14.1",
     "@hono/zod-validator": "^0.4.3",
     "@pe/db": "workspace:*",
+    "@pe/types": "workspace:*",
     "@pe/schemas": "workspace:*",
     "@types/jsonwebtoken": "^9.0.9",
     "axios": "^1.9.0",

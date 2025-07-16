@@ -1,10 +1,9 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useLocalSearchParams, useRouter } from "expo-router"
 import { t } from "i18next"
 import { useEffect, useState } from "react"
 import { Alert, ScrollView, Text, View } from "react-native"
 import Animated, { FadeIn } from "react-native-reanimated"
-
-import { type FullTreasureHuntType } from "@pe/types"
 
 import { LoadingIndicator } from "@/components"
 import { useAuthManager } from "@/components/contexts"
@@ -26,36 +25,73 @@ const HuntDetailsPage = () => {
 
   const { isAuthenticated } = useAuthManager()
   const router = useRouter()
-  const [hunt, setHunt] = useState<FullTreasureHuntType | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [isJoined, setIsJoined] = useState(false)
+  const queryClient = useQueryClient()
+  const [isJoined, setIsJoined] = useState(huntId === currentHuntId)
+
+  const fetchHuntDetails = async () => {
+    const response = await apiClient.get<TreasureHuntDetailsResponse>(
+      `/treasure-hunts/${huntId}`,
+    )
+
+    return response.data.result
+  }
+
+  const {
+    data: hunt,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["hunt-details", huntId],
+    queryFn: fetchHuntDetails,
+    enabled: isAuthenticated,
+  })
+
+  const joinHuntMutation = useMutation({
+    mutationFn: async () => {
+      await apiClient.post(`/treasure-hunts/participation/${huntId}/join`)
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["hunts"] })
+      await refetch()
+    },
+    onError: () => {
+      Alert.alert(t("error"), t("failedToJoinHunt"))
+    },
+  })
+
+  const leaveHuntMutation = useMutation({
+    mutationFn: async () => {
+      await apiClient.delete(`/treasure-hunts/participation/${huntId}/leave`)
+    },
+    onSuccess: async () => {
+      setIsJoined(false)
+      await queryClient.invalidateQueries({ queryKey: ["hunts"] })
+      router.back()
+    },
+    onError: () => {
+      Alert.alert(t("error"), t("failedToLeaveHunt"))
+    },
+  })
 
   useEffect(() => {
     if (!isAuthenticated) {
       router.replace("/(mobile)")
     }
+  }, [isAuthenticated, router])
 
-    void apiClient
-      .get<TreasureHuntDetailsResponse>(`/treasure-hunts/${huntId}`)
-      .then((response) => {
-        const { result } = response.data
-        setHunt(result)
-        setIsLoading(false)
-        setIsJoined(currentHuntId === result.id)
-      })
-      .catch(() => {
-        setError("Failed to fetch hunts. Please try again later.")
-        setIsLoading(false)
-      })
-  }, [huntId, isAuthenticated, router, currentHuntId])
+  useEffect(() => {
+    if (hunt && joinHuntMutation.isSuccess) {
+      setIsJoined(true)
+    }
+  }, [hunt, joinHuntMutation.isSuccess])
 
   if (isLoading) {
     return <LoadingIndicator />
   }
 
   if (error) {
-    return <ErrorDisplay message={error} />
+    return <ErrorDisplay message={t("errorLoadingHunts")} />
   }
 
   const handleJoinHunt = () => {
@@ -81,7 +117,7 @@ const HuntDetailsPage = () => {
       return
     }
 
-    Alert.alert(t("success"), t("youHaveJoinedHunt"))
+    joinHuntMutation.mutate()
   }
 
   const handleLeaveHunt = () => {
@@ -94,7 +130,7 @@ const HuntDetailsPage = () => {
         text: t("leaveHunt"),
         style: "destructive",
         onPress: () => {
-          Alert.alert(t("leftHunt"), t("youHaveLeftHunt"))
+          leaveHuntMutation.mutate()
         },
       },
     ])
@@ -107,7 +143,9 @@ const HuntDetailsPage = () => {
   if (!hunt) {
     return (
       <View className="flex-1 items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <Text className="text-gray-600 dark:text-gray-300">Hunt not found</Text>
+        <Text className="text-gray-600 dark:text-gray-300">
+          {t("noHuntsAvailable")}
+        </Text>
       </View>
     )
   }

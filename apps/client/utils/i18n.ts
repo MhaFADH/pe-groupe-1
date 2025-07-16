@@ -74,6 +74,8 @@ const resources = {
       areYouSureLeaveHunt: "Are you sure you want to leave this hunt?",
       leftHunt: "Left Hunt",
       youHaveLeftHunt: "You have left the hunt.",
+      failedToJoinHunt: "Failed to join the hunt. Please try again later.",
+      failedToLeaveHunt: "Failed to leave the hunt. Please try again later.",
       playHuntTitle: "Play Hunt",
       huntGameplayStart: "Hunt gameplay would start here!",
 
@@ -188,6 +190,8 @@ const resources = {
       maxParticipantsMin: "Must be at least 1 participant",
       locationRequired: "Please select a location on the map",
       endDateInvalid: "End date must be in the future",
+      errorLoadingHunts: "Failed to load hunts. Please try again later.",
+      error: "Error",
     },
   },
   fr: {
@@ -262,6 +266,10 @@ const resources = {
       areYouSureLeaveHunt: "Êtes-vous sûr de vouloir quitter cette chasse ?",
       leftHunt: "Chasse Quittée",
       youHaveLeftHunt: "Vous avez quitté la chasse.",
+      failedToJoinHunt:
+        "Échec de la tentative de rejoindre la chasse. Veuillez réessayer plus tard.",
+      failedToLeaveHunt:
+        "Échec de la tentative de quitter la chasse. Veuillez réessayer plus tard.",
       playHuntTitle: "Jouer la Chasse",
       huntGameplayStart: "Le gameplay de la chasse commencerait ici !",
 
@@ -385,6 +393,9 @@ const resources = {
       maxParticipantsMin: "Il doit y avoir au moins 1 participant",
       locationRequired: "Veuillez sélectionner un emplacement sur la carte",
       endDateInvalid: "La date de fin doit être dans le futur",
+      errorLoadingHunts:
+        "Échec du chargement des chasses. Veuillez réessayer plus tard.",
+      error: "Erreur",
     },
   },
 }

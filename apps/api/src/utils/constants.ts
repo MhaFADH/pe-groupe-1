@@ -9,4 +9,7 @@ export const ERROR_RESPONSES = {
   },
   userNotSynced: { message: "User not synced", code: 404 },
   failedToSync: { message: "Failed to sync user", code: 500 },
+  alreadyInHunt: { message: "You are already in a hunt", code: 400 },
+  notInHunt: { message: "You are not in this hunt", code: 400 },
+  huntFinished: { message: "This hunt is already finished", code: 400 },
 } satisfies Record<string, { message: string; code: StatusCode }>

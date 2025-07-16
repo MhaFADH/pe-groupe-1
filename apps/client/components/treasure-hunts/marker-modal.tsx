@@ -1,24 +1,24 @@
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
-import { type Marker } from "@/hooks/use-playable-map"
+import { type TreasureHintType } from "@pe/types"
 
 type Props = {
-  marker: Marker | null
+  hint: TreasureHintType | null
   onClose: () => void
 }
 
 const MarkerModal = (props: Props) => {
-  const { marker, onClose } = props
+  const { hint, onClose } = props
 
   return (
-    <Modal visible={Boolean(marker)} transparent>
+    <Modal visible={Boolean(hint)} transparent>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          {marker && (
+          {hint && (
             <>
-              <Text style={styles.title}>{marker.title}</Text>
+              <Text style={styles.title}>{hint.title}</Text>
               <View style={styles.divider} />
-              <Text style={styles.description}>{marker.description}</Text>
+              <Text style={styles.description}>{hint.description}</Text>
               <TouchableOpacity style={styles.closeButton} onPress={onClose}>
                 <Text style={styles.closeButtonText}>Close</Text>
               </TouchableOpacity>

@@ -3,19 +3,24 @@ import * as Location from "expo-location"
 import { getDistance } from "geolib"
 import { useCallback, useEffect, useState } from "react"
 
-type Coords = { latitude: number; longitude: number }
+import { type TreasureHintType } from "@pe/types"
 
-export type Marker = { id: number; title: string; description: string } & Coords
+type Coords = { latitude: number; longitude: number }
 
 const DISTANCE_INTERVAL = 10
 
-const usePlayableMap = (markersData: Marker[], proximityThreshold: number) => {
+const usePlayableMap = (
+  hintsData: TreasureHintType[],
+  proximityThreshold: number,
+) => {
   const [location, setLocation] = useState<Coords | null>(null)
-  const [markers, setMarkers] = useState<Marker[]>([])
-  const [selectedMarker, setSelectedMarker] = useState<Marker | null>(null)
+  const [hints, setHints] = useState<TreasureHintType[]>([])
+  const [selectedHint, setSelectedHint] = useState<TreasureHintType | null>(
+    null,
+  )
 
-  const setSelectedMarkerCallback = useCallback(
-    (marker: Marker | null) => () => setSelectedMarker(marker),
+  const setSelectedHintCallback = useCallback(
+    (hint: TreasureHintType | null) => () => setSelectedHint(hint),
     [],
   )
 
@@ -52,28 +57,28 @@ const usePlayableMap = (markersData: Marker[], proximityThreshold: number) => {
       return
     }
 
-    const nearbyMarkers = markersData.filter(({ latitude, longitude }) => {
+    const nearbyHints = hintsData.filter(({ latitude, longitude }) => {
       const distance = getDistance(location, { latitude, longitude })
 
       return distance <= proximityThreshold
     })
 
-    setMarkers((prev) => {
-      const existingIds = new Set(prev.map((m) => m.id))
+    setHints((prev) => {
+      const existingIds = new Set(prev.map(({ id }) => id))
 
-      const newMarkers = nearbyMarkers.filter((m) => !existingIds.has(m.id))
+      const newHints = nearbyHints.filter(({ id }) => !existingIds.has(id))
 
-      if (newMarkers.length === 0) {
+      if (newHints.length === 0) {
         return prev
       }
 
-      setSelectedMarkerCallback(newMarkers[0]!)()
+      setSelectedHint(newHints[0]!)
 
-      return [...prev, ...newMarkers]
+      return [...prev, ...newHints]
     })
-  }, [location, markersData, proximityThreshold, setSelectedMarkerCallback])
+  }, [hintsData, location, proximityThreshold])
 
-  return { location, markers, selectedMarker, setSelectedMarkerCallback }
+  return { location, hints, selectedHint, setSelectedHintCallback }
 }
 
 export default usePlayableMap

@@ -1,44 +1,50 @@
 import MapView, { Circle, Marker as MapMarker } from "react-native-maps"
 
-import MarkerModal from "@/components/treasure-hunts/marker-modal"
-import usePlayableMap, { type Marker } from "@/hooks/use-playable-map"
+import { type TreasureHintType } from "@pe/types"
 
-const markersData: Marker[] = [
+import MarkerModal from "@/components/treasure-hunts/marker-modal"
+import usePlayableMap from "@/hooks/use-playable-map"
+
+const hintsData: TreasureHintType[] = [
   {
-    id: 1,
-    title: "Marker 1",
+    id: "1",
+    title: "Hint 1",
     description: "Lorem ipsum 1...",
     latitude: 48.93951,
     longitude: 2.23559,
+    treasureHuntId: "1",
   },
   {
-    id: 2,
-    title: "Marker 2",
+    id: "2",
+    title: "Hint 2",
     description: "Lorem ipsum 2...",
     latitude: 48.93945,
     longitude: 2.2357,
+    treasureHuntId: "1",
   },
   {
-    id: 3,
-    title: "Marker 3",
+    id: "3",
+    title: "Hint 3",
     description: "Lorem ipsum 3...",
     latitude: 48.93947,
     longitude: 2.23561,
+    treasureHuntId: "1",
   },
   {
-    id: 4,
-    title: "Marker 4",
+    id: "4",
+    title: "Hint 4",
     description: "Lorem ipsum 4...",
     latitude: 48.86817,
     longitude: 2.35368,
+    treasureHuntId: "1",
   },
 ]
 
 const PROXIMITY_THRESHOLD = 15
 
 const PlayableMap = () => {
-  const { location, markers, selectedMarker, setSelectedMarkerCallback } =
-    usePlayableMap(markersData, PROXIMITY_THRESHOLD)
+  const { location, hints, selectedHint, setSelectedHintCallback } =
+    usePlayableMap(hintsData, PROXIMITY_THRESHOLD)
 
   if (!location) {
     return null
@@ -62,24 +68,24 @@ const PlayableMap = () => {
           strokeColor="black"
         />
 
-        {markers.map((marker) => (
+        {hints.map((hint) => (
           <MapMarker
-            key={marker.id}
+            key={hint.id}
             coordinate={{
-              latitude: marker.latitude,
-              longitude: marker.longitude,
+              latitude: hint.latitude,
+              longitude: hint.longitude,
             }}
-            title={marker.title}
-            description="Select marker again to see the details!"
+            title={hint.title}
+            description="Select hint again to see the details!"
             pinColor="gold"
-            onSelect={setSelectedMarkerCallback(marker)}
+            onSelect={setSelectedHintCallback(hint)}
           />
         ))}
       </MapView>
 
       <MarkerModal
-        marker={selectedMarker}
-        onClose={setSelectedMarkerCallback(null)}
+        hint={selectedHint}
+        onClose={setSelectedHintCallback(null)}
       />
     </>
   )

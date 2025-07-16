@@ -43,7 +43,7 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({
       }),
     },
     {
-      id: "create-hunts",
+      id: "profile",
       title: t("profile", { defaultValue: "Profile" }),
       icon: "person",
       description: t("yourProfile", { defaultValue: "Your Profile" }),

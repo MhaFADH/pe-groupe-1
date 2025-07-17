@@ -1,8 +1,9 @@
 import React from "react"
+import { Controller, type Control, type FieldErrors } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { Pressable, Text, View } from "react-native"
 
-import type { Hint } from "@pe/types"
+import type { CreateTreasureHunt, Hint } from "@pe/types"
 
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -10,30 +11,19 @@ import { Input } from "@/components/ui/input"
 import { LocationPicker } from "./location-picker"
 
 type HintFormProps = {
-  hint: Hint
-  onUpdate: (hint: Hint) => void
-  onDelete: () => void
+  control: Control<CreateTreasureHunt>
   index: number
-  errors?: {
-    title?: string
-    description?: string
-    latitude?: string
-    longitude?: string
-  }
+  onDelete: () => void
+  errors?: FieldErrors<Hint>
 }
 
 export const HintForm: React.FC<HintFormProps> = ({
-  hint,
-  onUpdate,
-  onDelete,
+  control,
   index,
+  onDelete,
   errors,
 }) => {
   const { t } = useTranslation()
-
-  const handleLocationSelect = (latitude: number, longitude: number) => {
-    onUpdate({ ...hint, latitude, longitude })
-  }
 
   return (
     <Card>
@@ -50,35 +40,62 @@ export const HintForm: React.FC<HintFormProps> = ({
       </View>
 
       <View className="gap-4">
-        <Input
-          label={t("hintTitle")}
-          value={hint.title}
-          onChangeText={(title) => onUpdate({ ...hint, title })}
-          placeholder={t("hintTitlePlaceholder")}
-          error={errors?.title}
-          required
+        <Controller
+          control={control}
+          name={`hints.${index}.title`}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              label={t("hintTitle")}
+              value={value}
+              onChangeText={onChange}
+              placeholder={t("hintTitlePlaceholder")}
+              error={errors?.title?.message}
+              required
+            />
+          )}
         />
 
-        <Input
-          label={t("hintDescription")}
-          value={hint.description}
-          onChangeText={(description) => onUpdate({ ...hint, description })}
-          placeholder={t("hintDescriptionPlaceholder")}
-          multiline
-          numberOfLines={3}
-          error={errors?.description}
-          required
+        <Controller
+          control={control}
+          name={`hints.${index}.description`}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              label={t("hintDescription")}
+              value={value}
+              onChangeText={onChange}
+              placeholder={t("hintDescriptionPlaceholder")}
+              multiline
+              numberOfLines={3}
+              error={errors?.description?.message}
+              required
+            />
+          )}
         />
 
         <View>
           <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
             {t("hintLocation")}
           </Text>
-          <LocationPicker
-            latitude={hint.latitude}
-            longitude={hint.longitude}
-            onLocationSelect={handleLocationSelect}
-            error={errors?.latitude ?? errors?.longitude}
+          <Controller
+            control={control}
+            name={`hints.${index}.latitude`}
+            render={({ field: { value: latitude, onChange: onLatitudeChange } }) => (
+              <Controller
+                control={control}
+                name={`hints.${index}.longitude`}
+                render={({ field: { value: longitude, onChange: onLongitudeChange } }) => (
+                  <LocationPicker
+                    latitude={latitude}
+                    longitude={longitude}
+                    onLocationSelect={(lat, lng) => {
+                      onLatitudeChange(lat)
+                      onLongitudeChange(lng)
+                    }}
+                    error={errors?.latitude?.message ?? errors?.longitude?.message}
+                  />
+                )}
+              />
+            )}
           />
         </View>
       </View>

@@ -1,8 +1,9 @@
 import React from "react"
+import type { Control, FieldArrayWithId, FieldErrors } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { Text, View } from "react-native"
 
-import type { Hint } from "@pe/types"
+import type { CreateTreasureHunt } from "@pe/types"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -10,17 +11,19 @@ import { Card } from "@/components/ui/card"
 import { HintForm } from "./hint-form"
 
 type HintsSectionProps = {
-  hints: Hint[]
+  control: Control<CreateTreasureHunt>
+  fields: FieldArrayWithId<CreateTreasureHunt, "hints", "id">[]
   onAddHint: () => void
-  onUpdateHint: (index: number, hint: Hint) => void
   onRemoveHint: (index: number) => void
+  errors?: FieldErrors<CreateTreasureHunt>
 }
 
 export const HintsSection: React.FC<HintsSectionProps> = ({
-  hints,
+  control,
+  fields,
   onAddHint,
-  onUpdateHint,
   onRemoveHint,
+  errors,
 }) => {
   const { t } = useTranslation()
 
@@ -28,7 +31,7 @@ export const HintsSection: React.FC<HintsSectionProps> = ({
     <Card>
       <View className="flex-row justify-between items-center mb-3">
         <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          {t("hints")} ({hints.length})
+          {t("hints")} ({fields.length})
         </Text>
         <Button
           title={t("addHint")}
@@ -38,19 +41,19 @@ export const HintsSection: React.FC<HintsSectionProps> = ({
         />
       </View>
 
-      {hints.length === 0 && (
+      {fields.length === 0 && (
         <Text className="text-center text-gray-500 dark:text-gray-400 py-8">
           {t("noHintsYet")}
         </Text>
       )}
 
-      {hints.map((hint, index) => (
-        <View key={index} className={index > 0 ? "mt-4" : ""}>
+      {fields.map((field, index) => (
+        <View key={field.id} className={index > 0 ? "mt-4" : ""}>
           <HintForm
-            hint={hint}
-            onUpdate={(updatedHint) => onUpdateHint(index, updatedHint)}
-            onDelete={() => onRemoveHint(index)}
+            control={control}
             index={index}
+            onDelete={() => onRemoveHint(index)}
+            errors={errors?.hints?.[index]}
           />
         </View>
       ))}

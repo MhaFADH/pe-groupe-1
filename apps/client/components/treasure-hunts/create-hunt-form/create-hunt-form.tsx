@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "expo-router"
 import React from "react"
-import { Controller, useForm } from "react-hook-form"
+import { Controller, useFieldArray, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { ScrollView, Text, View } from "react-native"
 
@@ -45,8 +45,12 @@ export const CreateHuntForm: React.FC = () => {
     defaultValues: defaultFormValues,
   })
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "hints",
+  })
+
   const watchedLocation = watch(["latitude", "longitude"])
-  const watchedHints = watch("hints")
 
   const onSubmit = async (data: CreateTreasureHunt) => {
     try {
@@ -64,27 +68,13 @@ export const CreateHuntForm: React.FC = () => {
   }
 
   const addHint = () => {
-    const currentHints = watchedHints ?? []
     const newHint: Hint = {
       title: "",
       description: "",
       latitude: watchedLocation[0] || defaultFormValues.latitude,
       longitude: watchedLocation[1] || defaultFormValues.longitude,
     }
-    setValue("hints", [...currentHints, newHint])
-  }
-
-  const updateHint = (index: number, updatedHint: Hint) => {
-    const currentHints = watchedHints ?? []
-    const newHints = [...currentHints]
-    newHints[index] = updatedHint
-    setValue("hints", newHints)
-  }
-
-  const removeHint = (index: number) => {
-    const currentHints = watchedHints ?? []
-    const newHints = currentHints.filter((_, i) => i !== index)
-    setValue("hints", newHints)
+    append(newHint)
   }
 
   return (
@@ -202,10 +192,11 @@ export const CreateHuntForm: React.FC = () => {
           </Card>
 
           <HintsSection
-            hints={watchedHints ?? []}
+            control={control}
+            fields={fields}
             onAddHint={addHint}
-            onUpdateHint={updateHint}
-            onRemoveHint={removeHint}
+            onRemoveHint={remove}
+            errors={errors}
           />
 
           <View className="gap-3 mt-4">

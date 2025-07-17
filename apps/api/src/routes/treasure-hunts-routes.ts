@@ -3,7 +3,7 @@ import { Hono } from "hono"
 import { logger } from "hono/logger"
 
 import { eq, treasureHunts } from "@pe/db"
-import { CreateTreasureHuntSchema } from "@pe/schemas"
+import { CreateTreasureHuntSchema, PatchTreasureHuntWin } from "@pe/schemas"
 
 import auth from "../middleware/auth"
 import participationRoutes from "./hunt/participation-routes"
@@ -106,6 +106,44 @@ treasureHuntsRoutes.get(
     }
 
     return send({ hunt, foundHints })
+  },
+)
+
+treasureHuntsRoutes.patch(
+  "/win",
+  auth(),
+  logger(),
+  zValidator("json", PatchTreasureHuntWin),
+  async ({ req, var: { db, fail, send, user } }) => {
+    if (!user) {
+      return fail("notFound")
+    }
+
+    const { huntId, latitude, longitude } = req.valid("json")
+
+    const hunt = await db.query.treasureHunts.findFirst({
+      columns: { latitude: true, longitude: true, winnerId: true },
+      where: eq(treasureHunts.id, huntId),
+    })
+
+    if (!hunt) {
+      return fail("notFound")
+    }
+
+    if (hunt.winnerId) {
+      return send({ success: false, message: "Someone already won!" })
+    }
+
+    if (hunt.latitude !== latitude || hunt.longitude !== longitude) {
+      return send({ success: false, message: "Bad coordinates!" })
+    }
+
+    await db
+      .update(treasureHunts)
+      .set({ winnerId: user.id })
+      .where(eq(treasureHunts.id, huntId))
+
+    return send({ success: true, message: "You win!" })
   },
 )
 

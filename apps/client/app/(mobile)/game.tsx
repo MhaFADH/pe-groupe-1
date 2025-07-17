@@ -47,16 +47,22 @@ type Params = { huntId: string }
 const PlayableMap = () => {
   const { huntId } = useLocalSearchParams<Params>()
 
-  const {
-    data: { defaultHints, hintsData },
-  } = useQuery({
+  const { data } = useQuery({
     queryKey: ["hunt-details", huntId],
     queryFn: () => fetchHuntDetails(huntId),
-    initialData: { defaultHints: [], hintsData: [] },
+    enabled: Boolean(huntId),
   })
 
+  const defaultHints = data?.defaultHints ?? []
+  const hintsData = data?.hintsData ?? []
+
   const { location, hints, selectedHint, setSelectedHintCallback } =
-    usePlayableMap(defaultHints, hintsData, PROXIMITY_THRESHOLD)
+    usePlayableMap({
+      huntId,
+      defaultHints,
+      hintsData,
+      proximityThreshold: PROXIMITY_THRESHOLD,
+    })
 
   const [isARMode, setIsARMode] = useState(false)
   const [mapType, setMapType] = useState<"standard" | "hybrid">("standard")

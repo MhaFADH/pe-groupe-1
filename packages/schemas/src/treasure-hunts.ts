@@ -9,3 +9,9 @@ export const CreateTreasureHuntSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
 })
+
+export const PatchTreasureHuntWin = z.object({
+  huntId: z.string().uuid(),
+  latitude: z.number(),
+  longitude: z.number(),
+})

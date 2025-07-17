@@ -4,6 +4,7 @@ import { cors } from "hono/cors"
 
 import { Config } from "../utils/config"
 import auth from "./middleware/auth"
+import treasureHintsUserRoutes from "./routes/treasure-hints-user-routes"
 import treasureHuntsRoutes from "./routes/treasure-hunts-routes"
 import userRoute from "./routes/user/user-routes"
 import { contextVariables, fail, send } from "./utils/context"
@@ -43,6 +44,7 @@ app.get("/test-auth", auth(), (c) => {
 
 app.route("/user", userRoute)
 app.route("/treasure-hunts", treasureHuntsRoutes)
+app.route("/treasure-hints-user", treasureHintsUserRoutes)
 
 serve(
   {

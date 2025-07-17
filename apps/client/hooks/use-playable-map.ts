@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query"
 import * as Location from "expo-location"
 import { router } from "expo-router"
 import { getDistance } from "geolib"
@@ -6,20 +7,35 @@ import { Alert } from "react-native"
 
 import { type TreasureHintType } from "@pe/types"
 
+import apiClient from "@/services/api/apiClient"
+
 type Coords = { latitude: number; longitude: number }
 
 const SCAN_INTERVAL = 5000
 
-const usePlayableMap = (
-  defaultHints: TreasureHintType[],
-  hintsData: TreasureHintType[],
-  proximityThreshold: number,
-) => {
+const usePlayableMap = (args: {
+  huntId: string
+  defaultHints: TreasureHintType[]
+  hintsData: TreasureHintType[]
+  proximityThreshold: number
+}) => {
+  const { huntId, defaultHints, hintsData, proximityThreshold } = args
+
   const [location, setLocation] = useState<Coords | null>(null)
   const [hints, setHints] = useState<TreasureHintType[]>([])
   const [selectedHint, setSelectedHint] = useState<TreasureHintType | null>(
     null,
   )
+
+  const { mutate: mutateNewHint } = useMutation({
+    mutationFn: async (data: { hintId: string }) =>
+      await apiClient.post("/treasure-hints-user", data),
+  })
+
+  const { mutate: mutateHuntFound } = useMutation({
+    mutationFn: async (data: Coords & { huntId: string }) =>
+      await apiClient.patch("/treasure-hunts/win", data),
+  })
 
   const setSelectedHintCallback = useCallback(
     (hint: TreasureHintType | null) => () => setSelectedHint(hint),
@@ -88,9 +104,15 @@ const usePlayableMap = (
 
           newHints.forEach((newHint) => {
             if (newHint.id === newHint.treasureHuntId) {
-              treasureFound = true
-
               clearInterval(interval)
+
+              mutateHuntFound({
+                huntId,
+                latitude: newHint.latitude,
+                longitude: newHint.longitude,
+              })
+
+              treasureFound = true
 
               Alert.alert(
                 "Congratulations!",
@@ -103,6 +125,8 @@ const usePlayableMap = (
                   },
                 ],
               )
+            } else {
+              mutateNewHint({ hintId: newHint.id })
             }
           })
 
@@ -120,7 +144,7 @@ const usePlayableMap = (
     return () => {
       clearInterval(interval)
     }
-  }, [hintsData, proximityThreshold])
+  }, [hintsData, huntId, mutateHuntFound, mutateNewHint, proximityThreshold])
 
   return { location, hints, selectedHint, setSelectedHintCallback }
 }

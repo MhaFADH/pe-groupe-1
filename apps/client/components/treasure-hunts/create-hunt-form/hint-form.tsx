@@ -1,5 +1,5 @@
 import React from "react"
-import { Controller, type Control, type FieldErrors } from "react-hook-form"
+import { type Control, Controller, type FieldErrors } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { Pressable, Text, View } from "react-native"
 
@@ -79,11 +79,15 @@ export const HintForm: React.FC<HintFormProps> = ({
           <Controller
             control={control}
             name={`hints.${index}.latitude`}
-            render={({ field: { value: latitude, onChange: onLatitudeChange } }) => (
+            render={({
+              field: { value: latitude, onChange: onLatitudeChange },
+            }) => (
               <Controller
                 control={control}
                 name={`hints.${index}.longitude`}
-                render={({ field: { value: longitude, onChange: onLongitudeChange } }) => (
+                render={({
+                  field: { value: longitude, onChange: onLongitudeChange },
+                }) => (
                   <LocationPicker
                     latitude={latitude}
                     longitude={longitude}
@@ -91,7 +95,9 @@ export const HintForm: React.FC<HintFormProps> = ({
                       onLatitudeChange(lat)
                       onLongitudeChange(lng)
                     }}
-                    error={errors?.latitude?.message ?? errors?.longitude?.message}
+                    error={
+                      errors?.latitude?.message ?? errors?.longitude?.message
+                    }
                   />
                 )}
               />

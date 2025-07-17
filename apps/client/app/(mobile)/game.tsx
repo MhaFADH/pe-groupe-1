@@ -67,7 +67,7 @@ const PlayableMap = () => {
     usePlayableMap(hintsData, PROXIMITY_THRESHOLD)
 
   const [isARMode, setIsARMode] = useState(false)
-  const [mapType, setMapType] = useState<"standard" | "hybrid">("hybrid")
+  const [mapType, setMapType] = useState<"standard" | "hybrid">("standard")
   const mapRef = useRef<MapView>(null)
 
   if (!location) {

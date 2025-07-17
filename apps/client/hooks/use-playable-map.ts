@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import * as Location from "expo-location"
 import { router } from "expo-router"
 import { getDistance } from "geolib"
@@ -9,7 +8,7 @@ import { type TreasureHintType } from "@pe/types"
 
 type Coords = { latitude: number; longitude: number }
 
-const DISTANCE_INTERVAL = 10
+const SCAN_INTERVAL = 5000
 
 const usePlayableMap = (
   hintsData: TreasureHintType[],
@@ -29,7 +28,7 @@ const usePlayableMap = (
   useEffect(() => {
     let subscription: Location.LocationSubscription | null = null
 
-    ;(async () => {
+    void (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync()
 
       if (status !== Location.PermissionStatus.GRANTED) {
@@ -39,7 +38,6 @@ const usePlayableMap = (
       subscription = await Location.watchPositionAsync(
         {
           accuracy: Location.Accuracy.High,
-          distanceInterval: DISTANCE_INTERVAL,
         },
         ({ coords: { latitude, longitude } }) => {
           setLocation({ latitude, longitude })
@@ -55,44 +53,69 @@ const usePlayableMap = (
   }, [])
 
   useEffect(() => {
-    if (!location) {
-      return
+    const interval = setInterval(() => {
+      const checkLocation = async () => {
+        const {
+          coords: { latitude, longitude },
+        } = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.High,
+        })
+
+        const nearbyHints = hintsData.filter((hint) => {
+          const distance = getDistance(
+            { latitude, longitude },
+            { latitude: hint.latitude, longitude: hint.longitude },
+          )
+
+          return distance <= proximityThreshold
+        })
+
+        let treasureFound = false
+
+        setHints((prev) => {
+          const existingIds = new Set(prev.map(({ id }) => id))
+
+          const newHints = nearbyHints.filter(({ id }) => !existingIds.has(id))
+
+          if (newHints.length === 0) {
+            return prev
+          }
+
+          newHints.forEach((newHint) => {
+            if (newHint.id === newHint.treasureHuntId) {
+              treasureFound = true
+
+              clearInterval(interval)
+
+              Alert.alert(
+                "Congratulations!",
+                "You just found the treasure 🥳",
+                [
+                  {
+                    onPress: () => {
+                      router.push("/(mobile)/home")
+                    },
+                  },
+                ],
+              )
+            }
+          })
+
+          if (!treasureFound) {
+            setSelectedHint(newHints[0]!)
+          }
+
+          return [...prev, ...newHints]
+        })
+      }
+
+      void checkLocation()
+    }, SCAN_INTERVAL)
+
+    return () => {
+      clearInterval(interval)
     }
-
-    const nearbyHints = hintsData.filter(({ latitude, longitude }) => {
-      const distance = getDistance(location, { latitude, longitude })
-
-      return distance <= proximityThreshold
-    })
-
-    let treasureFound = false
-
-    setHints((prev) => {
-      const existingIds = new Set(prev.map(({ id }) => id))
-
-      const newHints = nearbyHints.filter(({ id }) => !existingIds.has(id))
-
-      if (newHints.length === 0) {
-        return prev
-      }
-
-      newHints.forEach((newHint) => {
-        if (newHint.id === newHint.treasureHuntId) {
-          treasureFound = true
-
-          Alert.alert("Congratulations!", "You just found the treasure 🥳", [
-            { onPress: () => router.push("/(mobile)/home") },
-          ])
-        }
-      })
-
-      if (!treasureFound) {
-        setSelectedHint(newHints[0]!)
-      }
-
-      return [...prev, ...newHints]
-    })
-  }, [hintsData, location, proximityThreshold])
+  }, [hintsData, proximityThreshold])
 
   return { location, hints, selectedHint, setSelectedHintCallback }
 }

@@ -76,8 +76,12 @@ treasureHuntsRoutes.get(
   "/:id",
   auth(),
   logger(),
-  async ({ req, var: { send, db, fail } }) => {
+  async ({ req, var: { send, db, fail, user: userContext } }) => {
     const { id } = req.param()
+
+    if (!id || !userContext) {
+      return fail("notFound")
+    }
 
     const hunt = await db.query.treasureHunts.findFirst({
       where: eq(treasureHunts.id, id),
@@ -93,11 +97,15 @@ treasureHuntsRoutes.get(
       },
     })
 
+    const foundHints = hunt?.hints.filter((hint) =>
+      hint.users.some((user) => user.userId === userContext.id),
+    )
+
     if (!hunt) {
       return fail("notFound")
     }
 
-    return send(hunt)
+    return send({ hunt, foundHints })
   },
 )
 

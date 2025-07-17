@@ -164,8 +164,6 @@ export const CreateHuntForm: React.FC = () => {
                         ? t(errors.maxParticipants.message)
                         : ""
                     }
-                    min={1}
-                    max={100}
                     required
                   />
                 )}

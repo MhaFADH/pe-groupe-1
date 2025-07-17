@@ -7,8 +7,6 @@ type NumberInputProps = {
   onChange: (value: number) => void
   placeholder?: string
   error?: string
-  min?: number
-  max?: number
   required?: boolean
   className?: string
 }
@@ -19,17 +17,13 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   onChange,
   placeholder,
   error,
-  min = 1,
-  max = 100,
   required = false,
   className = "",
 }) => {
   const handleChange = (text: string) => {
     const numValue = parseInt(text, 10)
 
-    if (!isNaN(numValue) && numValue >= min && numValue <= max) {
-      onChange(numValue)
-    }
+    onChange(numValue)
   }
 
   return (

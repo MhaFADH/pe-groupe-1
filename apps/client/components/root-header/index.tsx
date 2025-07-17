@@ -32,6 +32,10 @@ const RootHeader: React.FC<RootHeaderProps> = ({ route, onOpenDrawer }) => {
   const canGoBack =
     goBackRoutes.includes(currentPath) || currentPath.includes("/explore/")
 
+  if (currentPath === "/game") {
+    return null
+  }
+
   const handlePress = () => {
     if (canGoBack) {
       router.back()

@@ -1,8 +1,12 @@
-import MapView, { Circle, Marker as MapMarker } from "react-native-maps"
+import { useRef, useState } from "react"
+import { View } from "react-native"
+import MapView, { Marker as MapMarker } from "react-native-maps"
 
 import { type TreasureHintType } from "@pe/types"
 
+import GameHeader from "@/components/treasure-hunts/game-header"
 import MarkerModal from "@/components/treasure-hunts/marker-modal"
+import SonarOverlay from "@/components/ui/map/sonar-effect"
 import usePlayableMap from "@/hooks/use-playable-map"
 
 const hintsData: TreasureHintType[] = [
@@ -62,42 +66,51 @@ const PlayableMap = () => {
   const { location, hints, selectedHint, setSelectedHintCallback } =
     usePlayableMap(hintsData, PROXIMITY_THRESHOLD)
 
+  const [isARMode, setIsARMode] = useState(false)
+  const [mapType, setMapType] = useState<"standard" | "hybrid">("hybrid")
+  const mapRef = useRef<MapView>(null)
+
   if (!location) {
     return null
   }
 
   return (
     <>
-      <MapView
-        style={{ flex: 1 }}
-        initialRegion={{
-          ...location,
-          latitudeDelta: 0.001,
-          longitudeDelta: 0.001,
-        }}
-        showsUserLocation
-      >
-        <Circle
-          center={location}
-          radius={PROXIMITY_THRESHOLD}
-          fillColor="green"
-          strokeColor="black"
-        />
+      <GameHeader
+        isARMode={isARMode}
+        setIsARMode={setIsARMode}
+        mapType={mapType}
+        setMapType={setMapType}
+      />
 
-        {hints.map((hint) => (
-          <MapMarker
-            key={hint.id}
-            coordinate={{
-              latitude: hint.latitude,
-              longitude: hint.longitude,
-            }}
-            title={hint.title}
-            description="Select hint again to see the details!"
-            pinColor="gold"
-            onSelect={setSelectedHintCallback(hint)}
-          />
-        ))}
-      </MapView>
+      <View className="flex-1 relative">
+        <MapView
+          ref={mapRef}
+          style={{ flex: 1 }}
+          initialRegion={{
+            ...location,
+            latitudeDelta: 0.001,
+            longitudeDelta: 0.001,
+          }}
+          mapType={mapType}
+          showsUserLocation
+        >
+          {hints.map((hint) => (
+            <MapMarker
+              key={hint.id}
+              coordinate={{
+                latitude: hint.latitude,
+                longitude: hint.longitude,
+              }}
+              title={hint.title}
+              description="Select hint again to see the details!"
+              pinColor="gold"
+              onSelect={setSelectedHintCallback(hint)}
+            />
+          ))}
+        </MapView>
+        <SonarOverlay mapRef={mapRef} userLocation={location} />
+      </View>
 
       <MarkerModal
         hint={selectedHint}

@@ -137,7 +137,10 @@ const HuntDetailsPage = () => {
   }
 
   const handlePlayHunt = () => {
-    Alert.alert(t("playHuntTitle"), t("huntGameplayStart"))
+    router.push({
+      pathname: "/game",
+      params: { huntId: currentHuntId },
+    })
   }
 
   if (!hunt) {

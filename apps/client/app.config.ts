@@ -3,6 +3,8 @@ import { ConfigContext, ExpoConfig } from "expo/config"
 
 config({ path: "../../.env" })
 
+const bundleId = process.env.EXPO_PUBLIC_BUNDLE_ID || "lootopia.dev"
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: "client",
@@ -15,14 +17,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   newArchEnabled: true,
   ios: {
     supportsTablet: true,
-    bundleIdentifier: "lootopia.dev",
+    bundleIdentifier: bundleId,
   },
   android: {
     adaptiveIcon: {
       foregroundImage: "./assets/images/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
-    package: "lootopia.dev",
+    package: bundleId,
   },
   web: {
     bundler: "metro",
@@ -61,9 +63,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   experiments: {
     typedRoutes: true,
   },
+
   extra: {
     eas: {
-      projectId: "b6b6ce61-f98b-41f3-b68d-e43d4d33f703",
+      projectId: "7676e82c-dc45-43b2-ac94-80b5eb7f88a4",
     },
   },
 })

@@ -11,6 +11,7 @@ type Coords = { latitude: number; longitude: number }
 const SCAN_INTERVAL = 5000
 
 const usePlayableMap = (
+  defaultHints: TreasureHintType[],
   hintsData: TreasureHintType[],
   proximityThreshold: number,
 ) => {
@@ -24,6 +25,10 @@ const usePlayableMap = (
     (hint: TreasureHintType | null) => () => setSelectedHint(hint),
     [],
   )
+
+  useEffect(() => {
+    setHints(defaultHints)
+  }, [defaultHints])
 
   useEffect(() => {
     let subscription: Location.LocationSubscription | null = null

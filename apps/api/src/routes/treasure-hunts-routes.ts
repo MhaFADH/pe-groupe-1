@@ -16,7 +16,8 @@ treasureHuntsRoutes.post(
   "/",
   auth(),
   zValidator("json", CreateTreasureHuntSchema),
-  async ({ req, var: { send, db, authUserId } }) => {
+  logger(),
+  async ({ req, var: { send, fail, db, user } }) => {
     const {
       title,
       description,
@@ -27,6 +28,10 @@ treasureHuntsRoutes.post(
       longitude,
     } = req.valid("json")
 
+    if (!user) {
+      return fail("notFound")
+    }
+
     await db.insert(treasureHunts).values({
       title,
       description,
@@ -34,7 +39,7 @@ treasureHuntsRoutes.post(
       startDate: new Date(),
       maxParticipants,
       endDate,
-      creatorId: authUserId,
+      creatorId: user.id,
       latitude,
       longitude,
       // Placeholder for location, to be replaced with actual logic

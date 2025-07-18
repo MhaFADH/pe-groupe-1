@@ -33,12 +33,6 @@ export const HintsSection: React.FC<HintsSectionProps> = ({
         <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
           {t("hints")} ({fields.length})
         </Text>
-        <Button
-          title={t("addHint")}
-          onPress={onAddHint}
-          variant="outline"
-          size="sm"
-        />
       </View>
 
       {fields.length === 0 && (
@@ -57,6 +51,13 @@ export const HintsSection: React.FC<HintsSectionProps> = ({
           />
         </View>
       ))}
+      <Button
+        title={t("addHint")}
+        onPress={onAddHint}
+        variant="outline"
+        size="sm"
+        className="mt-4"
+      />
     </Card>
   )
 }

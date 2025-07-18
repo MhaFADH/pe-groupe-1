@@ -47,8 +47,8 @@ type Params = { huntId: string }
 const PlayableMap = () => {
   const { huntId } = useLocalSearchParams<Params>()
 
-  const { data } = useQuery({
-    queryKey: ["hunt-details", huntId],
+  const { data, isSuccess } = useQuery({
+    queryKey: ["game", huntId],
     queryFn: () => fetchHuntDetails(huntId),
     enabled: Boolean(huntId),
   })
@@ -59,6 +59,7 @@ const PlayableMap = () => {
   const { location, hints, selectedHint, setSelectedHintCallback } =
     usePlayableMap({
       huntId,
+      isSuccess,
       defaultHints,
       hintsData,
       proximityThreshold: PROXIMITY_THRESHOLD,

@@ -15,11 +15,13 @@ const SCAN_INTERVAL = 5000
 
 const usePlayableMap = (args: {
   huntId: string
+  isSuccess: boolean
   defaultHints: TreasureHintType[]
   hintsData: TreasureHintType[]
   proximityThreshold: number
 }) => {
-  const { huntId, defaultHints, hintsData, proximityThreshold } = args
+  const { huntId, isSuccess, defaultHints, hintsData, proximityThreshold } =
+    args
 
   const [location, setLocation] = useState<Coords | null>(null)
   const [hints, setHints] = useState<TreasureHintType[]>([])
@@ -43,8 +45,10 @@ const usePlayableMap = (args: {
   )
 
   useEffect(() => {
-    setHints(defaultHints)
-  }, [defaultHints])
+    if (isSuccess) {
+      setHints(defaultHints)
+    }
+  }, [defaultHints, isSuccess])
 
   useEffect(() => {
     let subscription: Location.LocationSubscription | null = null

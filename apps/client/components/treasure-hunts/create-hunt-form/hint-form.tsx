@@ -49,7 +49,7 @@ export const HintForm: React.FC<HintFormProps> = ({
               value={value}
               onChangeText={onChange}
               placeholder={t("hintTitlePlaceholder")}
-              error={errors?.title?.message}
+              error={t(errors?.title?.message ?? "")}
               required
             />
           )}
@@ -66,7 +66,7 @@ export const HintForm: React.FC<HintFormProps> = ({
               placeholder={t("hintDescriptionPlaceholder")}
               multiline
               numberOfLines={3}
-              error={errors?.description?.message}
+              error={t(errors?.description?.message ?? "")}
               required
             />
           )}
@@ -96,7 +96,8 @@ export const HintForm: React.FC<HintFormProps> = ({
                       onLongitudeChange(lng)
                     }}
                     error={
-                      errors?.latitude?.message ?? errors?.longitude?.message
+                      t(errors?.latitude?.message ?? "") ||
+                      t(errors?.longitude?.message ?? "")
                     }
                   />
                 )}

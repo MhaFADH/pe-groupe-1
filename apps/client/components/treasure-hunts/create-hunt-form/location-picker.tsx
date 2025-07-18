@@ -1,15 +1,7 @@
-import Geolocation from "@react-native-community/geolocation"
-import React, { useCallback, useEffect, useState } from "react"
+import * as Location from "expo-location"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
-import {
-  Alert,
-  PermissionsAndroid,
-  Platform,
-  Pressable,
-  Text,
-  TextInput,
-  View,
-} from "react-native"
+import { Alert, Pressable, Text, TextInput, View } from "react-native"
 
 import { useTheme } from "@/components/contexts"
 import MapView, {
@@ -37,66 +29,35 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
   const [isSearching, setIsSearching] = useState(false)
-
-  const requestLocationPermission = async () => {
-    if (Platform.OS === "android") {
-      try {
-        const permission = PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-
-        if (!permission) {
-          return false
-        }
-
-        const granted = await PermissionsAndroid.request(permission, {
-          title: "Location Permission",
-          message:
-            "This app needs access to location to show your current position.",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK",
-        })
-
-        return granted === PermissionsAndroid.RESULTS.GRANTED
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.warn(err)
-
-        return false
-      }
-    }
-
-    return true
-  }
+  const isMounted = useRef(false)
 
   const getCurrentLocation = useCallback(async () => {
-    const hasPermission = await requestLocationPermission()
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync()
 
-    if (!hasPermission) {
+      if (status !== Location.PermissionStatus.GRANTED) {
+        setLoading(false)
+
+        return
+      }
+
+      const location = await Location.getCurrentPositionAsync({})
+      const { latitude: lat, longitude: lng } = location.coords
+      onLocationSelect(lat, lng)
       setLoading(false)
-
-      return
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn("Error getting current location:", err)
+      setLoading(false)
     }
-
-    Geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude: lat, longitude: lng } = position.coords
-        onLocationSelect(lat, lng)
-        setLoading(false)
-      },
-      (locationError) => {
-        // eslint-disable-next-line no-console
-        console.warn("Error getting location:", locationError)
-        setLoading(false)
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 10000,
-      },
-    )
   }, [onLocationSelect])
 
   useEffect(() => {
+    if (isMounted.current) {
+      return
+    }
+
+    isMounted.current = true
     void getCurrentLocation()
   }, [getCurrentLocation])
 

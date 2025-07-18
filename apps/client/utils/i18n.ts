@@ -5,6 +5,35 @@ import { initReactI18next } from "react-i18next"
 const resources = {
   en: {
     translation: {
+      createHuntButton: "Create Hunt",
+      cancel: "Cancel",
+      close: "Close",
+      clear: "Clear",
+      validate: "Validate",
+
+      // Hints
+      hints: "Hints",
+      hint: "Hint",
+      addHint: "Add Hint",
+      noHintsYet: "No hints added yet",
+      hintTitle: "Hint Title",
+      hintTitlePlaceholder: "Enter hint title",
+      hintDescription: "Hint Description",
+      hintDescriptionPlaceholder: "Describe the hint...",
+      hintLocation: "Hint Location",
+
+      // Form Validation
+      titleRequired: "Title is required",
+      titleMinLength: "Title must be at least 3 characters long",
+      descriptionMaxLength: "Description cannot exceed 500 characters",
+      maxParticipantsRequired: "Maximum participants is required",
+      maxParticipantsMin: "There must be at least 1 participant",
+      locationRequired: "Please select a location on the map",
+      endDateInvalid: "End date must be in the future",
+      hintTitleRequired: "Hint title is required",
+      hintTitleMinLength: "Hint title must be at least 3 characters long",
+      hintDescriptionRequired: "Hint description is required",
+      hintDescriptionMaxLength: "Hint description cannot exceed 500 characters",
       appName: "Lootopia",
       appDescription: "Discover Hidden Treasures Around You",
       appDescriptionShort: "Explore the World",
@@ -61,14 +90,11 @@ const resources = {
       huntDetails: "Hunt Details",
       participants: "Participants",
       ends: "Ends",
-      hints: "Hints",
       hintsFound: "Hints Found",
-      noHintsYet: "No hints found yet",
       startExploring: "Start exploring to find hints!",
       alreadyJoinedHunt: "You're already in a hunt",
       mustLeaveCurrentHunt: "Leave your current hunt to join a new one",
       viewCurrentHunt: "View Current Hunt",
-      cancel: "Cancel",
       success: "Success",
       youHaveJoinedHunt: "You have joined the hunt!",
       areYouSureLeaveHunt: "Are you sure you want to leave this hunt?",
@@ -177,19 +203,7 @@ const resources = {
       searchLocationError: "Search Error",
       searchLocationNotFound: "No location found for this search",
       searchLocationFailed: "Failed to search location. Please try again.",
-      createHuntButton: "Create Hunt",
-      close: "Close",
-      clear: "Clear",
-      validate: "Validate",
 
-      // Form Validation
-      titleRequired: "Title is required",
-      titleMinLength: "Title must be at least 3 characters",
-      descriptionMaxLength: "Description cannot exceed 500 characters",
-      maxParticipantsRequired: "Max participants is required",
-      maxParticipantsMin: "Must be at least 1 participant",
-      locationRequired: "Please select a location on the map",
-      endDateInvalid: "End date must be in the future",
       errorLoadingHunts: "Failed to load hunts. Please try again later.",
       error: "Error",
     },
@@ -384,6 +398,15 @@ const resources = {
       clear: "Effacer",
       validate: "Valider",
 
+      // Hints
+      hint: "Indice",
+      addHint: "Ajouter un Indice",
+      hintTitle: "Titre de l'Indice",
+      hintTitlePlaceholder: "Entrez le titre de l'indice",
+      hintDescription: "Description de l'Indice",
+      hintDescriptionPlaceholder: "Décrivez l'indice...",
+      hintLocation: "Localisation de l'Indice",
+
       // Form Validation
       titleRequired: "Le titre est requis",
       titleMinLength: "Le titre doit contenir au moins 3 caractères",
@@ -396,6 +419,12 @@ const resources = {
       errorLoadingHunts:
         "Échec du chargement des chasses. Veuillez réessayer plus tard.",
       error: "Erreur",
+      hintTitleRequired: "Le titre de l'indice est requis",
+      hintTitleMinLength:
+        "Le titre de l'indice doit contenir au moins 3 caractères",
+      hintDescriptionRequired: "La description de l'indice est requise",
+      hintDescriptionMaxLength:
+        "La description de l'indice ne peut pas dépasser 500 caractères",
     },
   },
 }

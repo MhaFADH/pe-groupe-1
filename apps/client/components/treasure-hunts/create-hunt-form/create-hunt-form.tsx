@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "expo-router"
 import React from "react"
-import { Controller, useForm } from "react-hook-form"
+import { Controller, useFieldArray, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { ScrollView, Text, View } from "react-native"
 
 import { CreateTreasureHuntSchema } from "@pe/schemas"
-import type { CreateTreasureHunt } from "@pe/types"
+import type { CreateTreasureHunt, Hint } from "@pe/types"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -16,6 +16,7 @@ import { NumberInput } from "@/components/ui/number-input"
 import { Switch } from "@/components/ui/switch"
 import apiClient from "@/services/api/apiClient"
 
+import { HintsSection } from "./hints-section"
 import { LocationPicker } from "./location-picker"
 
 const defaultFormValues: CreateTreasureHunt = {
@@ -26,6 +27,7 @@ const defaultFormValues: CreateTreasureHunt = {
   endDate: null,
   latitude: 37.78825,
   longitude: -122.4324,
+  hints: [],
 }
 
 export const CreateHuntForm: React.FC = () => {
@@ -43,6 +45,11 @@ export const CreateHuntForm: React.FC = () => {
     defaultValues: defaultFormValues,
   })
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "hints",
+  })
+
   const watchedLocation = watch(["latitude", "longitude"])
 
   const onSubmit = async (data: CreateTreasureHunt) => {
@@ -58,6 +65,16 @@ export const CreateHuntForm: React.FC = () => {
   const handleLocationSelect = (latitude: number, longitude: number) => {
     setValue("latitude", latitude)
     setValue("longitude", longitude)
+  }
+
+  const addHint = () => {
+    const newHint: Hint = {
+      title: "",
+      description: "",
+      latitude: watchedLocation[0] || defaultFormValues.latitude,
+      longitude: watchedLocation[1] || defaultFormValues.longitude,
+    }
+    append(newHint)
   }
 
   return (
@@ -137,8 +154,6 @@ export const CreateHuntForm: React.FC = () => {
                         ? t(errors.maxParticipants.message)
                         : ""
                     }
-                    min={1}
-                    max={100}
                     required
                   />
                 )}
@@ -175,6 +190,14 @@ export const CreateHuntForm: React.FC = () => {
               error={errors.latitude?.message ?? errors.longitude?.message}
             />
           </Card>
+
+          <HintsSection
+            control={control}
+            fields={fields}
+            onAddHint={addHint}
+            onRemoveHint={remove}
+            errors={errors}
+          />
 
           <View className="gap-3 mt-4">
             <Button

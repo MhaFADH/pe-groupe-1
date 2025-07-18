@@ -43,7 +43,10 @@ export const CurrentHuntBox = ({ currentHunt }: CurrentHuntBoxProps) => {
         <TouchableOpacity
           className="bg-primary-600 dark:bg-primary-500 py-3 px-6 rounded-xl"
           onPress={() => {
-            // Navigate to hunt details or resume hunt
+            router.push({
+              pathname: "/game",
+              params: { huntId: currentHunt.id },
+            })
           }}
         >
           <Text className="text-white font-semibold text-center">

@@ -1,4 +1,4 @@
-import { type FullTreasureHuntType } from "@pe/types"
+import type { FullTreasureHintType, FullTreasureHuntType } from "@pe/types"
 
 export type TreasureHuntFetchResponse = {
   result: {
@@ -7,4 +7,6 @@ export type TreasureHuntFetchResponse = {
   }
 }
 
-export type TreasureHuntDetailsResponse = { result: FullTreasureHuntType }
+export type TreasureHuntDetailsResponse = {
+  result: { hunt: FullTreasureHuntType; foundHints: FullTreasureHintType[] }
+}

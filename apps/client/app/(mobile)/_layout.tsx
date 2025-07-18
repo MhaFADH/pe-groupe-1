@@ -40,6 +40,7 @@ const MobileApp = () => {
         <Stack.Screen name="settings" />
         <Stack.Screen name="explore" />
         <Stack.Screen name="profile" />
+        <Stack.Screen name="game" />
       </Stack>
       <BurgerMenu
         isVisible={isDrawerOpen}

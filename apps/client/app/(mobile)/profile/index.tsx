@@ -12,7 +12,6 @@ const ProfilePage = () => {
   const { getThemeColor } = useThemeColor()
   const { isAuthenticated } = useAuthManager()
   const router = useRouter()
-
   useEffect(() => {
     if (!isAuthenticated) {
       router.replace("/(mobile)")
@@ -42,5 +41,4 @@ const ProfilePage = () => {
     </View>
   )
 }
-
 export default ProfilePage

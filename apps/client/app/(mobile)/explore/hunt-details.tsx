@@ -33,15 +33,13 @@ const HuntDetailsPage = () => {
       `/treasure-hunts/${huntId}`,
     )
 
-    return response.data.result
+    return {
+      foundHints: response.data.result.foundHints,
+      hunt: response.data.result.hunt,
+    }
   }
 
-  const {
-    data: hunt,
-    isLoading,
-    error,
-    refetch,
-  } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["hunt-details", huntId],
     queryFn: fetchHuntDetails,
     enabled: isAuthenticated,
@@ -81,10 +79,10 @@ const HuntDetailsPage = () => {
   }, [isAuthenticated, router])
 
   useEffect(() => {
-    if (hunt && joinHuntMutation.isSuccess) {
+    if (data?.hunt && joinHuntMutation.isSuccess) {
       setIsJoined(true)
     }
-  }, [hunt, joinHuntMutation.isSuccess])
+  }, [data?.hunt, joinHuntMutation.isSuccess])
 
   if (isLoading) {
     return <LoadingIndicator />
@@ -137,10 +135,13 @@ const HuntDetailsPage = () => {
   }
 
   const handlePlayHunt = () => {
-    Alert.alert(t("playHuntTitle"), t("huntGameplayStart"))
+    router.push({
+      pathname: "/game",
+      params: { huntId: currentHuntId },
+    })
   }
 
-  if (!hunt) {
+  if (!data?.hunt) {
     return (
       <View className="flex-1 items-center justify-center bg-gray-50 dark:bg-gray-900">
         <Text className="text-gray-600 dark:text-gray-300">
@@ -153,11 +154,11 @@ const HuntDetailsPage = () => {
   return (
     <View className="flex-1 bg-gray-50 dark:bg-gray-900">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <HuntHeader hunt={hunt} />
+        <HuntHeader hunt={data.hunt} />
 
         <View className="px-6 py-6">
           <Animated.View entering={FadeIn.delay(200)}>
-            <HuntInfo hunt={hunt} />
+            <HuntInfo hunt={data.hunt} />
 
             <HuntActions
               isJoined={isJoined}
@@ -166,7 +167,7 @@ const HuntDetailsPage = () => {
               onPlayHunt={handlePlayHunt}
             />
 
-            <HintsSection hints={hunt.hints} isJoined={isJoined} />
+            <HintsSection hints={data.foundHints} isJoined={isJoined} />
           </Animated.View>
         </View>
       </ScrollView>

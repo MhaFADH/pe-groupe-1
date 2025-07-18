@@ -1,5 +1,5 @@
 import * as Location from "expo-location"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Alert, Pressable, Text, TextInput, View } from "react-native"
 
@@ -29,6 +29,7 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
   const [isSearching, setIsSearching] = useState(false)
+  const isMounted = useRef(false)
 
   const getCurrentLocation = useCallback(async () => {
     try {
@@ -52,6 +53,11 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   }, [onLocationSelect])
 
   useEffect(() => {
+    if (isMounted.current) {
+      return
+    }
+
+    isMounted.current = true
     void getCurrentLocation()
   }, [getCurrentLocation])
 

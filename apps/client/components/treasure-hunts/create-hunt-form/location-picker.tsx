@@ -10,9 +10,12 @@ import {
   TextInput,
   View,
 } from "react-native"
-import MapView, { type MapPressEvent, Marker } from "react-native-maps"
 
 import { useTheme } from "@/components/contexts"
+import MapView, {
+  type MapPressEvent,
+  Marker,
+} from "@/packages/maps/react-native-maps"
 
 import { darkMapStyle } from "./map-styles"
 

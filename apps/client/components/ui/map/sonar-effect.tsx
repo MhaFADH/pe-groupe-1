@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { View } from "react-native"
-import type MapView from "react-native-maps"
 import Animated, {
   Easing,
   interpolate,
@@ -10,6 +9,8 @@ import Animated, {
   withRepeat,
   withTiming,
 } from "react-native-reanimated"
+
+import type MapView from "@/packages/maps/react-native-maps"
 
 const SonarOverlay = ({
   mapRef,

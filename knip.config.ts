@@ -7,6 +7,7 @@ const config: KnipConfig = {
         "app/**/*.tsx",
         "components/ui/**/index.tsx",
         "components/ar/**/*.tsx",
+        "packages/maps/*.web.tsx",
       ],
     },
   },

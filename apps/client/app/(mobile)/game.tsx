@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query"
 import { useLocalSearchParams } from "expo-router"
 import { useRef, useState } from "react"
 import { View } from "react-native"
-import MapView, { Marker as MapMarker } from "react-native-maps"
 
 import { type TreasureHintType } from "@pe/types"
 
@@ -10,6 +9,7 @@ import GameHeader from "@/components/treasure-hunts/game-header"
 import MarkerModal from "@/components/treasure-hunts/marker-modal"
 import SonarOverlay from "@/components/ui/map/sonar-effect"
 import usePlayableMap from "@/hooks/use-playable-map"
+import MapView, { Marker } from "@/packages/maps/react-native-maps"
 import apiClient from "@/services/api/apiClient"
 import { type TreasureHuntDetailsResponse } from "@/types/api-calls"
 
@@ -95,7 +95,7 @@ const PlayableMap = () => {
           showsUserLocation
         >
           {hints.map((hint) => (
-            <MapMarker
+            <Marker
               key={hint.id}
               coordinate={{
                 latitude: hint.latitude,

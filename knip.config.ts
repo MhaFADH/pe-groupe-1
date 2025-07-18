@@ -10,7 +10,11 @@ const config: KnipConfig = {
       ],
     },
   },
-  ignore: ["packages/db/src/drizzle/**", "tailwind.config.js"],
+  ignore: [
+    "packages/db/src/drizzle/**",
+    "tailwind.config.js",
+    "apps/client/packages/maps/*.web.tsx",
+  ],
   ignoreDependencies: ["@babel/runtime", "@testing-library/*"],
 }
 

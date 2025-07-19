@@ -21,7 +21,7 @@ export type TreasureHuntParticipantType =
   typeof treasureHuntParticipants.$inferSelect
 export type TreasureHuntImageType = typeof treasureHuntImages.$inferSelect
 
-export type CreateTreasureHunt = z.infer<typeof CreateTreasureHuntSchema>
+export type CreateTreasureHunt = z.input<typeof CreateTreasureHuntSchema>
 
 export type TreasureHuntWinningsType = typeof treasureHuntWinnings.$inferSelect
 export type TreasureHuntStepType = typeof treasureHuntSteps.$inferSelect

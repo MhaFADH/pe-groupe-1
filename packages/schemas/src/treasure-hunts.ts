@@ -18,7 +18,7 @@ export const CreateTreasureHuntSchema = z.object({
   endDate: z.date().nullable().optional(),
   latitude: z.number(),
   longitude: z.number(),
-  hints: z.array(HintSchema).optional(),
+  hints: z.array(HintSchema).optional().default([]),
 })
 
 export const PatchTreasureHuntWin = z.object({

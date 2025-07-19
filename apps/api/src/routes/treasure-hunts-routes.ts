@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator"
 import { Hono } from "hono"
 import { logger } from "hono/logger"
 
-import { eq, treasureHunts } from "@pe/db"
+import { eq, treasureHints, treasureHunts } from "@pe/db"
 import { CreateTreasureHuntSchema, PatchTreasureHuntWin } from "@pe/schemas"
 
 import auth from "../middleware/auth"
@@ -26,25 +26,40 @@ treasureHuntsRoutes.post(
       endDate,
       latitude,
       longitude,
+      hints,
     } = req.valid("json")
 
     if (!user) {
       return fail("notFound")
     }
 
-    await db.insert(treasureHunts).values({
-      title,
-      description,
-      isPrivate: !isPublic,
-      startDate: new Date(),
-      maxParticipants,
-      endDate,
-      creatorId: user.id,
-      latitude,
-      longitude,
-      // Placeholder for location, to be replaced with actual logic
-      location: "PLACEHOLDER",
-    })
+    const [hunt] = await db
+      .insert(treasureHunts)
+      .values({
+        title,
+        description,
+        isPrivate: !isPublic,
+        startDate: new Date(),
+        maxParticipants,
+        endDate,
+        creatorId: user.id,
+        latitude,
+        longitude,
+        // Placeholder for location, to be replaced with actual logic
+        location: "PLACEHOLDER",
+      })
+      .returning({ id: treasureHunts.id })
+
+    if (!hunt) {
+      return fail("failToCreateHunt")
+    }
+
+    await db.insert(treasureHints).values(
+      hints.map((hint) => ({
+        ...hint,
+        treasureHuntId: hunt.id,
+      })),
+    )
 
     return send("Treasure hunt created successfully")
   },

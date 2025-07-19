@@ -12,4 +12,5 @@ export const ERROR_RESPONSES = {
   alreadyInHunt: { message: "You are already in a hunt", code: 400 },
   notInHunt: { message: "You are not in this hunt", code: 400 },
   huntFinished: { message: "This hunt is already finished", code: 400 },
+  failToCreateHunt: { message: "Failed to create hunt", code: 500 },
 } satisfies Record<string, { message: string; code: StatusCode }>

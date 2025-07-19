@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator"
 import { Hono } from "hono"
 import { logger } from "hono/logger"
 
-import { eq, treasureHints, treasureHunts } from "@pe/db"
+import { eq, isNull, treasureHints, treasureHunts } from "@pe/db"
 import { CreateTreasureHuntSchema, PatchTreasureHuntWin } from "@pe/schemas"
 
 import auth from "../middleware/auth"
@@ -74,6 +74,7 @@ treasureHuntsRoutes.get(
   logger(),
   async ({ var: { send, db, user } }) => {
     const allHunts = await db.query.treasureHunts.findMany({
+      where: isNull(treasureHunts.winnerId),
       with: {
         winner: true,
         images: true,

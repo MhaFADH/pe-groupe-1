@@ -206,6 +206,7 @@ const resources = {
 
       errorLoadingHunts: "Failed to load hunts. Please try again later.",
       error: "Error",
+      unknown: "Unknown",
     },
   },
   fr: {
@@ -425,6 +426,7 @@ const resources = {
       hintDescriptionRequired: "La description de l'indice est requise",
       hintDescriptionMaxLength:
         "La description de l'indice ne peut pas dépasser 500 caractères",
+      unknown: "Inconnue",
     },
   },
 }

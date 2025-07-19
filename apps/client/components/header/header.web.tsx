@@ -53,7 +53,9 @@ export const HeaderWeb = () => {
         <Pressable
           onPress={() => router.navigate("/(web)/home")}
           className={`px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 ${
-            isActive("/(web)/home") ? "bg-primary-50 dark:bg-primary-900/20" : ""
+            isActive("/(web)/home")
+              ? "bg-primary-50 dark:bg-primary-900/20"
+              : ""
           }`}
         >
           <Text
@@ -70,7 +72,9 @@ export const HeaderWeb = () => {
         <Pressable
           onPress={() => router.navigate("/(web)/explore")}
           className={`px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 ${
-            isActive("/(web)/explore") ? "bg-primary-50 dark:bg-primary-900/20" : ""
+            isActive("/(web)/explore")
+              ? "bg-primary-50 dark:bg-primary-900/20"
+              : ""
           }`}
         >
           <Text
@@ -87,7 +91,9 @@ export const HeaderWeb = () => {
         <Pressable
           onPress={() => router.navigate("/(web)/create-hunt")}
           className={`px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 ${
-            isActive("/(web)/create-hunt") ? "bg-primary-50 dark:bg-primary-900/20" : ""
+            isActive("/(web)/create-hunt")
+              ? "bg-primary-50 dark:bg-primary-900/20"
+              : ""
           }`}
         >
           <Text

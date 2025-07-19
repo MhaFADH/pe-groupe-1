@@ -16,6 +16,8 @@ type HintsSectionProps = {
   onAddHint: () => void
   onRemoveHint: (index: number) => void
   errors?: FieldErrors<CreateTreasureHunt>
+  expandedHints: Set<number>
+  onToggleExpansion: (index: number) => void
 }
 
 export const HintsSection: React.FC<HintsSectionProps> = ({
@@ -24,6 +26,8 @@ export const HintsSection: React.FC<HintsSectionProps> = ({
   onAddHint,
   onRemoveHint,
   errors,
+  expandedHints,
+  onToggleExpansion,
 }) => {
   const { t } = useTranslation()
 
@@ -48,6 +52,8 @@ export const HintsSection: React.FC<HintsSectionProps> = ({
             index={index}
             onDelete={() => onRemoveHint(index)}
             errors={errors?.hints?.[index]}
+            isExpanded={expandedHints.has(index)}
+            onToggleExpansion={() => onToggleExpansion(index)}
           />
         </View>
       ))}

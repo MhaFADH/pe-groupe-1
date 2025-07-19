@@ -8,6 +8,7 @@ export const HintSchema = z.object({
     .max(500, "hintDescriptionMaxLength"),
   latitude: z.number(),
   longitude: z.number(),
+  location: z.string().optional(),
 })
 
 export const CreateTreasureHuntSchema = z.object({
@@ -15,10 +16,11 @@ export const CreateTreasureHuntSchema = z.object({
   description: z.string().max(500, "descriptionMaxLength").optional(),
   isPublic: z.boolean(),
   maxParticipants: z.coerce.number().min(1, "maxParticipantsMin"),
-  endDate: z.date().nullable().optional(),
+  endDate: z.coerce.date().nullable().optional(),
   latitude: z.number(),
   longitude: z.number(),
   hints: z.array(HintSchema).optional(),
+  location: z.string().optional(),
 })
 
 export const PatchTreasureHuntWin = z.object({

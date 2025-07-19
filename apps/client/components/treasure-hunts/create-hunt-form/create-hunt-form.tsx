@@ -1,12 +1,15 @@
+/* eslint-disable max-lines */
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
+import * as Location from "expo-location"
 import { useRouter } from "expo-router"
-import React from "react"
+import React, { useState } from "react"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { ScrollView, Text, View } from "react-native"
 
 import { CreateTreasureHuntSchema } from "@pe/schemas"
-import type { CreateTreasureHunt, Hint } from "@pe/types"
+import type { CreateTreasureHunt } from "@pe/types"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -33,6 +36,7 @@ const defaultFormValues: CreateTreasureHunt = {
 export const CreateHuntForm: React.FC = () => {
   const { t } = useTranslation()
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const {
     control,
@@ -50,11 +54,51 @@ export const CreateHuntForm: React.FC = () => {
     name: "hints",
   })
 
+  const [expandedHints, setExpandedHints] = useState<Set<number>>(new Set())
   const watchedLocation = watch(["latitude", "longitude"])
+
+  const resolveLocation = async (
+    latitude: number,
+    longitude: number,
+  ): Promise<string> => {
+    try {
+      const [result] = await Location.reverseGeocodeAsync({
+        latitude,
+        longitude,
+      })
+
+      if (result) {
+        return result.city ?? t("unknown")
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Location resolution failed:", error)
+    }
+
+    return t("unknown")
+  }
 
   const onSubmit = async (data: CreateTreasureHunt) => {
     try {
-      await apiClient.post("/treasure-hunts", data)
+      const huntLocation = await resolveLocation(data.latitude, data.longitude)
+
+      const hintsWithLocation = await Promise.all(
+        (data.hints ?? []).map(async (hint) => ({
+          ...hint,
+          location: await resolveLocation(hint.latitude, hint.longitude),
+        })),
+      )
+
+      const submitData = {
+        ...data,
+        location: huntLocation,
+        hints: hintsWithLocation,
+      }
+
+      await apiClient.post("/treasure-hunts", submitData)
+
+      await queryClient.invalidateQueries({ queryKey: ["hunts"] })
+
       router.back()
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -68,13 +112,37 @@ export const CreateHuntForm: React.FC = () => {
   }
 
   const addHint = () => {
-    const newHint: Hint = {
+    // Collapse all existing hints
+    setExpandedHints(new Set())
+
+    const newHint: {
+      title: string
+      description: string
+      latitude: number
+      longitude: number
+      location?: string
+    } = {
       title: "",
       description: "",
       latitude: watchedLocation[0] || defaultFormValues.latitude,
       longitude: watchedLocation[1] || defaultFormValues.longitude,
     }
     append(newHint)
+
+    // Expand the newly added hint
+    setExpandedHints(new Set([fields.length]))
+  }
+
+  const toggleHintExpansion = (index: number) => {
+    const newExpanded = new Set(expandedHints)
+
+    if (newExpanded.has(index)) {
+      newExpanded.delete(index)
+    } else {
+      newExpanded.add(index)
+    }
+
+    setExpandedHints(newExpanded)
   }
 
   return (
@@ -197,6 +265,8 @@ export const CreateHuntForm: React.FC = () => {
             onAddHint={addHint}
             onRemoveHint={remove}
             errors={errors}
+            expandedHints={expandedHints}
+            onToggleExpansion={toggleHintExpansion}
           />
 
           <View className="gap-3 mt-4">

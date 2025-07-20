@@ -1,6 +1,7 @@
+/* eslint-disable max-lines */
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "expo-router"
-import React from "react"
+import React, { useState } from "react"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { ScrollView, Text, View } from "react-native"
@@ -52,6 +53,7 @@ export const CreateHuntFormWeb: React.FC = () => {
   })
 
   const watchedLocation = watch(["latitude", "longitude"])
+  const [expandedHints, setExpandedHints] = useState<Set<number>>(new Set())
 
   const onSubmit = async (data: CreateTreasureHunt) => {
     try {
@@ -69,6 +71,7 @@ export const CreateHuntFormWeb: React.FC = () => {
   }
 
   const addHint = () => {
+    setExpandedHints(new Set())
     const newHint: Hint = {
       title: "",
       description: "",
@@ -76,6 +79,19 @@ export const CreateHuntFormWeb: React.FC = () => {
       longitude: watchedLocation[1] || defaultFormValues.longitude,
     }
     append(newHint)
+    setExpandedHints(new Set([fields.length]))
+  }
+
+  const toggleHintExpansion = (index: number) => {
+    const newExpanded = new Set(expandedHints)
+
+    if (newExpanded.has(index)) {
+      newExpanded.delete(index)
+    } else {
+      newExpanded.add(index)
+    }
+
+    setExpandedHints(newExpanded)
   }
 
   return (
@@ -231,6 +247,8 @@ export const CreateHuntFormWeb: React.FC = () => {
                 onAddHint={addHint}
                 onRemoveHint={remove}
                 errors={errors}
+                expandedHints={expandedHints}
+                onToggleExpansion={toggleHintExpansion}
               />
             </Animated.View>
 
@@ -255,8 +273,6 @@ export const CreateHuntFormWeb: React.FC = () => {
             </Animated.View>
           </View>
         </View>
-
-        {/* Action Buttons */}
       </ScrollView>
     </View>
   )

@@ -1,5 +1,5 @@
 import { Slot } from "expo-router"
-import { Platform } from "react-native"
+import { Platform, ScrollView } from "react-native"
 
 import { Footer, Header } from "@/components"
 import { ModalPersistenceProvider } from "@/components/contexts/modal-persistence"
@@ -13,7 +13,9 @@ const WebApp = () => {
   return (
     <ModalPersistenceProvider>
       <Header />
-      <Slot />
+      <ScrollView className="bg-gray-50 dark:bg-gray-900">
+        <Slot />
+      </ScrollView>
       <Footer />
       <SettingsModalWeb />
     </ModalPersistenceProvider>

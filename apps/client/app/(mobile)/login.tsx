@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 
 const LoginNative = () => {
   const { t } = useTranslation()
-  const { signIn, signOut, isAuthenticated } = useAuthManager()
+  const { signIn, isAuthenticated } = useAuthManager()
   const router = useRouter()
 
   const handleSignIn = async () => {
@@ -18,7 +18,7 @@ const LoginNative = () => {
   }
 
   const handleSignUp = async () => {
-    await signOut()
+    await signIn(true)
   }
 
   useEffect(() => {

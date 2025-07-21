@@ -25,9 +25,9 @@ export const Chest = () => (
     <Viro3DObject
       type="GLB"
       source={require("../../assets/ar/chest.glb")}
-      scale={[0.07, 0.07, 0.07]}
-      position={[0, -1, -1]}
-      rotation={[0, 0, 0]}
+      scale={[0.09, 0.09, 0.09]}
+      position={[1, -1.5, 2]}
+      rotation={[0, -180, 0]}
     />
   </ViroARScene>
 )

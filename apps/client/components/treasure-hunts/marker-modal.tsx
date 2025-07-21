@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next"
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
 import { type TreasureHintType } from "@pe/types"
@@ -10,6 +11,8 @@ type Props = {
 const MarkerModal = (props: Props) => {
   const { hint, onClose } = props
 
+  const { t } = useTranslation()
+
   return (
     <Modal visible={Boolean(hint)} animationType="fade" transparent>
       <View style={styles.modalContainer}>
@@ -20,7 +23,7 @@ const MarkerModal = (props: Props) => {
               <View style={styles.divider} />
               <Text style={styles.description}>{hint.description}</Text>
               <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-                <Text style={styles.closeButtonText}>Close</Text>
+                <Text style={styles.closeButtonText}>{t("close")}</Text>
               </TouchableOpacity>
             </>
           )}

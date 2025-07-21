@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useLocalSearchParams } from "expo-router"
 import { useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { View } from "react-native"
 
 import { type TreasureHintType } from "@pe/types"
@@ -40,12 +41,13 @@ const fetchHuntDetails = async (huntId: string) => {
   return { defaultHints, hintsData }
 }
 
-const PROXIMITY_THRESHOLD = 15
+const PROXIMITY_THRESHOLD = 5
 
 type Params = { huntId: string }
 
 const PlayableMap = () => {
   const { huntId } = useLocalSearchParams<Params>()
+  const { t } = useTranslation()
 
   const { data, isSuccess } = useQuery({
     queryKey: ["game", huntId],
@@ -56,16 +58,18 @@ const PlayableMap = () => {
   const defaultHints = data?.defaultHints ?? []
   const hintsData = data?.hintsData ?? []
 
+  const [isARMode, setIsARMode] = useState(true)
+
   const { location, hints, selectedHint, setSelectedHintCallback } =
     usePlayableMap({
       huntId,
       isSuccess,
+      isARMode,
       defaultHints,
       hintsData,
       proximityThreshold: PROXIMITY_THRESHOLD,
     })
 
-  const [isARMode, setIsARMode] = useState(false)
   const [mapType, setMapType] = useState<"standard" | "hybrid">("standard")
   const mapRef = useRef<MapView>(null)
 
@@ -102,7 +106,7 @@ const PlayableMap = () => {
                 longitude: hint.longitude,
               }}
               title={hint.title}
-              description="Select hint again to see the details!"
+              description={t("selectHint")}
               pinColor="gold"
               onSelect={setSelectedHintCallback(hint)}
             />

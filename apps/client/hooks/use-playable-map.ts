@@ -3,6 +3,7 @@ import * as Location from "expo-location"
 import { router } from "expo-router"
 import { getDistance } from "geolib"
 import { useCallback, useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { Alert } from "react-native"
 
 import { type TreasureHintType } from "@pe/types"
@@ -11,17 +12,26 @@ import apiClient from "@/services/api/apiClient"
 
 type Coords = { latitude: number; longitude: number }
 
-const SCAN_INTERVAL = 5000
+const SCAN_INTERVAL = 3000
 
 const usePlayableMap = (args: {
   huntId: string
   isSuccess: boolean
+  isARMode: boolean
   defaultHints: TreasureHintType[]
   hintsData: TreasureHintType[]
   proximityThreshold: number
 }) => {
-  const { huntId, isSuccess, defaultHints, hintsData, proximityThreshold } =
-    args
+  const {
+    huntId,
+    isSuccess,
+    isARMode,
+    defaultHints,
+    hintsData,
+    proximityThreshold,
+  } = args
+
+  const { t } = useTranslation()
 
   const [location, setLocation] = useState<Coords | null>(null)
   const [hints, setHints] = useState<TreasureHintType[]>([])
@@ -118,17 +128,13 @@ const usePlayableMap = (args: {
 
               treasureFound = true
 
-              Alert.alert(
-                "Congratulations!",
-                "You just found the treasure 🥳",
-                [
-                  {
-                    onPress: () => {
-                      router.push("/(mobile)/home")
-                    },
+              Alert.alert(t("congratulations"), t("treasureFound"), [
+                {
+                  onPress: () => {
+                    router.push(isARMode ? "/(mobile)/ar" : "/(mobile)/home")
                   },
-                ],
-              )
+                },
+              ])
             } else {
               mutateNewHint({ hintId: newHint.id })
             }
@@ -148,7 +154,15 @@ const usePlayableMap = (args: {
     return () => {
       clearInterval(interval)
     }
-  }, [hintsData, huntId, mutateHuntFound, mutateNewHint, proximityThreshold])
+  }, [
+    hintsData,
+    huntId,
+    isARMode,
+    mutateHuntFound,
+    mutateNewHint,
+    proximityThreshold,
+    t,
+  ])
 
   return { location, hints, selectedHint, setSelectedHintCallback }
 }

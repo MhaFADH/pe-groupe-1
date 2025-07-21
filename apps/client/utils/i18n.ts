@@ -207,6 +207,10 @@ const resources = {
       errorLoadingHunts: "Failed to load hunts. Please try again later.",
       error: "Error",
       unknown: "Unknown",
+      ar: "AR visualization",
+      selectHint: "Select hint again to see the details!",
+      congratulations: "Congratulations!",
+      treasureFound: "You just found the treasure 🥳",
     },
   },
   fr: {
@@ -427,6 +431,10 @@ const resources = {
       hintDescriptionMaxLength:
         "La description de l'indice ne peut pas dépasser 500 caractères",
       unknown: "Inconnue",
+      ar: "Visualisation en AR",
+      selectHint: "Sélectionner à nouveau l'indice pour voir les détails !",
+      congratulations: "Félicitations !",
+      treasureFound: "Vous avez trouvé le trésor ! 🥳",
     },
   },
 }
